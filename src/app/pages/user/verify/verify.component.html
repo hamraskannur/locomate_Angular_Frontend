@@ -1,0 +1,88 @@
+<div id="particles-js"></div>
+<div class="verification-container" *ngIf="spinner">
+  <div class="spinner"></div>
+
+  <p>Please wait for verification...</p>
+</div>
+
+<div class="card" *ngIf="verify">
+  <div
+    style="
+      border-radius: 200px;
+      height: 200px;
+      width: 200px;
+      background: #f8faf5;
+      margin: 0 auto;
+    "
+  >
+    <i class="checkmark text-slate-500">✓</i>
+  </div>
+  <h1 class="text-slate-500">Success</h1>
+  <p>
+    Congratulations!<br />
+    Your account has been successfully verified.<br />
+    You can now enjoy all the features and benefits of our platform
+  </p>
+  <a
+    type="submit"
+    routerLink="../login"
+    class="ml-2 inline-block rounded bg-slate-500 px-6 pb-2.5 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+  >
+    go to login
+  </a>
+</div>
+
+<div class="card" *ngIf="alreadyVerify">
+    <div
+      style="
+        border-radius: 200px;
+        height: 200px;
+        width: 200px;
+        background: #f8faf5;
+        margin: 0 auto;
+      "
+    >
+      <i class="checkmark text-slate-500">✓</i>
+    </div>
+    <h1 class="text-slate-500">Success</h1>
+    <p>
+      Already verified your account.<br />
+      Log in and use the your features
+    </p>
+    <a
+      type="submit"
+      routerLink="../login"
+      class="ml-2 inline-block rounded bg-slate-500 px-6 pb-2.5 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+    >
+      go to login
+    </a>
+  </div>
+  
+
+
+<div class="card" *ngIf="notVerify">
+    <div
+      style="
+        border-radius: 200px;
+        height: 200px;
+        width: 200px;
+        background: #f8faf5;
+        margin: 0 auto;
+      "
+    >
+      <i class="checkmark ">❌</i>
+    </div>
+    <h1 class="text-red-600">Not verified</h1>
+    <p>
+      Your account has been not verified.<br />
+       try again
+    </p>
+    <a
+      type="submit"
+      routerLink="../register"
+      class="ml-2 inline-block rounded bg-slate-500 px-6 pb-2.5 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+    >
+      go to register
+    </a>
+  </div>
+  

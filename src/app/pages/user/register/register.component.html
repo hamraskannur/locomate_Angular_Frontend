@@ -1,17 +1,18 @@
+<div id="particles-js"></div>
 <div class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
   <div class="w-auto m-2 h-full relative py-3 sm:max-w-xl sm:mx-auto">
     <div
       class="absolute h-full inset-0 bg-gradient-to-r from-slate-500 to-slate-700 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"
     ></div>
     <div class="relative px-4 py-5 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-      <div>
-        <div
-          *ngIf="verify"
-          class="bg-green-200 h-7 text-center text-black text-lg"
-        >
-          {{ verify }}
-        </div>
-      </div>
+        <div>
+            <div
+              *ngIf="verify"
+              class="bg-green-200 h-7 text-center text-black text-lg"
+            >
+              {{ verify }}
+            </div>
+          </div>
       <div class="max-w-md mx-auto">
         <div>
           <h1 class="text-2xl text-center font-semibold font-mono">
@@ -30,6 +31,8 @@
                 <input
                   formControlName="name"
                   type="text"
+                  id="name"
+                  name="name"
                   class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                   placeholder="Name"
                 />
@@ -39,12 +42,22 @@
                 >
                   Name
                 </label>
+                <div
+                  *ngIf="submit && f.name.errors"
+                  class="invalid-feedback text-red-600"
+                >
+                  <small *ngIf="f.name.errors['required']">
+                    name is required
+                  </small>
+                </div>
               </div>
               <!-- Username Field -->
               <div class="relative">
                 <input
                   formControlName="username"
                   type="text"
+                  id="username"
+                  name="username"
                   class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                   placeholder="Username"
                 />
@@ -54,11 +67,23 @@
                 >
                   Username
                 </label>
+                <div
+                  *ngIf="submit && f.username.errors"
+                  class="invalid-feedback text-red-600"
+                >
+                  <small *ngIf="f.username.errors['required']">
+                    Email is required
+                  </small>
+                </div>
               </div>
               <!-- Email Address Field -->
               <div class="relative">
                 <input
                   formControlName="email"
+                  type="email"
+                  autocomplete="email"
+                  id="email"
+                  name="email"
                   type="email"
                   class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                   placeholder="Email address"
@@ -67,11 +92,21 @@
                   for="email"
                   class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
                 >
-                  Email Address
+                  Email
                 </label>
+                <div
+                  *ngIf="submit && f.email.errors"
+                  class="invalid-feedback text-red-600"
+                >
+                  <small *ngIf="f.email.errors['required']">
+                    Email is required
+                  </small>
+                  <small *ngIf="f.email.errors['email']">
+                    invalid E-mail, Please enter correctly
+                  </small>
+                </div>
               </div>
 
-              
               <!-- Password Field -->
               <div class="relative">
                 <div class="flex">
@@ -102,54 +137,30 @@
                     Password
                   </label>
                 </div>
-              </div>
-              <!-- Repeat Password Field -->
-              <div class="relative">
-                <div class="flex">
-                  <input
-                    formControlName="repeatPassword"
-                    type="{{ repeatPasswordShown ? 'text' : 'password' }}"
-                    class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                    placeholder="Repeat Password"
-                  />
-                  <img
-                    (click)="toggleRepeatPasswordVisibility()"
-                    [src]="
-                      repeatPasswordShown
-                        ? 'https://cdn-icons-png.flaticon.com/512/565/565655.png'
-                        : 'https://cdn-icons-png.flaticon.com/512/6684/6684701.png'
-                    "
-                    [class]="
-                      repeatPasswordShown
-                        ? 'w-8 h-8 p-1 cursor-pointer'
-                        : 'w-8 h-8 cursor-pointer'
-                    "
-                    alt=""
-                  />
-                  <label
-                    for="repeatPassword"
-                    class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                  >
-                    Repeat Password
-                  </label>
+                <div
+                  *ngIf="submit && f.password.errors"
+                  class="invalid-feedback text-red-600"
+                >
+                  <small *ngIf="f.password.errors['required']">
+                    password is required
+                  </small>
+                  <small *ngIf="f.password.errors['pattern']">
+                    Password contain minimum 6 letters and combination of
+                    Alphabets and numbers and a special character
+                  </small>
                 </div>
-              </div>
-              
-              <a
-                class="inline-block text-sm text-slate-500 hover:text-slate-900"
-                routerLink="../login"
-              >
-              Have an account? Login
-              </a>
+              </div>              
+
+           
               <div class="flex items-center justify-center border-none">
-                <small *ngIf="ErrMessage" class="text-red-600">{{
+                <small *ngIf="ErrMessage!=null" class="text-red-600">{{
                   ErrMessage
                 }}</small>
               </div>
               <div class="relative border-none">
                 <button
                   type="submit"
-                  class="bg-slate-500 text-white rounded-md px-2 py-1"
+                  class="ml-2 inline-block rounded bg-slate-500 px-6 pb-2.5 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                 >
                   Sign up
                 </button>
@@ -158,6 +169,22 @@
           </form>
         </div>
       </div>
+
+       <!-- Separator between social media sign in and email/password sign in -->
+    <div
+    class="my-2 mb-3 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300"
+  >
+    <p class="mx-4 mb-0 text-center font-semibold dark:text-dark">Or</p>
+  </div>
+  <div class="text-center mb-4">
+    <a
+      class="inline-block text-sm text-slate-500 hover:text-slate-900"
+      routerLink="../login"
+    >
+    Have an account? Login
+    </a>
+  </div>
     </div>
   </div>
 </div>
+

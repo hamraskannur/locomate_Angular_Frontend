@@ -1,58 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import {Credentials, loginResponse} from "../../../models/interface"
-import {  passwordPattern} from '../../../constants/patterns'
+import { ActivatedRoute } from '@angular/router';
+import { registerResponse } from 'src/app/models/interface';
 import { UserApiServiceService } from 'src/app/services/user-api.service.service';
-
 declare const particlesJS: any;
 
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-verify',
+  templateUrl: './verify.component.html',
+  styleUrls: ['./verify.component.css']
 })
-export class LoginComponent implements OnInit {
+export class VerifyComponent implements OnInit {
 
-  constructor(private fb: FormBuilder,private userApiServiceService:UserApiServiceService, private router: Router) {}
-
-  //declare variable
-  submit: boolean = false;
-  passwordShown: boolean = false;
-  ErrMessage: string | null = null;
-
+  spinner: boolean = true;
+  verify: boolean = false;
+  notVerify: boolean = false;
+  alreadyVerify: boolean = false;
   
-  //interface of formdata
-  registrationForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.pattern(passwordPattern)]],
-  });
-  get f() {
-    return this.registrationForm.controls;
-  }
 
-
-  onSubmit() {
-    this.submit = true;    
-    if (this.registrationForm.valid) {
-      this.userApiServiceService.userLogin(this.registrationForm.value).subscribe(({token,message,status}:loginResponse)=>{
-           if(status){
-            localStorage.setItem("token", token)
-            this.ErrMessage=null
-            this.router.navigate(['/user']);
-           }else{
-            this.ErrMessage=message
-           }
-      })
-    }
-  }
-
-  togglePasswordVisibility(){
-   this.passwordShown=!this.passwordShown;
-  }
+  constructor(private route: ActivatedRoute,private userApiServiceService:UserApiServiceService) { }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.queryParamMap.get('id');
+    const token = this.route.snapshot.queryParamMap.get('token');
+
+    this.route.queryParamMap.subscribe(params => {
+      const id = params.get('id');
+      const token = params.get('token');
+      if(id !== null && token !== null){
+        this.userApiServiceService.verifyRegistration(id,token).subscribe(({status,message}:registerResponse)=>{     
+          if(message==="Already verified"){
+            this.alreadyVerify=true
+            this.spinner=false
+          }else if( status){
+            this.verify=true
+            this.spinner=false
+          }else{
+            this.spinner=false
+            this.verify=false
+            this.notVerify=true
+          }
+        })
+      }
+      
+    });
+
+
     particlesJS('particles-js', {
       particles: {
         number: {
@@ -164,5 +156,9 @@ export class LoginComponent implements OnInit {
       retina_detect: true,
     });
   }
+
+
+  
+
 
 }
