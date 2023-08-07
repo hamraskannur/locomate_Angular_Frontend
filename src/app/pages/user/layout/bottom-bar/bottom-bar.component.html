@@ -1,0 +1,7 @@
+<div class="border-t-2 flex px-4 py-2 justify-between border-slate-700 bg-white bottom-0 h-14 fixed w-full">
+      <a *ngFor="let menu of menus" [routerLink]="menu.link" >
+        <div class="hover:bg-[#bbc0c7] rounded-md p-2">
+            <span class="material-symbols-outlined"> {{ menu.icon }} </span>
+        </div>
+    </a>
+</div>

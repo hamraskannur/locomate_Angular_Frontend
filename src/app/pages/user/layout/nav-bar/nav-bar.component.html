@@ -1,0 +1,61 @@
+<div class="z-50 flex justify-between bg-heavy-metal-800 shadow-md w-full bg-slate-700 h-16 shadow-heavy-metal-400 p-4 top-0 sticky">
+    <a routerLink="/">
+      <h2 class="ml-5 font-bold text-white text-2xl max-sm:text-xl cursor-pointer">
+        Locomate
+      </h2>
+    </a>
+    <div class="flex gap-3 items-center">
+      <a routerLink="/myAccount">
+        <div class="flex">
+          <div class="w-8 rounded-full border-white border overflow-hidden shadow-sm shadow-gray-500">
+            <img
+              src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9Qe3xIGgvQXm8wCn1SJ3kXEMsUsw_1LklIQ&usqp=CAU'
+              alt="avatars"
+            />
+          </div>
+          <div class="pl-2">
+            <h1 class="max-sm:hidden max-md:hidden max-lg:hidden mt-2 text-white">username </h1>
+          </div>
+        </div>
+      </a>
+      <div (click)="toggleAddPost()">
+        <h1 class="hidden max-sm:inline-block text-white ml-0">+</h1>
+      </div>
+      <div (click)="toggleShowToggle()">
+        <h1 class="hidden max-sm:inline-block text-white ml-0">☰</h1>
+      </div>
+      <ng-container *ngIf="showToggle">
+        <div
+          class="w-40 mr-2 rounded-md ml-auto mt-14 border-2 h-24 bg-white fixed overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none"
+        >
+          <a routerLink="/settings" class="group flex items-center ml-2 text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md">
+            <h1 class="hidden max-sm:inline-block max-md:inline-block max-lg:inline-block text-black ml-0">⚙</h1>
+            <h1>Settings</h1>
+          </a>
+          <a routerLink="/search" class="group flex items-center ml-2 text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md">
+            <h1 class="hidden max-sm:inline-block max-md:inline-block max-lg:inline-block text-black ml-0">🔍</h1>
+            <h1>Search</h1>
+          </a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="addPost">
+        <div
+          class="w-40 mr-2 ml-auto mt-14 border-2 h-20 bg-white fixed overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none"
+        >
+          <div
+            (click)="showModal = !showModal"
+            class="group flex items-center justify-center text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md"
+          >
+            <h1>Upload Photo</h1>
+          </div>
+          <div
+            (click)="toggleShortsModal()"
+            class="group flex items-center justify-center text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md"
+          >
+            <h1>Upload Shorts</h1>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  

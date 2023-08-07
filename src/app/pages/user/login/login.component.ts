@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
            if(status){
             localStorage.setItem("token", token)
             this.ErrMessage=null
-            this.router.navigate(['/user']);
+            this.router.navigate(['/']);
            }else{
             this.ErrMessage=message
            }

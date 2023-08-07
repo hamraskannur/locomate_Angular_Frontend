@@ -1,0 +1,112 @@
+<div class="h-full sticky top-16">
+  <div class="hidden md:inline-block border-r-4 border-slate-700">
+    <div
+      [ngClass]="{
+        'w-64': sideBar,
+        'w-16': !sideBar
+      }"
+      class="bg-white h-[91vh] duration-500 text-black px-4"
+    >
+      <div
+        style="cursor: pointer"
+        (click)="changeSidebar()"
+        class="py-3 flex justify-end pt-2"
+      >
+        <img class="w-8 h-7" src="../../../../../assets/menu.png" alt="" />
+      </div>
+
+      <a
+        *ngFor="let menu of menus; let i = index"
+        [routerLink]="menu.link"
+        class="mt-4 flex flex-col gap-4 relative"
+      >
+        <button
+          type="button"
+          class="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md"
+        >
+          <div>
+            <span class="material-symbols-outlined"> {{ menu.icon }} </span>
+          </div>
+          <h2
+          [ngClass]="{
+              'whitespace-pre': true,
+              'duration-500': sideBar,
+              'opacity-0 translate-x-28 overflow-hidden': !sideBar
+            }"
+            [style.transition-delay]="(i + 3) + '00ms'"
+          >
+            {{ menu.name }}
+          </h2>
+          <h2
+            [ngClass]="{
+              'absolute left-48 bg-white font-semibold w-0 overflow-hidden whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit': true,
+              hidden: sideBar
+            }"
+          >
+            {{ menu.name }}
+          </h2>
+        </button>
+    </a>
+
+      <div (click)="logOut()" class="mt-4 flex flex-col gap-4 relative">
+        <button
+          type="button"
+          class="group flex items-center text-sm gap-3.5 font-medium hover:bg-[#bbc0c7] rounded-md p-2"
+        >
+          <div>
+            <span class="material-symbols-outlined"> notifications </span>
+          </div>
+          <h2
+            style="transition-delay: 800ms"
+            [ngClass]="{
+              'whitespace-pre': true,
+              'duration-500': sideBar,
+              'opacity-0 translate-x-28 overflow-hidden': !sideBar
+            }"
+          >
+            notifications
+          </h2>
+          <h2
+            [ngClass]="{
+              'absolute left-48 bg-white font-semibold w-0 overflow-hidden whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit': true,
+              hidden: sideBar
+            }"
+          >
+            notifications
+          </h2>
+        </button>
+      </div>
+
+      <!-- logOut button -->
+
+      <div (click)="logOut()" class="mt-4 flex flex-col gap-4 relative">
+        <button
+          type="button"
+          class="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md"
+        >
+          <div>
+            <span class="material-symbols-outlined"> logout </span>
+          </div>
+          <h2
+            style="transition-delay:900ms"
+            [ngClass]="{
+              'whitespace-pre': true,
+              'duration-500': sideBar,
+              'opacity-0 translate-x-28 overflow-hidden': !sideBar
+            }"
+          >
+            Log out
+          </h2>
+          <h2
+            [ngClass]="{
+              'absolute left-48 bg-white font-semibold w-0 overflow-hidden whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit': true,
+              hidden: sideBar
+            }"
+          >
+            Log out
+          </h2>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
