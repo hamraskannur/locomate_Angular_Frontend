@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
-import { loginResponse, registerResponse } from '../models/interface';
+import { User, loginResponse, registerResponse } from '../models/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,4 +24,13 @@ export class UserApiServiceService {
     return this.http.post<loginResponse>(`${this.serverApi}login`, userData)
   }
   
+
+  getUser(): Observable<{success:boolean,message:string,user:User}>{
+    return this.http.get<{success:boolean,message:string,user:User}>(`${this.serverApi}getMyProfile`)
+  }
+
+
+  getSuggestionUsers():Observable<{status:boolean,notFollowedUsers:User[]}>{
+    return this.http.get<{status:boolean,notFollowedUsers:User[]}>(`${this.serverApi}suggestionUsers`)
+  }
 }

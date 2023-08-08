@@ -11,14 +11,24 @@ import { LayoutComponent } from './layout/layout.component';
 import { NavBarComponent } from './layout/nav-bar/nav-bar.component';
 import { SideBarComponent } from './layout/side-bar/side-bar.component';
 import { BottomBarComponent } from './layout/bottom-bar/bottom-bar.component';
+import { SuggestionComponent } from './common/suggestions/suggestion/suggestion.component';
+import { AvatarComponent } from './common/avatar/avatar.component';
+import { SuggestionsComponent } from './common/suggestions/suggestions.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, VerifyComponent, HomeComponent, LayoutComponent,NavBarComponent, SideBarComponent, BottomBarComponent],
-  imports:[
-    UserRoutingModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    VerifyComponent,
+    HomeComponent,
+    LayoutComponent,
+    NavBarComponent,
+    SideBarComponent,
+    BottomBarComponent,
+    SuggestionComponent,
+    AvatarComponent,
+    SuggestionsComponent
   ],
+  imports: [UserRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class UserModule {}
