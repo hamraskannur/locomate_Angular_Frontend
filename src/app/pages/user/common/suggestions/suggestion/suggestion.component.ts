@@ -9,7 +9,7 @@ import { User } from 'src/app/models/interface';
 })
 export class SuggestionComponent {
   @Input() user: User|null = null;
-  sideBar=false
+  sideBar=true
 
   constructor(private router: Router) {}
 

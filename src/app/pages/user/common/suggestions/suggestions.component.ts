@@ -15,7 +15,8 @@ import { UserApiServiceService } from 'src/app/services/user-api.service.service
 })
 export class SuggestionsComponent implements OnInit {
   users:User[]=[]
-  constructor(private router: Router,private userApiServiceService:UserApiServiceService) {  }
+  userId:string=''
+  constructor(private userApiServiceService:UserApiServiceService) {  }
 
   ngOnInit(): void {
     this.getUser()
@@ -32,8 +33,8 @@ export class SuggestionsComponent implements OnInit {
 
   
   getUser(){
-    this.userApiServiceService.getUser().subscribe((data:{success:boolean,message:string,user:User}) => {
-      console.log(data);
+    this.userApiServiceService.getUser().subscribe(({user}:{success:boolean,message:string,user:User}) => {
+      this.userId=user._id
     });
   }
 }

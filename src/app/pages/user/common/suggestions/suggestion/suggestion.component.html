@@ -18,8 +18,8 @@
   </div>
   <div *ngIf="!sideBar" class="ml-auto  flex duration-900">
     <div>
-      <h1 class="align-middle ml-8 font-semibold">
-        {{ user.Followers.length! || 0 }}
+      <h1 class="align-middle ml-8 font-semibold" *ngIf="user?.Followers">
+        {{ user.Followers.length  || 0 }}
       </h1>
       <div class="text-slate-700 p-1 rounded-md px-2 flex">
         <span class="material-symbols-outlined"> person </span>
@@ -27,8 +27,8 @@
       </div>
     </div>
     <div>
-        <h1 class="align-middle ml-8 font-semibold">
-            {{ user.Following.length! || 0 }}
+        <h1 class="align-middle ml-8 font-semibold"*ngIf="user?.Following">
+            {{ user.Following.length || 0 }}
           </h1>
           
       <div class="text-slate-700 p-1 rounded-md px-2 flex">

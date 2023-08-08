@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/interface';
+import { UserApiServiceService } from 'src/app/services/user-api.service.service';
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit {
   showModal = false;
   addPost = false;
   shortsModal = false;
   showToggle = false;
-  user = {}; // Replace with your user data
+  user :User|null = null;
 
+  constructor(private userApiServiceService:UserApiServiceService){}
+
+ ngOnInit(): void {
+   this.userApiServiceService.getUser().subscribe(({user}:{ success: boolean; message: string; user: User })=>{    
+        this.user=user
+   })
+ }
   toggleAddPost() {
     this.addPost = !this.addPost;
   }
@@ -31,5 +40,7 @@ export class NavBarComponent {
   outsideClickHandlerAddPost() {
     this.addPost = false;
   }
+
+
 
 }

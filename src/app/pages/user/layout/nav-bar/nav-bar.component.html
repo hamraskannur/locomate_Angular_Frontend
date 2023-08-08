@@ -7,14 +7,12 @@
     <div class="flex gap-3 items-center">
       <a routerLink="/myAccount">
         <div class="flex">
-          <div class="w-8 rounded-full border-white border overflow-hidden shadow-sm shadow-gray-500">
-            <img
-              src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9Qe3xIGgvQXm8wCn1SJ3kXEMsUsw_1LklIQ&usqp=CAU'
-              alt="avatars"
-            />
-          </div>
+            <app-avatar *ngIf="user && user.ProfileImg ; else nonImg" [imgSrc]="user.ProfileImg"></app-avatar>
+            <ng-template #nonImg>
+              <app-avatar></app-avatar>
+            </ng-template>
           <div class="pl-2">
-            <h1 class="max-sm:hidden max-md:hidden max-lg:hidden mt-2 text-white">username </h1>
+            <h1 *ngIf="user" class="max-sm:hidden max-md:hidden max-lg:hidden mt-2 text-white">{{user.username}} </h1>
           </div>
         </div>
       </a>

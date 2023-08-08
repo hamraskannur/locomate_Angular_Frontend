@@ -1,36 +1,55 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, loginResponse, registerResponse } from '../models/interface';
+
+import {
+  Post,
+  User,
+  loginResponse,
+  registerResponse,
+} from '../models/interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserApiServiceService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-  
-  private serverApi="http://localhost:3008/"
+  private serverApi = 'http://localhost:3008/';
 
-  userRegister(userData:object): Observable<registerResponse> {
-    return this.http.post<registerResponse>(`${this.serverApi}register`, userData)
+  userRegister(userData: object): Observable<registerResponse> {
+    return this.http.post<registerResponse>(
+      `${this.serverApi}register`,
+      userData
+    );
   }
 
-  verifyRegistration(id:string,token:string): Observable<registerResponse> {
-    return this.http.get<registerResponse>(`${this.serverApi}verifyRegistration/${id}/${token}`)
+  verifyRegistration(id: string, token: string): Observable<registerResponse> {
+    return this.http.get<registerResponse>(
+      `${this.serverApi}verifyRegistration/${id}/${token}`
+    );
   }
 
-  userLogin(userData:object):Observable<loginResponse> {
-    return this.http.post<loginResponse>(`${this.serverApi}login`, userData)
-  }
-  
-
-  getUser(): Observable<{success:boolean,message:string,user:User}>{
-    return this.http.get<{success:boolean,message:string,user:User}>(`${this.serverApi}getMyProfile`)
+  userLogin(userData: object): Observable<loginResponse> {
+    return this.http.post<loginResponse>(`${this.serverApi}login`, userData);
   }
 
+  getUser(): Observable<{ success: boolean; message: string; user: User }> {
+    return this.http.get<{ success: boolean; message: string; user: User }>(
+      `${this.serverApi}getMyProfile`
+    );
+  }
 
-  getSuggestionUsers():Observable<{status:boolean,notFollowedUsers:User[]}>{
-    return this.http.get<{status:boolean,notFollowedUsers:User[]}>(`${this.serverApi}suggestionUsers`)
+  getSuggestionUsers(): Observable<{
+    status: boolean;
+    notFollowedUsers: User[];
+  }> {
+    return this.http.get<{ status: boolean; notFollowedUsers: User[] }>(
+      `${this.serverApi}suggestionUsers`
+    );
+  }
+
+  getAllPost(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.serverApi}post/getAllPost`);
   }
 }

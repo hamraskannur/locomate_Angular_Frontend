@@ -11,5 +11,7 @@ import { Component, Input } from '@angular/core';
   `,
 })
 export class AvatarComponent {
-  @Input() imgSrc!: string; 
+  @Input() imgSrc: string='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png';
+
+  
 }
