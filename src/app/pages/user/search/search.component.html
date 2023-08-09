@@ -1,0 +1,15 @@
+<app-layout>
+  <div class="w-6/12 max-sm:w-full max-md:w-full max-lg:w-full">
+    <h2
+    class="pl-5 hidden md:block text-3xl m-5 text-heavy-metal-500 mx-auto opacity-40"
+    >
+      Search here
+    </h2>
+    <app-search-bar (setSearchInput)="handleSetSearchInput($event)"></app-search-bar>
+    <app-search-results [searchResults]="user" ></app-search-results>
+  </div>
+  <div class="max-sm:hidden max-md:hidden max-lg:hidden">
+    <app-suggestions></app-suggestions>
+  </div>
+</app-layout>
+

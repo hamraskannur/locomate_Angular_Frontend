@@ -29,7 +29,7 @@ export interface User {
   description: string;
   ProfileImg: string;
   coverImg: string;
-  public: Boolean;
+  public: boolean;
   PostalCode: number;
   Requests: string[];
   Followers: string[];

@@ -1,0 +1,23 @@
+<hr />
+<div class="grid grid-cols-3 gap-3 mt-5 ">
+    <div *ngFor="let post of posts" (click)="handlePostClick(post)"  >
+      <img
+        class="rounded-md overflow-hidden h-48 flex items-center object-cover"
+        [src]="SavedPost?post?.post?.img[0]:post?.img[0]"
+        alt="posts"
+      />
+    </div>
+</div>
+
+  <div *ngIf="postCount=== 0  && type" class="">
+    <div class="flex justify-center  bg-white">
+      <img
+        class="bg-white h-28"
+        src="https://freepngimg.com/thumb/photography/59850-and-instagram-photography-black-logo-white.png  "
+        alt="img"
+      />
+    </div>
+    <div class="flex justify-center">
+      <h1 class="not-italic">share your post</h1>
+    </div>
+  </div>

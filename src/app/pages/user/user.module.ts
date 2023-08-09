@@ -14,10 +14,20 @@ import { SuggestionComponent } from './common/suggestions/suggestion/suggestion.
 import { AvatarComponent } from './common/avatar/avatar.component';
 import { SuggestionsComponent } from './common/suggestions/suggestions.component';
 import { PostComponent } from './home/post/post.component';
-import { OnePostComponent } from './common/post/one-post/one-post.component';
+import { OnePostComponent } from './common/post/one-post.component';
 import { CommentComponent } from './common/post/comment/comment.component';
 import { EditPostComponent } from './common/post/edit-post/edit-post.component';
 import { ReportPostComponent } from './common/post/report-post/report-post.component';
+import { MyAccountComponent } from './my-account/my-account.component';
+import { AccountComponent } from './common/account/account.component';
+import { FriendAccountComponent } from './friend-account/friend-account.component';
+import { AllPostComponent } from './common/account/all-post/all-post.component';
+import { PrivatePageComponent } from './common/account/private-page/private-page.component';
+import { ShowUserComponent } from './common/account/show-user/show-user.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SearchComponent } from './search/search.component';
+import { SearchBarComponent } from './search/search-bar/search-bar.component';
+import { SearchResultsComponent } from './search/search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +45,17 @@ import { ReportPostComponent } from './common/post/report-post/report-post.compo
     OnePostComponent,
     CommentComponent,
     EditPostComponent,
-    ReportPostComponent
+    ReportPostComponent,
+    MyAccountComponent,
+    AccountComponent,
+    FriendAccountComponent,
+    AllPostComponent,
+    PrivatePageComponent,
+    ShowUserComponent,
+    SettingsComponent,
+    SearchComponent,
+    SearchBarComponent,
+    SearchResultsComponent
   ],
   imports: [UserRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
 })

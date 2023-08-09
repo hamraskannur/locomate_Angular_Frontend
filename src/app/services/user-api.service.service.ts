@@ -52,4 +52,33 @@ export class UserApiServiceService {
   getAllPost(): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.serverApi}post/getAllPost`);
   }
+
+
+  getSavedPost(userId:string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.serverApi}post/getSavedPost/${userId}`);
+  }
+
+  getUserAllPost(userId:string): Observable<{success:boolean,AllPosts:Post[],message:string}> {
+    return this.http.get<{success:boolean,AllPosts:Post[],message:string}>(`${this.serverApi}post/getUserAllPost/${userId}`);
+  }
+
+  getFollowingUser(userId:string): Observable<{message:string,user:any[]}> {
+    return this.http.get<{message:string,user:any[]}>(`${this.serverApi}getFollowingUser/${userId}`);
+  }
+
+  getFollowersUser(userId:string): Observable<{message:string,user:any[]}> {
+    return this.http.get<{message:string,user:any[]}>(`${this.serverApi}getFollowersUser/${userId}`);
+  }
+
+  getFriendsAccount(userId:string): Observable<User> {
+    return this.http.get<User>(`${this.serverApi}getFriendsAccount/${userId}`);
+  }
+  changeToPrivate(checked: boolean): Observable<{message:string,success:boolean}> {
+    return this.http.put<{message:string,success:boolean}>(`${this.serverApi}changeToPrivate`, {checked});
+  }
+  searchUser(searchData: string): Observable<User[]> {
+    return this.http.post<User[]>(`${this.serverApi}searchUser`, {searchData});
+  }
+  
+  
 }

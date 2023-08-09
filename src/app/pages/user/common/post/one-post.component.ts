@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Post, User } from 'src/app/models/interface';
 import { UserApiServiceService } from 'src/app/services/user-api.service.service';
 
@@ -18,7 +19,8 @@ export class OnePostComponent implements OnInit {
   likeCount = 0;
   count = 0;
   user: User | null = null;
-  constructor(private userApiServiceService: UserApiServiceService) {}
+    
+    constructor(private userApiServiceService: UserApiServiceService,private router: Router) {}
 
   ngOnInit() {
     this.userApiServiceService
@@ -34,7 +36,14 @@ export class OnePostComponent implements OnInit {
       );
   }
 
-  getAccountPage(id: string) {}
+  getAccountPage(id: string) {
+    if ( this.currentUser) {
+      this.router.navigate(['/myAccount']);
+    } else {
+      this.router.navigate(['/friendAccount',id]);
+    }
+
+  }
 
   submit(id: string) {}
 

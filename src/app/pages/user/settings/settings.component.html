@@ -1,0 +1,40 @@
+<app-layout>
+    <div class="w-6/12 max-sm:w-full max-md:w-full max-lg:w-full">
+        <div class="px-4 bg-white   rounded-md m-5">
+            <div class="grid gap-5 p-5">
+              <div class="flex justify-between">
+                <div class="flex  gap-4 w-1/4 hover:bg-snow-drift-300 py-1 px-3 rounded">
+                    <span class="material-symbols-outlined">
+                        lock
+                        </span>
+                  <p class="font-bold hover:underline cursor-pointer">
+                    Privacy
+                  </p>
+                </div>
+                <label class="relative inline-flex mx-auto mt-1 cursor-pointer">
+                  <!-- <input onChange={changeHandler} type="checkbox"  class="sr-only peer" checked={switchChecked}  /> -->
+                  <input [(ngModel)]="switchChecked" type="checkbox" class="sr-only peer"  (change)="handleSwitchChange()"/>
+
+                  <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 absolute peer-focus:ring-gray-300 dark:peer-focus:ring-gray-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gray-600"></div>
+                </label>
+              </div>
+    
+              <div
+                class="flex gap-4 w-1/4 hover:bg-snow-drift-300 py-1 px-3 rounded"
+                (click)="handleLogout()"
+              >
+                <span>
+                    <span class="material-symbols-outlined"> logout </span>
+
+                </span>
+                <p class="font-bold hover:underline cursor-pointer text-blue-500">
+                  LogOut
+                </p>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="max-sm:hidden max-md:hidden max-lg:hidden">
+      <app-suggestions></app-suggestions>
+    </div>
+  </app-layout>

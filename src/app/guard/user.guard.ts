@@ -8,7 +8,6 @@ export class UserGuard implements CanActivate {
   constructor( private router: Router) { }
   canActivate() {
     const isLoggedIn =localStorage.getItem("token")
-    console.log(isLoggedIn);
     
     if (isLoggedIn) {
       return true;

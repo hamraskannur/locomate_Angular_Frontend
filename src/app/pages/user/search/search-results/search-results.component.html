@@ -1,0 +1,29 @@
+<div class="bg-white ml-5">
+  <div class="px-5">
+    <div >
+      <div *ngIf="searchResults?.length === 0; else user">
+        <div class="py-10 flex justify-center">
+          <p class="font-bold text-heavy-metal-800">No User Found</p>
+        </div>
+      </div>
+    <ng-template #user>
+
+      <div
+        *ngFor="let result of searchResults"
+        (click)="goToAccount(result._id)"
+        class="border-b p-4 -mx-4 border-b-heavy-metal-300 hover:bg-heavy-metal-200 cursor-pointer"
+      >
+        <div class="flex gap-3">
+          <app-avatar [imgSrc]="result.ProfileImg"></app-avatar>
+          <div>
+            <h3 class="font-bold text-lg">{{ result?.username }}</h3>
+            <h4 class="text-sm leading-3">{{ result?.name }}</h4>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    </div>
+
+
+  </div>
+</div>

@@ -6,6 +6,10 @@ import { VerifyComponent } from './verify/verify.component';
 import { HomeComponent } from './home/home.component';
 import { UserGuard } from 'src/app/guard/user.guard';
 import { UserLoginGuard } from 'src/app/guard/userLogin.guard';
+import { MyAccountComponent } from './my-account/my-account.component';
+import { FriendAccountComponent } from './friend-account/friend-account.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SearchComponent } from './search/search.component';
 
 const userRoute: Routes = [
   {
@@ -14,7 +18,11 @@ const userRoute: Routes = [
       { path: '', component: HomeComponent, pathMatch: 'full',canActivate:[UserGuard] },
       { path: 'login', component: LoginComponent ,canActivate:[UserLoginGuard]},
       { path: 'register', component: RegisterComponent,canActivate:[UserLoginGuard] },
-      { path: 'verify', component: VerifyComponent,canActivate:[UserLoginGuard] }
+      { path: 'verify', component: VerifyComponent,canActivate:[UserLoginGuard] },
+      { path: 'myAccount', component: MyAccountComponent,canActivate:[UserGuard] },
+      { path: 'friendAccount/:id', component: FriendAccountComponent,canActivate:[UserGuard] },
+      { path: 'settings', component: SettingsComponent,canActivate:[UserGuard] },
+      { path: 'search', component: SearchComponent,canActivate:[UserGuard] },
     ],
   },
 ];

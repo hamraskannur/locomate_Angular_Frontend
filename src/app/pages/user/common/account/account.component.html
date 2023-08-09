@@ -1,0 +1,194 @@
+<div
+  
+      class=" bg-white  shadow:lg
+   shadow-gray-300 rounded-md p-4 mb-5  md:m-4 mt-6 "
+    >
+      <div class=" ">
+        <div class="relative ">
+          <div class="h-40 w-full overflow-hidden flex rounded-md justify-center items-center">
+            <img
+             *ngIf="user.coverImg"
+            [src]="user.coverImg"
+              alt="cover"
+            />
+            <img
+            *ngIf="!user.coverImg"
+           src="https://media.easemytrip.com/media/Blog/India/637033873695687971/637033873695687971fsrzol.jpg"
+             alt="cover"
+           />
+          </div>
+          <div class="absolute top-14 left-4">
+            <div class="w-36 h-36 rounded-full overflow-hidden shadow-sm shadow-gray-500">
+              <img
+                class="bg-white"
+                [src]="user.ProfileImg ||'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'"
+
+                alt="avatars"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10">
+          <h2 class="text-3xl font-bold text-heavy-metal-800 ">
+            {{ user.username || '' }}
+          </h2>
+          <div class="text-heavy-metal-500 leading-4 mt-2">
+            {{user.name ||''}},
+          </div>
+          <div class="text-heavy-metal-500 leading-4 mt-1">
+            {{user.city  || ""}},
+            {{user.country || ""}}
+          </div>
+          <p class="my-2   max-w-6xl text-sm">
+            {{user.description||""}}
+          </p>
+          <div class="flex justify-end mr-5">
+              <button
+               *ngIf="type"
+                (click)="editUser()"
+                class="ml-5 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1  px-4 rounded-l"
+              >
+                edit
+              </button>
+          </div>
+
+          <div class="flex">
+              <button
+              *ngIf="!type && !follow && !Requested"
+              (click)="followUserHandler(user._id)"
+              class="flex justify-between ml-2 font-bold py-1   rounded bg-slate-700 hover:bg-slate-600 text-white px-6 pb-2 pt-2.5 text-xs uppercase leading-normal  shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]" 
+              >
+                follow
+              </button>
+              <button
+              *ngIf="!type && follow && !Requested"
+              (click)="followUserHandler(user._id)"
+              class="flex justify-between ml-2 font-bold py-1   rounded bg-slate-700 hover:bg-slate-600 text-white px-6 pb-2 pt-2.5 text-xs uppercase leading-normal  shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]" 
+              >
+                UnFollow
+              </button>
+              <button
+              *ngIf="!type && Requested "
+              (click)="followUserHandler(user._id)"
+              class="flex justify-between ml-2 font-bold py-1   rounded bg-slate-700 hover:bg-slate-600 text-white px-6 pb-2 pt-2.5 text-xs uppercase leading-normal  shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]" 
+              >
+                Requested
+              </button>
+              <button
+              *ngIf="!type  "
+              (click)="createMessage(user._id)"
+              class="flex justify-between ml-2 font-bold py-1   rounded bg-slate-700 hover:bg-slate-600 text-white px-6 pb-2 pt-2.5 text-xs uppercase leading-normal  shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]" 
+              >
+                Message
+              </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex  mt-2  justify-center">
+          <span
+          *ngIf="user?.public || type || follow  "
+          (click)="openPost()"
+
+            class="bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300"
+          >
+            <div class="flex justify-center">
+              <p class="text-lg font-bold text-center ml-3">{{postCount}}</p>
+            </div>
+            <p class="text-center">Posts</p>
+          </span>
+          
+        <span
+        (click)="clickFollowers()"
+          class="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300"
+        >
+          <div class="flex ">
+            <div class="text-lg font-bold text-center mt-1">
+                <span class="material-symbols-outlined">
+                    group
+                    </span>
+            </div>
+            <p class="text-lg font-bold text-center ml-3">
+              {{followersCount}}
+            </p>
+          </div>
+          <p class="text-center">Followers</p>
+        </span>
+        <span
+        (click)="clickFollowing()"
+          class="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300"
+        >
+          <div class="flex ">
+            <div class="text-lg font-bold text-center mt-1">
+                <span class="material-symbols-outlined">
+                    group
+                    </span>
+            </div>
+            <p class="text-lg font-bold text-center ml-3">
+              {{followingCount}}
+            </p>
+          </div>
+          <p class="text-center">Following</p>
+        </span>
+      </div>
+
+      <div *ngIf="user?.public || type || follow" class="flex items-center justify-center mt-5">
+            <div class="flex">
+              <div
+               (click)="openPost()"
+                class="cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110"
+              >
+                <h1>Post</h1>
+              </div>
+            </div>
+            <div
+              (click)="openShorts()"
+              class="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110"
+            >
+              <h1>Shorts</h1>
+            </div>
+            <div
+              (click)="clickSavePost()"
+              class="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110"
+            >
+              <h1>Saved post</h1>
+            </div>
+      </div>
+        <div class="mt-5" *ngIf="(user?.public || type || follow ) && !onePostId &&  selectOption === 'post'">
+          <app-all-post
+            [userId]="user._id"
+            [type]="type"
+            [SavedPost]="false"
+            [postCount]="postCount"
+            (onePost)="onePost($event)"
+            (postCountChange)="onPostCountChange($event)"
+          ></app-all-post>
+        </div>
+        <div class="mt-5" *ngIf="(user?.public || type || follow ) && !onePostId && selectOption === 'SavedPost'">
+       <app-all-post
+       [userId]="user._id"
+       [SavedPost]="true"
+       [type]="type"
+       [postCount]="postCount"
+       (onePost)="onePost($event)"
+       ></app-all-post>
+        </div>
+
+        <div class="mt-5" *ngIf="(user?.public || type || follow ) && onePostId ">
+          <app-one-post
+           [onePost]="true"
+            [post]="onePostId"
+          ></app-one-post>
+        </div>
+        <!-- <div class="mt-5" *ngIf="(user?.public || type || follow ) && selectOption === 'shorts'">
+        <Shorts userId={user?._id}/>
+        </div> -->
+
+        <div class="mt-5" *ngIf="(user?.public || type || follow ) && selectOption != 'post' && selectOption != 'shorts' && !onePostId && selectOption != 'SavedPost' ">
+          <app-show-user  [userId]="user._id ||''" [type]="selectOption" ></app-show-user>
+        </div>
+
+        <div class="shadow-md shadow-gray-400" *ngIf="!user.public && !type && !follow">
+          <app-private-page ></app-private-page>
+        </div>
+    </div>

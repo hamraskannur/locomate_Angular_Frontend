@@ -25,7 +25,7 @@ export class SuggestionsComponent implements OnInit {
 
 
   fetchSuggestions(): void {
-      this.userApiServiceService.getSuggestionUsers().subscribe(({notFollowedUsers}:{status:boolean,notFollowedUsers:User[]})=>{
+      this.userApiServiceService.getSuggestionUsers().subscribe(({notFollowedUsers}:{status:boolean,notFollowedUsers:User[]})=>{        
         this.users=notFollowedUsers
       })
   }
