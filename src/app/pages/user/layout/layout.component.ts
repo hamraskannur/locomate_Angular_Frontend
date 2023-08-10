@@ -10,12 +10,14 @@ import { UserApiServiceService } from 'src/app/services/user-api.service.service
 })
 export class LayoutComponent  {
   constructor(private router: Router,private userApiServiceService:UserApiServiceService){}
-  count=1
+  count=0
   sideBar=true;
+  public=false
 
   ngOnInit(): void {
     this.userApiServiceService.getUser().subscribe(({user}:{ success: boolean; message: string; user: User })=>{    
          this.count=user.Requests.length
+         this.public=user.public
     })
   }
 

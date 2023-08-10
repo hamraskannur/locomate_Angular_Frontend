@@ -42,7 +42,9 @@ export class AccountComponent implements OnInit {
         this.follow = this.user?.Followers.includes(user._id);
         this.Requested = this.user?.Requests.includes(user._id);
         this.followersCount = this.user?.Followers?.length 
-        this.followingCount = this.user?.Following?.length           
+        this.followingCount = this.user?.Following?.length  
+        this.follow= this.user?.Followers.includes(user._id)
+
       }
       );
   }
@@ -56,9 +58,38 @@ export class AccountComponent implements OnInit {
     this.router.navigate(['/editProfile']);
   };
 
-  followUserHandler(id: string | undefined) {}
+  followUserHandler(followId: string ) {
+    
+    this.userApiServiceService.followUser({followId}).subscribe(({success,message}:{message:string,success:boolean})=>{
+      if (success) {
+        if (!this.user?.public) {
+          if (this.follow) {
+            this.followersCount--
+            this.follow=false
+          } else {
+            if (this.Requested) {
+              this.Requested=false
+            } else {
+              this.Requested=true
+            }
+          }
+        } else {
+          if (this.follow) {
+            this.followersCount--
+            this.follow=false
+          } else {
+            this.followersCount++
+            this.follow=true
+          }
+        }
+      } else {
 
-  createMessage(id: string | undefined) {}
+        
+      }
+    })
+  }
+
+  createMessage(id: string ) {}
   openPost = () => {
     this.onePostId = null;
     this.selectOption = 'post';

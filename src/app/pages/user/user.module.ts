@@ -31,6 +31,7 @@ import { SearchResultsComponent } from './search/search-results/search-results.c
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { TimeAgoPipe } from 'src/app/pipe/timePipe';
 import { RequestsComponent } from './requests/requests.component';
+import { CardComponent } from './requests/card/card.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { RequestsComponent } from './requests/requests.component';
     SearchBarComponent,
     SearchResultsComponent,
     EditProfileComponent,
-    RequestsComponent
+    RequestsComponent,
+    CardComponent
   ],
   imports: [UserRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
 })

@@ -8,12 +8,13 @@ import {
   loginResponse,
   registerResponse,
 } from '../models/interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserApiServiceService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   private serverApi = 'http://localhost:3008/';
 
@@ -53,42 +54,99 @@ export class UserApiServiceService {
     return this.http.get<Post[]>(`${this.serverApi}post/getAllPost`);
   }
 
-
-  getSavedPost(userId:string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.serverApi}post/getSavedPost/${userId}`);
+  getSavedPost(userId: string): Observable<Post[]> {
+    return this.http.get<Post[]>(
+      `${this.serverApi}post/getSavedPost/${userId}`
+    );
   }
 
-  getUserAllPost(userId:string): Observable<{success:boolean,AllPosts:Post[],message:string}> {
-    return this.http.get<{success:boolean,AllPosts:Post[],message:string}>(`${this.serverApi}post/getUserAllPost/${userId}`);
+  getUserAllPost(
+    userId: string
+  ): Observable<{ success: boolean; AllPosts: Post[]; message: string }> {
+    return this.http.get<{
+      success: boolean;
+      AllPosts: Post[];
+      message: string;
+    }>(`${this.serverApi}post/getUserAllPost/${userId}`);
   }
 
-  getFollowingUser(userId:string): Observable<{message:string,user:any[]}> {
-    return this.http.get<{message:string,user:any[]}>(`${this.serverApi}getFollowingUser/${userId}`);
+  getFollowingUser(
+    userId: string
+  ): Observable<{ message: string; user: any[] }> {
+    return this.http.get<{ message: string; user: any[] }>(
+      `${this.serverApi}getFollowingUser/${userId}`
+    );
   }
 
-  getFollowersUser(userId:string): Observable<{message:string,user:any[]}> {
-    return this.http.get<{message:string,user:any[]}>(`${this.serverApi}getFollowersUser/${userId}`);
+  getFollowersUser(
+    userId: string
+  ): Observable<{ message: string; user: any[] }> {
+    return this.http.get<{ message: string; user: any[] }>(
+      `${this.serverApi}getFollowersUser/${userId}`
+    );
   }
 
-  getFriendsAccount(userId:string): Observable<User> {
+  getFriendsAccount(userId: string): Observable<User> {
     return this.http.get<User>(`${this.serverApi}getFriendsAccount/${userId}`);
   }
-  changeToPrivate(checked: boolean): Observable<{message:string,success:boolean}> {
-    return this.http.put<{message:string,success:boolean}>(`${this.serverApi}changeToPrivate`, {checked});
+  changeToPrivate(
+    checked: boolean
+  ): Observable<{ message: string; success: boolean }> {
+    return this.http.put<{ message: string; success: boolean }>(
+      `${this.serverApi}changeToPrivate`,
+      { checked }
+    );
   }
   searchUser(searchData: string): Observable<User[]> {
-    return this.http.post<User[]>(`${this.serverApi}searchUser`, {searchData});
+    return this.http.post<User[]>(`${this.serverApi}searchUser`, {
+      searchData,
+    });
   }
-  
-  uploadImage(img: File): Observable<{secure_url:string   }> {
+
+  uploadImage(img: File): Observable<{ secure_url: string }> {
     const formData = new FormData();
-    formData.append("file", img);
-    formData.append("upload_preset", "ete0nc34");
-    return this.http.post<{secure_url:string   }>("https://api.cloudinary.com/v1_1/dyujj6zhw/image/upload",formData );
+    formData.append('file', img);
+    formData.append('upload_preset', 'ete0nc34');
+    return this.http.post<{ secure_url: string }>(
+      'https://api.cloudinary.com/v1_1/dyujj6zhw/image/upload',
+      formData
+    );
   }
   saveUserData(formData: User): Observable<User[]> {
     return this.http.put<User[]>(`${this.serverApi}updateUserData`, formData);
   }
-  
 
+  getAllRequest(): Observable<any> {
+    return this.http.get<any>(`${this.serverApi}getAllRequest`);
+  }
+
+  followUser(formData: {
+    followId: string;
+  }): Observable<{ message: string; success: boolean }> {
+    return this.http.put<{ message: string; success: boolean }>(
+      `${this.serverApi}followUser`,
+      formData
+    );
+  }
+
+  goToAccount(userId: string): void {
+    this.getUser().subscribe(
+      ({ user }: { success: boolean; message: string; user: User }) => {
+        const currentUserId = user._id;
+        if (userId === currentUserId) {
+          this.router.navigate(['/myAccount']);
+        } else {
+          this.router.navigate(['/friendAccount', userId]);
+        }
+      }
+    );
+  }
+
+  deleteRequests(deleteId:string): Observable<any> {
+    return this.http.delete<any>(`${this.serverApi}deleteRequests/${deleteId}`);
+  }
+
+  acceptRequest(acceptId:{acceptId:string}): Observable<any> {
+    return this.http.put<any>(`${this.serverApi}acceptRequest`, acceptId);
+  }
 }

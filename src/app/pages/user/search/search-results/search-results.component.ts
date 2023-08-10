@@ -11,17 +11,10 @@ import { UserApiServiceService } from 'src/app/services/user-api.service.service
 export class SearchResultsComponent {
   @Input() searchResults: User[]=[] 
 
-  constructor(private router: Router,private userApiServiceService:UserApiServiceService) {}
+  constructor(private userApiServiceService:UserApiServiceService) {}
 
   goToAccount(userId: string): void {
-
-    this.userApiServiceService.getUser().subscribe(({user}:{ success: boolean; message: string; user: User })=>{    
-     const currentUserId=user._id
-      if (userId === currentUserId) {
-        this.router.navigate(['/myAccount']);
-      } else {
-        this.router.navigate(['/friendAccount',currentUserId]);
-      }
- })
+ 
+    this.userApiServiceService.goToAccount(userId)
   }
 }
