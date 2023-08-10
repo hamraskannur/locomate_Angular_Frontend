@@ -19,6 +19,7 @@ export class AccountComponent implements OnInit {
   Requested = false;
   followersCount = 0;
   followingCount = 0;
+  loading=false
 
   constructor(
     private userApiServiceService: UserApiServiceService,
@@ -59,27 +60,32 @@ export class AccountComponent implements OnInit {
   };
 
   followUserHandler(followId: string ) {
-    
+    this.loading=true
     this.userApiServiceService.followUser({followId}).subscribe(({success,message}:{message:string,success:boolean})=>{
       if (success) {
         if (!this.user?.public) {
           if (this.follow) {
             this.followersCount--
             this.follow=false
+            this.loading=false
           } else {
             if (this.Requested) {
               this.Requested=false
+              this.loading=false
             } else {
               this.Requested=true
+              this.loading=false
             }
           }
         } else {
           if (this.follow) {
             this.followersCount--
             this.follow=false
+            this.loading=false
           } else {
             this.followersCount++
             this.follow=true
+            this.loading=false
           }
         }
       } else {

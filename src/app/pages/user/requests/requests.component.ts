@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/interface';
 import { UserApiServiceService } from 'src/app/services/user-api.service.service';
 
 @Component({
