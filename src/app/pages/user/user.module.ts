@@ -28,9 +28,13 @@ import { SettingsComponent } from './settings/settings.component';
 import { SearchComponent } from './search/search.component';
 import { SearchBarComponent } from './search/search-bar/search-bar.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { TimeAgoPipe } from 'src/app/pipe/timePipe';
+import { RequestsComponent } from './requests/requests.component';
 
 @NgModule({
   declarations: [
+    TimeAgoPipe,
     LoginComponent,
     RegisterComponent,
     VerifyComponent,
@@ -55,7 +59,9 @@ import { SearchResultsComponent } from './search/search-results/search-results.c
     SettingsComponent,
     SearchComponent,
     SearchBarComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    EditProfileComponent,
+    RequestsComponent
   ],
   imports: [UserRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
 })

@@ -80,5 +80,15 @@ export class UserApiServiceService {
     return this.http.post<User[]>(`${this.serverApi}searchUser`, {searchData});
   }
   
+  uploadImage(img: File): Observable<{secure_url:string   }> {
+    const formData = new FormData();
+    formData.append("file", img);
+    formData.append("upload_preset", "ete0nc34");
+    return this.http.post<{secure_url:string   }>("https://api.cloudinary.com/v1_1/dyujj6zhw/image/upload",formData );
+  }
+  saveUserData(formData: User): Observable<User[]> {
+    return this.http.put<User[]>(`${this.serverApi}updateUserData`, formData);
+  }
   
+
 }

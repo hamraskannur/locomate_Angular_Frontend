@@ -29,7 +29,9 @@ export class PostComponent implements OnInit {
   }
   getPost(): void {
     this.userApiServiceService.getAllPost().subscribe((allPost:Post[]) => {      
-      this.posts = allPost.reverse();
+     if(allPost.length>0){
+       this.posts = allPost.reverse();
+     }
     });
   }
 }

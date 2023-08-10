@@ -9,8 +9,7 @@
               (click)="goToAccountPage(user?.result?._id)"
                 class="flex gap-3 cursor-pointer"
               >
-                <app-avatar *ngIf="user?.result?.ProfileImg" [imgSrc]="user?.result?.ProfileImg"></app-avatar>
-                <app-avatar *ngIf="!user?.result?.ProfileImg"></app-avatar>
+                <app-avatar [imgSrc]="user?.result?.ProfileImg"></app-avatar>
 
                 <div>
                   <h3 class="font-bold text-lg">

@@ -17,9 +17,11 @@ export class AvatarComponent {
   @Input()
   set imgSrc(value: string | undefined) {
     this._imgSrc = value || 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png';
+    value=undefined
   }
 
   get imgSrc(): string | undefined {
+
     return this._imgSrc;
   }
 }

@@ -15,5 +15,11 @@ export class BottomBarComponent {
       link: "/notifications",
       icon: "notifications",
     },
+    {
+      name: "request",
+      link: "/requests",
+      icon: "request_page",
+    },
   ];
+
 }

@@ -5,7 +5,7 @@
   <div>
     <app-avatar
     [imgSrc]='post?.userId?.ProfileImg'
-    />
+    ></app-avatar>
   </div>
   <div
   (click)="getAccountPage(post?.userId?._id)"
@@ -15,7 +15,7 @@
       <p class="font-semibold">{{post?.userId?.username}}</p>
     </div>
     <p class="text-gray-500 text-sm">
-      <!-- <Moment fromNow>{{post?.createdAt}}</Moment> -->
+      <a>{{post?.createdAt  | timeAgo}}</a>
  <span *ngIf="post?.edit" class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">edited</span>
     </p>
   </div>

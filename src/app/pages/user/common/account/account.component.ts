@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Post, User } from 'src/app/models/interface';
 import { UserApiServiceService } from 'src/app/services/user-api.service.service';
@@ -26,20 +26,28 @@ export class AccountComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userApiServiceService
-      .getUser()
-      .subscribe(
-        ({ user }: { success: boolean; message: string; user: User }) => {
-          this.follow = this.user?.Followers.includes(user._id);
-          this.Requested = this.user?.Requests.includes(user._id);
+    this.userCheck()
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['user']) {
+      this.userCheck();
+    }
+  }
 
-          this.followersCount = this.user?.Followers?.length || 0;
-          this.followingCount = this.user?.Following?.length || 0;
-          console.log(this.user.ProfileImg);
-          
-        }
+  userCheck(){
+    this.userApiServiceService
+    .getUser()
+    .subscribe(
+      ({ user }: { success: boolean; message: string; user: User }) => {
+        this.follow = this.user?.Followers.includes(user._id);
+        this.Requested = this.user?.Requests.includes(user._id);
+        this.followersCount = this.user?.Followers?.length 
+        this.followingCount = this.user?.Following?.length           
+      }
       );
   }
+
+
   onePost(post: Post) {
     this.onePostId = post;
   }

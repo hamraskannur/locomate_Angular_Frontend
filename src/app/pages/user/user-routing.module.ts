@@ -10,6 +10,8 @@ import { MyAccountComponent } from './my-account/my-account.component';
 import { FriendAccountComponent } from './friend-account/friend-account.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SearchComponent } from './search/search.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { RequestsComponent } from './requests/requests.component';
 
 const userRoute: Routes = [
   {
@@ -23,6 +25,8 @@ const userRoute: Routes = [
       { path: 'friendAccount/:id', component: FriendAccountComponent,canActivate:[UserGuard] },
       { path: 'settings', component: SettingsComponent,canActivate:[UserGuard] },
       { path: 'search', component: SearchComponent,canActivate:[UserGuard] },
+      { path: 'editProfile', component: EditProfileComponent,canActivate:[UserGuard] },
+      { path: 'requests', component: RequestsComponent,canActivate:[UserGuard] },
     ],
   },
 ];

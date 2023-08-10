@@ -1,0 +1,238 @@
+<app-layout>
+  <div class="justify-center items-center  max-sm:w-full max-md:w-full max-lg:w-full ">
+    <div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+      <div
+        class="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
+      >
+        <div class="rounded-t bg-white mb-0 px-6 py-6">
+          <div class="text-center flex justify-between">
+            <h6 class="text-blueGray-700 text-xl font-bold">My account</h6>
+
+            <small class="text-red-600">{{ imgErr }}</small>
+            <button
+              (click)="submitHandler()"
+              class="bg-slate-500 h-10 text-white active:bg-slate-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+              type="button"
+            >
+              Save
+            </button>
+          </div>
+          <div
+            *ngIf="success"
+            class="flex items-center w-full m-4 bg-green-200 text-white text-sm font-bold px-4 py-3"
+            role="alert"
+          >
+            <div>
+              <span class="material-symbols-outlined"> check_circle </span>
+            </div>
+            <p>successfully updated you data</p>
+          </div>
+          <div
+            *ngIf="noUpdates"
+            class="flex items-center w-full m-4 bg-green-200 text-white text-sm font-bold px-4 py-3"
+            role="alert"
+          >
+            <p>nothing update you data</p>
+          </div>
+        </div>
+        <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+          <form>
+            <h1 class="text-blueGray-400 text-sm mt-5 mb-2 font-bold uppercase">
+              click and Edit your image
+            </h1>
+            <div>
+              <div class="relative">
+                <div
+                  (click)="coverImageRef.click()"
+                  class="h-40 w-full overflow-hidden flex rounded-md justify-center items-center"
+                >
+                  <img
+                    class="cursor-pointer"
+                    [src]="
+                      coverImg
+                        ? coverImg
+                        : userData?.coverImg ||
+                          'https://media.easemytrip.com/media/Blog/India/637033873695687971/637033873695687971fsrzol.jpg'
+                    "
+                    alt="cover"
+                  />
+                  <input
+                    type="file"
+                    name="cover_img"
+                    (change)="coverImgChangeHandler($event)"
+                    #coverImageRef
+                    hidden
+                  />
+                </div>
+                <div class="absolute top-14 left-4">
+                  <div
+                    (click)="proImageRef.click()"
+                    class="w-36 h-36 rounded-full object-cover overflow-hidden shadow-sm shadow-gray-500"
+                  >
+                    <img
+                      class="bg-white"
+                      [src]="
+                        proImg
+                          ? proImg
+                          : userData?.ProfileImg ||
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'
+                      "
+                      alt="avatars"
+                    />
+                    <input
+                      type="file"
+                      name="Profile_img"
+                      (change)="proImgChangeHandler($event)"
+                      #proImageRef
+                      hidden
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Rest of the form elements -->
+            <h6 class=" text-blueGray-400 text-sm mt-12 mb-6 font-bold uppercase ">
+                User Information
+              </h6>
+
+              <div class="flex flex-wrap">
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Name
+                    </label>
+                    <input
+                     [(ngModel)]="userData.name"
+                      name="name"
+                      type="text"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Date of Birth
+                    </label>
+                    <input
+                      [(ngModel)]="userData.dob"
+                      name="dob"
+                      type="date"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      PhoneNo
+                    </label>
+                    <input
+                      [(ngModel)]="userData.phoneNo"
+                      name="phoneNo"
+                      type="number"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Username
+                    </label>
+                    <input
+                      [(ngModel)]="userData.username"
+                      name="username"
+                      type="text"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+              </div>
+              <hr class="mt-6 border-b-1 border-blueGray-300" />
+              <h6 class="text-blueGray-400 text-sm mt-2 mb-6 font-bold uppercase">
+                Contact Information
+              </h6>
+              <div class="flex flex-wrap">
+                <div class="w-full lg:w-12/12 px-4">
+                  <div class="w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Address
+                    </label>
+                    <input
+                      [(ngModel)]="userData.Address"
+                      name="Address"
+                      type="text"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Add your address"
+                    />
+                  </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4">
+                  <div class="w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      City
+                    </label>
+                    <input
+                      [(ngModel)]="userData.city"
+                      name="city"
+                      type="text"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="New York"
+                    />
+                  </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4">
+                  <div class="w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Country
+                    </label>
+                    <input
+                      [(ngModel)]="userData.country"
+                      name="country"
+                      type="text"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="United States"
+                    />
+                  </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4">
+                  <div class="w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Postal Code
+                    </label>
+                    <input
+                      [(ngModel)]="userData.PostalCode"
+                      name="PostalCode"
+                      type="text"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Postal Code"
+                    />
+                  </div>
+                </div>
+              </div>
+              <hr class="mt-6 border-b-1 border-blueGray-300" />
+            
+              
+              <div class="flex flex-wrap">
+                <div class="w-full lg:w-12/12 px-4">
+                  <div class="w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      About me
+                    </label>
+                    <textarea
+                      [(ngModel)]="userData.description"
+                      name="description"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="This is a description."
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-layout>
