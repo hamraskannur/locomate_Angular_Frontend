@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Post, User } from 'src/app/models/interface';
+import { ToastrServiceService } from 'src/app/services/toastr.service';
 import { UserApiServiceService } from 'src/app/services/user-api.service.service';
 
 @Component({
@@ -19,8 +20,13 @@ export class OnePostComponent implements OnInit {
   likeCount = 0;
   count = 0;
   user: User | null = null;
-    
-    constructor(private userApiServiceService: UserApiServiceService,private router: Router) {}
+  editPost = false;
+
+  constructor(
+    private userApiServiceService: UserApiServiceService,
+    private router: Router,
+    private toastrService: ToastrServiceService
+  ) {}
 
   ngOnInit() {
     this.userApiServiceService
@@ -31,31 +37,66 @@ export class OnePostComponent implements OnInit {
           this.savedStatus = user?.saved?.includes(this.post?._id);
           this.like = this.post?.likes?.includes(user._id);
           this.likeCount = this.post?.likes?.length;
-          this.user=user
+          this.user = user;
         }
       );
   }
-
+  onDescriptionChange(newDescription: string): void {
+    this.post.description = newDescription;
+  }
   getAccountPage(id: string) {
-    if ( this.currentUser) {
+    if (this.currentUser) {
       this.router.navigate(['/myAccount']);
     } else {
-      this.router.navigate(['/friendAccount',id]);
+      this.router.navigate(['/friendAccount', id]);
     }
-
   }
 
   submit(id: string) {}
 
-  setEditPost() {}
+  setEditPost() {
+    this.editPost = true;
+  }
 
   setReport() {}
 
-  likePost(id: string) {}
-  handleSavePost(id: string) {}
+  likePost(id: string) {
+    this.userApiServiceService
+      .likePost(id)
+      .subscribe(({ success }: { success: boolean; message: string }) => {
+        if (success) {
+          if (this.like) {
+            this.likeCount--;
+            this.like = false;
+          } else {
+            this.likeCount++;
+            this.like = true;
+          }
+        }
+      });
+  }
+
+  handleSavePost(postId: string) {
+    this.userApiServiceService
+      .savePost({ postId })
+      .subscribe((response: { success: boolean; message: string }) => {
+        if (response.success) {
+          this.savedStatus = !this.savedStatus;
+          if (this.savedStatus) {
+            this.toastrService.showSuccess('Post saved successfully');
+          } else {
+            this.toastrService.showSuccess('Post unsaved successfully');
+          }
+        }
+      });
+  }
   setDropdownOpen() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
   setCommentsOpen(state: boolean) {}
+
+  onSetEditPost(value: boolean) {
+    this.editPost = false;
+  }
 }

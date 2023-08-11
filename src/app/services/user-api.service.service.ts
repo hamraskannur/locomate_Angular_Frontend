@@ -149,4 +149,16 @@ export class UserApiServiceService {
   acceptRequest(acceptId:{acceptId:string}): Observable<any> {
     return this.http.put<any>(`${this.serverApi}acceptRequest`, acceptId);
   }
+
+  savePost(postId:{postId:string}): Observable<{success:boolean,message:string}> {
+    return this.http.put<{success:boolean,message:string}>(`${this.serverApi}post/savePost`, postId);
+  }
+
+  editPost(postData:{postId:string, newDescription:string}): Observable<{success:boolean,message:string}> {
+    return this.http.put<{success:boolean,message:string}>(`${this.serverApi}post/editPost`, postData);
+  }
+
+  likePost(postId:string): Observable<{success:boolean,message:string}> {
+    return this.http.get<{success:boolean,message:string}>(`${this.serverApi}post/likePostReq/${postId}`);
+  }
 }

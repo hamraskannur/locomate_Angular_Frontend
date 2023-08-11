@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr'; 
 
 import { TokenIntercepterService } from 'src/app/core/token-intercepter.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +12,7 @@ import { AppInternalserverComponent } from './pages/error/app-internalserver/app
 import { AppBadgatewayComponent } from './pages/error/app-badgateway/app-badgateway.component';
 import { CommonerrorComponent } from './pages/error/commonerror/commonerror.component';
 import { ErrorHandlingInterceptor } from './core/errorHandintercepter.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 @NgModule({
   declarations: [
@@ -20,7 +22,7 @@ import { ErrorHandlingInterceptor } from './core/errorHandintercepter.service';
     AppBadgatewayComponent,
     CommonerrorComponent,
   ],
-  imports: [AppRoutingModule, BrowserModule, FormsModule, HttpClientModule],
+  imports: [AppRoutingModule, BrowserModule, FormsModule, HttpClientModule,BrowserAnimationsModule,ToastrModule.forRoot()],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

@@ -1,1 +1,52 @@
-<p>edit-post works!</p>
+<div class=" justify-center w-full items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+    <div class="relative w-auto my-6 mx-auto max-w-3xl">
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+          <h3 class="text-3xl font-semibold">Edit Post</h3>
+        </div>
+        <div class="flex  mt-5    w-[50vh]  px-3 ">
+          <div class="rounded-lg shadow-xl bg-gray-50 w-full ">
+            <div class="m-4">
+              <span class="flex justify-center items-center text-[12px] mb-1 text-red-500">
+               {{errMessage}}
+
+              </span>
+              <div class="rounded-md overflow-hidden w-full">
+                <video *ngIf="shorts" class="w-full" controls>
+                  <source [src]="img" />
+                </video>
+                
+                <img *ngIf="!shorts" [src]="img" alt="" />
+                
+              </div>
+            </div>
+            <label class="ml-2">Description</label>
+            <div class="border grow rounded-full">
+              <textarea
+                class="block w-full p-3 px-4 h-full  overflow-hidden  rounded-md"
+                [(ngModel)]="description"
+                placeholder="Description"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+          <button
+            class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button"
+            (click)="EditPost()"
+          >
+            Close
+          </button>
+          <button
+            class="bg-slate-700 text-white active:bg-slate-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button"
+            (click)="submitHandler()"
+          >
+            Edit Your post
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="opacity-25 fixed inset-0 z-40 bg-black"></div>

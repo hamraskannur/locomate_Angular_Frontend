@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors }
 import {passwordPattern,namePattern} from '../../../constants/patterns'
 import { UserApiServiceService } from 'src/app/services/user-api.service.service';
 import { registerResponse } from 'src/app/models/interface';
+import { ToastrServiceService } from 'src/app/services/toastr.service';
 
 declare const particlesJS: any;
 
@@ -14,7 +15,7 @@ declare const particlesJS: any;
 })
 export class RegisterComponent implements OnInit  {
 
-  constructor(private formBuilder: FormBuilder,private userApiServiceService:UserApiServiceService) {}
+  constructor(private formBuilder: FormBuilder,private userApiServiceService:UserApiServiceService,private toastrService:ToastrServiceService) {}
 
   submit: boolean = false;
   passwordShown = false;
@@ -40,6 +41,7 @@ export class RegisterComponent implements OnInit  {
     if (this.signupForm.valid ) {
         this.userApiServiceService.userRegister(this.signupForm.value).subscribe(({status,message}:registerResponse)=>{         
           if(status){
+            this.toastrService.showSuccess(message)
             this.verify=message
             this.ErrMessage=null
           }else{

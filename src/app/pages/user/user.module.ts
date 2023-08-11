@@ -13,7 +13,6 @@ import { BottomBarComponent } from './layout/bottom-bar/bottom-bar.component';
 import { SuggestionComponent } from './common/suggestions/suggestion/suggestion.component';
 import { AvatarComponent } from './common/avatar/avatar.component';
 import { SuggestionsComponent } from './common/suggestions/suggestions.component';
-import { PostComponent } from './home/post/post.component';
 import { OnePostComponent } from './common/post/one-post.component';
 import { CommentComponent } from './common/post/comment/comment.component';
 import { EditPostComponent } from './common/post/edit-post/edit-post.component';
@@ -46,7 +45,6 @@ import { CardComponent } from './requests/card/card.component';
     SuggestionComponent,
     AvatarComponent,
     SuggestionsComponent,
-    PostComponent,
     OnePostComponent,
     CommentComponent,
     EditPostComponent,

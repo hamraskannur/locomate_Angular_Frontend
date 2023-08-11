@@ -1,35 +1,45 @@
-<div [ngClass]="{
-    'shadow-md': onePost,'shadow-lg': !onePost,'bg-white': true,'shadow-gray-400': true,
-    'rounded-md': true,'p-3': true,'md:mx-5': true,'mb-5': true,'mt-5': true,'md:mt-6': true}" class="mb-5">
-<div class="flex gap-3 ">
-  <div>
-    <app-avatar
-    [imgSrc]='post?.userId?.ProfileImg'
-    ></app-avatar>
-  </div>
-  <div
-  (click)="getAccountPage(post?.userId?._id)"
-    class="grow cursor-pointer"
-  >
-    <div class="flex items-center gap-2">
-      <p class="font-semibold">{{post?.userId?.username}}</p>
+<div
+  [ngClass]="{
+    'shadow-md': onePost,
+    'shadow-lg': !onePost,
+    'bg-white': true,
+    'shadow-gray-400': true,
+    'rounded-md': true,
+    'p-3': true,
+    'md:mx-5': true,
+    'mb-5': true,
+    'mt-5': true,
+    'md:mt-6': true
+  }"
+  class="mb-5"
+>
+  <div class="flex gap-3">
+    <div>
+      <app-avatar [imgSrc]="post?.userId?.ProfileImg"></app-avatar>
     </div>
-    <p class="text-gray-500 text-sm">
-      <a>{{post?.createdAt  | timeAgo}}</a>
- <span *ngIf="post?.edit" class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">edited</span>
-    </p>
-  </div>
-    <div >
-      <button
-        type="button"
-        class="text-gray-400"
-        (click)="setDropdownOpen()"
-      >
+    <div
+      (click)="getAccountPage(post?.userId?._id)"
+      class="grow cursor-pointer"
+    >
+      <div class="flex items-center gap-2">
+        <p class="font-semibold">{{ post?.userId?.username }}</p>
+      </div>
+      <p class="text-gray-500 text-sm">
+        <a>{{ post?.createdAt | timeAgo }}</a>
+        <span
+          *ngIf="post?.edit"
+          class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300"
+          >edited</span
+        >
+      </p>
+    </div>
+    <div>
+      <button type="button" class="text-gray-400" (click)="setDropdownOpen()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth=1.5
+          strokeWidth="1.5"
           stroke="currentColor"
           class="w-6 h-6"
         >
@@ -40,179 +50,188 @@
           />
         </svg>
       </button>
-      <div
-      (click)="setDropdownOpen()"
-      >
+      <div (click)="setDropdownOpen()">
         <div class="relative">
-            <div *ngIf="dropdownOpen && !currentUser " class="cursor-pointer absolute right-6 border border-gray-300 bg-white shadow-md shadow-gray-100 p-3 rounded-md w-36">
-              <div
-                class="cursor-pointer"
-                (click)="handleSavePost(post?._id)"
+          <div
+            *ngIf="dropdownOpen && !currentUser"
+            class="cursor-pointer absolute right-6 border border-gray-300 bg-white shadow-md shadow-gray-100 p-3 rounded-md w-36"
+          >
+            <div class="cursor-pointer" (click)="handleSavePost(post?._id)">
+              <p
+                *ngIf="savedStatus; else unSavedStatus"
+                class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
               >
-              <p *ngIf="savedStatus; else unSavedStatus"
-              href=""
-              class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
-           >
-             <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" [attr.stroke-width]="1.5" stroke="currentColor" class="w-6 h-6">
-             </svg>
-             Save post
-           </p>
-           
-           <ng-template #unSavedStatus>
-             <p  class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400">
-                <span class="material-symbols-outlined">
-                    bookmark
-                    </span>
-               Save post
-             </p>
-           </ng-template>
-           
-              </div>
-              <div (click)="setReport()" >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  viewBox="0 0 24 24"
+                  [attr.stroke-width]="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                ></svg>
+                Save post
+              </p>
 
+              <ng-template #unSavedStatus>
+                <p
+                  class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
+                >
+                  <span class="material-symbols-outlined"> bookmark </span>
+                  Save post
+                </p>
+              </ng-template>
+            </div>
+            <div (click)="setReport()">
               <p
                 class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
               >
-              <span class="material-symbols-outlined">
-                report
-                </span>
+                <span class="material-symbols-outlined"> report </span>
                 Report
               </p>
             </div>
-            </div>
+          </div>
 
-            <div *ngIf="dropdownOpen && currentUser"  class="cursor-pointer absolute right-6 border border-gray-300 bg-white shadow-md shadow-gray-100 p-3 rounded-md w-36">
-              <div
-                class="cursor-pointer"
-                (click)=" handleSavePost(post?._id)"
-              >
-                  <p *ngIf="savedStatus else savedStatus"
-                    href=""
-                    class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="black"
-                      viewBox="0 0 24 24"
-                      strokeWidth=1.5
-                      stroke="currentColor"
-                      class="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                      />
-                    </svg>
-                    Save post
-                  </p>
-                  <ng-template #savedStatus>
-                    <p
-                    href=""
-                    class="flex gap-3  py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all  hover:shadow-md shadow-gray-400"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth=1.5
-                      stroke="currentColor"
-                      class="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                      />
-                    </svg>
-                    Save post
-                  </p>
-                </ng-template>
-              </div>
-
-              <div (click)="setEditPost()" class="cursor-pointer">
-                <p class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400">
-                  <span class="material-symbols-outlined">
-                    edit
-                  </span>
-                  Edit post
-                </p>
-              </div>
-              
-              <div (click)="submit(post?._id)" >
-                <p class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400">
-                    <span class="material-symbols-outlined">
-                        delete
-                        </span>
-                  Delete post
-                </p>
-              </div>
-            </div>
-        </div>
-    </div>
-    </div>
-</div>
-<div>
-  <p class="my-1 break-all text-sm">{{post?.description}}</p>
-  <div class="rounded-md overflow-hidden w-full">
-    <img
-      class="w-full h-80"
-      [src]=post?.img[0]
-      alt=""
-    />
-  </div>
-</div>
-    <div class="flex mt-2 gap-4">
-      <button type="button" class="flex gap-2 items-center">
-        
-          <div *ngIf="like else unlike" (click)="likePost(post._id)">
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
+          <div
+            *ngIf="dropdownOpen && currentUser"
+            class="cursor-pointer absolute right-6 border border-gray-300 bg-white shadow-md shadow-gray-100 p-3 rounded-md w-36"
           >
-            <path fill="none" d="M0 0H24V24H0z" />
-            <path d="M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z" />
-          </svg>          </div>
-        <ng-template #unlike>
+            <div (click)="handleSavePost(post?._id)" class="cursor-pointer">
+              <p
+                *ngIf="savedStatus; else savedStatuss"
+                class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                  />
+                </svg>
+                Save post
+              </p>
+              <ng-template #savedStatuss>
+                <p
+                  href=""
+                  class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                    />
+                  </svg>
+                  Save post
+                </p>
+              </ng-template>
+            </div>
 
-            <svg
-            (click)="likePost(post._id)"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-            >
-              <path fill="none" d="M0 0H24V24H0z" />
-              <path d="M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z" />
-            </svg>
-        </ng-template>
-        {{likeCount}}
-      </button>
-      <button
-        type="button"
-        (click)="setCommentsOpen(!commentsOpen)"
-        class="flex gap-2 items-center"
-      >
-        <svg
+            <div (click)="setEditPost()" class="cursor-pointer">
+              <p
+                class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
+              >
+                <span class="material-symbols-outlined"> edit </span>
+                Edit post
+              </p>
+            </div>
+
+            <div (click)="submit(post?._id)">
+              <p
+                class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
+              >
+                <span class="material-symbols-outlined"> delete </span>
+                Delete post
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="my-1 break-all text-sm">{{ post?.description }}</p>
+    <div class="rounded-md overflow-hidden w-full">
+      <img class="w-full h-80" [src]="post?.img[0]" alt="" />
+    </div>
+  </div>
+  <div class="flex mt-2 gap-4">
+    <button type="button" class="flex gap-2 items-center">
+      <div *ngIf="like; else unlike" (click)="likePost(post._id)">
+        <!-- <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           width="24"
           height="24"
         >
-          <path fill="none" d="M0 0h24v24H0z" />
-          <path d="M7.291 20.824L2 22l1.176-5.291A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.956 9.956 0 0 1-4.709-1.176zm.29-2.113l.653.35A7.955 7.955 0 0 0 12 20a8 8 0 1 0-8-8c0 1.334.325 2.618.94 3.766l.349.653-.655 2.947 2.947-.655z" />
+          <path fill="none" d="M0 0H24V24H0z" />
+          <path
+            d="M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z"
+          />
+        </svg> -->
+        <img class="w-7" src="../../../../../assets/favorite_FILL1_wght400_GRAD0_opsz48.svg" alt="">
+      </div>
+      <ng-template #unlike>
+        <svg
+          (click)="likePost(post._id)"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="28"
+          height="28"
+        >
+          <path fill="none" d="M0 0H24V24H0z" />
+          <path
+            d="M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z"
+          />
         </svg>
-        <p *ngIf="count !== 0 ">
-            {{ count}}
-        </p>
-      </button>
-   
-    </div>
-  <div class="mt-3">
-      <!-- <app-comment *ngIf="commentsOpen" [postId]="post?._id" [setCount]="setCount" [count]="count" ></app-comment> -->
+      </ng-template>
+      {{ likeCount }}
+    </button>
+    <button
+      type="button"
+      (click)="setCommentsOpen(!commentsOpen)"
+      class="flex gap-2 items-center"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+      >
+        <path fill="none" d="M0 0h24v24H0z" />
+        <path
+          d="M7.291 20.824L2 22l1.176-5.291A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.956 9.956 0 0 1-4.709-1.176zm.29-2.113l.653.35A7.955 7.955 0 0 0 12 20a8 8 0 1 0-8-8c0 1.334.325 2.618.94 3.766l.349.653-.655 2.947 2.947-.655z"
+        />
+      </svg>
+      <p *ngIf="count !== 0">
+        {{ count }}
+      </p>
+    </button>
   </div>
- <!-- <app-edit-post *ngIf="editPost" img={post?.img[0]} shorts={false}  description={post?.description} postId={post?._id} setEditPost={setEditPost}></app-edit-post>
-<app-report-post *ngIf="report" video={false} setReport={setReport} postId={post?._id}></app-report-post> -->
+  <div class="mt-3">
+    <!-- <app-comment *ngIf="commentsOpen" [postId]="post?._id" [setCount]="setCount" [count]="count" ></app-comment> -->
+  </div>
+  <app-edit-post
+    *ngIf="editPost"
+    [img]="post?.img[0]"
+    [shorts]="false"
+    [description]="post?.description"
+    [postId]="post?._id"
+    (setEditPost)="onSetEditPost($event)"
+    (descriptionChange)="onDescriptionChange($event)"
+  ></app-edit-post>
+  <!-- <app-report-post *ngIf="report" video={false} setReport={setReport} postId={post?._id}></app-report-post> -->
 </div>

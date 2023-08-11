@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {Credentials, loginResponse} from "../../../models/interface"
 import {  passwordPattern} from '../../../constants/patterns'
 import { UserApiServiceService } from 'src/app/services/user-api.service.service';
+import { ToastrServiceService } from 'src/app/services/toastr.service';
 
 declare const particlesJS: any;
 
@@ -15,7 +16,7 @@ declare const particlesJS: any;
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder,private userApiServiceService:UserApiServiceService, private router: Router) {}
+  constructor(private fb: FormBuilder,private userApiServiceService:UserApiServiceService, private router: Router,private toastrService:ToastrServiceService) {}
 
   //declare variable
   submit: boolean = false;
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("token", token)
             this.ErrMessage=null
             this.router.navigate(['/']);
+            this.toastrService.showSuccess("logined successfully")
            }else{
             this.ErrMessage=message
            }
