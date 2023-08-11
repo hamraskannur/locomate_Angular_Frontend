@@ -12,12 +12,13 @@ export class LayoutComponent  {
   constructor(private router: Router,private userApiServiceService:UserApiServiceService){}
   count=0
   sideBar=true;
-  public=false
-
+  public=true
+  notification=false
   ngOnInit(): void {
     this.userApiServiceService.getUser().subscribe(({user}:{ success: boolean; message: string; user: User })=>{    
          this.count=user.Requests.length
          this.public=user.public
+         this.notification=user.read
     })
   }
 

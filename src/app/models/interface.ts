@@ -35,7 +35,7 @@ export interface User {
   Followers: string[];
   Following: string[];
   saved: string[];
-  read: Boolean;
+  read: boolean;
   notification: [
     {
       userId: string;
@@ -53,6 +53,20 @@ export interface Post {
   shorts: string;
   edit: boolean;
   createdAt: string;
+  userId: {
+    username: string;
+    name: string;
+    _id: string;
+    ProfileImg: string;
+    public: boolean;
+  };
+}
+
+
+export interface notification{
+  postId:string;
+  text:string;
+  _id:string;
   userId: {
     username: string;
     name: string;

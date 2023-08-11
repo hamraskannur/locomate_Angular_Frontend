@@ -12,7 +12,7 @@ import { AppInternalserverComponent } from './pages/error/app-internalserver/app
 import { AppBadgatewayComponent } from './pages/error/app-badgateway/app-badgateway.component';
 import { CommonerrorComponent } from './pages/error/commonerror/commonerror.component';
 import { ErrorHandlingInterceptor } from './core/errorHandintercepter.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppInternalserverComponent,
     AppBadgatewayComponent,
     CommonerrorComponent,
-  ],
+ ],
   imports: [AppRoutingModule, BrowserModule, FormsModule, HttpClientModule,BrowserAnimationsModule,ToastrModule.forRoot()],
   providers: [
     {

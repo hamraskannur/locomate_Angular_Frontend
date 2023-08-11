@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Post } from 'src/app/models/interface';
+import { Post, User } from 'src/app/models/interface';
 import { UserApiServiceService } from 'src/app/services/user-api.service.service';
 
 @Component({
@@ -36,20 +36,13 @@ export class AllPostComponent implements OnInit, OnChanges {
     }
   }
 
-  handlePostClick(post: Post): void {
-    if (this.SavedPost) {
-      this.getSavedOnePost(post);
-    } else {
-      this.getOnePost(post);
-    }
-  }
 
   getPost = async () => {
     if (this.SavedPost && this.userId) {
+
       this.userApiServiceService
         .getSavedPost(this.userId)
         .subscribe((response) => {
-          console.log(response, 'response');
           this.posts = response;
         });
     } else {
@@ -72,7 +65,10 @@ export class AllPostComponent implements OnInit, OnChanges {
       }
     }
   };
-  getSavedOnePost(postData: Post) {
+  getSavedOnePost(postData: Post,postUser:any) {
+    console.log(postData);
+    
+    postData.userId=postUser
     this.onePost.emit(postData);
   }
 

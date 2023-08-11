@@ -52,13 +52,19 @@
             </button>
           </a>
 
-          <a routerLink="/" class="mt-4 flex flex-col gap-4 relative">
+          <a routerLink="/notification" class="mt-4 flex flex-col gap-4 relative">
             <button
               type="button"
               class="group flex items-center text-sm gap-3.5 font-medium hover:bg-[#bbc0c7] rounded-md p-2"
             >
               <div>
-                <span class="material-symbols-outlined"> notifications </span>
+                <div class="flex">
+
+                  <span class="material-symbols-outlined"> notifications </span>
+                  <span *ngIf="!sideBar && notification" class="bg-red-100 text-red-800 text-xs font-medium p-1 rounded-full dark:bg-red-900 dark:text-red-300">
+                    new
+                  </span>
+                </div>
               </div>
               <h2
                 style="transition-delay: 800ms"
@@ -68,7 +74,11 @@
                   'opacity-0 translate-x-28 overflow-hidden': !sideBar
                 }"
               >
-                Notifications
+                Notifications 
+                <span *ngIf="notification" class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                  new
+                </span>
+               
               </h2>
               <h2
                 [ngClass]="{
@@ -77,6 +87,7 @@
                 }"
               >
                 Notifications
+                
               </h2>
             </button>
           </a>
@@ -154,10 +165,11 @@
               </h2>
             </button>
           </div>
+
+
         </div>
       </div>
     </div>
-    <!-- side bar -->
 
     <ng-content></ng-content>
   </div>

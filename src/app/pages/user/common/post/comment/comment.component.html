@@ -1,1 +1,26 @@
-<p>comment works!</p>
+<div class="comment bg-white border-slate-300 p-2 rounded-md border-2  ">
+    <div class="flex mt-1 gap-3 ">
+      <div class="mt-2 ">
+     
+        <app-avatar [imgSrc]="profileImg"></app-avatar>
+      </div>
+
+      <div class="border-none ml-0  grow rounded-full">
+        <input [(ngModel)]="newComment" placeholder="Type" class="rounded-input">
+        
+      </div>
+      <img
+        (click)="handlePostComment()"
+        class="h-9 mt-2 cursor-pointer"
+        src="https://cdn-icons-png.flaticon.com/512/3106/3106794.png"
+      />
+    </div>
+    <div
+      class="max-h-96	overflow-y-scroll"
+      
+    >
+      <!-- {comment?.map((comment) => (
+       <Comment comment={comment} key={comment?._id} />
+      ))} -->
+    </div>
+  </div>

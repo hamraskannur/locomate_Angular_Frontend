@@ -12,6 +12,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { SearchComponent } from './search/search.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { RequestsComponent } from './requests/requests.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const userRoute: Routes = [
   {
@@ -27,6 +28,7 @@ const userRoute: Routes = [
       { path: 'search', component: SearchComponent,canActivate:[UserGuard] },
       { path: 'editProfile', component: EditProfileComponent,canActivate:[UserGuard] },
       { path: 'requests', component: RequestsComponent,canActivate:[UserGuard] },
+      { path: 'notification', component: NotificationsComponent,canActivate:[UserGuard] },
     ],
   },
 ];

@@ -12,7 +12,7 @@ export class BottomBarComponent {
     { name: "Messages", link: "/messages", icon: "chat"  },
     {
       name: "notification",
-      link: "/notifications",
+      link: "/notification",
       icon: "notifications",
     },
     {

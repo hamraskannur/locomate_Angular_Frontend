@@ -6,6 +6,7 @@ import {
   Post,
   User,
   loginResponse,
+  notification,
   registerResponse,
 } from '../models/interface';
 import { Router } from '@angular/router';
@@ -160,5 +161,9 @@ export class UserApiServiceService {
 
   likePost(postId:string): Observable<{success:boolean,message:string}> {
     return this.http.get<{success:boolean,message:string}>(`${this.serverApi}post/likePostReq/${postId}`);
+  }
+
+  getAllNotifications(): Observable<{Status:boolean,user:notification[]}> {
+    return this.http.get<{Status:boolean,user:notification[]}>(`${this.serverApi}getAllNotifications`);
   }
 }

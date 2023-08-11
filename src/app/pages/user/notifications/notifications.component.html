@@ -1,0 +1,21 @@
+<app-layout>
+    <div class="w-6/12 max-sm:w-full max-md:w-full max-lg:w-full">
+        <ng-container *ngIf="notification.length > 0">
+            <div *ngFor="let item of notification" class="m-4 bg-white">
+              <div (click)="getAccountPage(item.userId._id)" class="flex items-center gap-3 bottom-b border-b-heavy-metal-600 p-4">
+                <div class="w-12 rounded-full overflow-hidden shadow-sm shadow-gray-500 cursor-pointer">
+                  <img [src]="item.userId.ProfileImg ? item.userId.ProfileImg : 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'" alt="avatars" />
+                </div>
+                <div>
+                  <div class="font-bold hover:underline cursor-pointer">{{ item?.userId?.username }}</div>
+                  <div class="text-black hover:underline cursor-pointer">{{ item?.text }}</div>
+                </div>
+              </div>
+            </div>
+          </ng-container>          
+
+    </div>
+    <div class="max-sm:hidden max-md:hidden max-lg:hidden">
+      <app-suggestions></app-suggestions>
+    </div>
+  </app-layout>

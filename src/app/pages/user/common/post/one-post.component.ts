@@ -43,6 +43,7 @@ export class OnePostComponent implements OnInit {
   }
   onDescriptionChange(newDescription: string): void {
     this.post.description = newDescription;
+    this.post.edit=true
   }
   getAccountPage(id: string) {
     if (this.currentUser) {
@@ -56,6 +57,9 @@ export class OnePostComponent implements OnInit {
 
   setEditPost() {
     this.editPost = true;
+  }
+  handleSetCount(value:number){
+
   }
 
   setReport() {}
@@ -94,7 +98,9 @@ export class OnePostComponent implements OnInit {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  setCommentsOpen(state: boolean) {}
+  setCommentsOpen(state: boolean) {
+    this.commentsOpen=state
+  }
 
   onSetEditPost(value: boolean) {
     this.editPost = false;

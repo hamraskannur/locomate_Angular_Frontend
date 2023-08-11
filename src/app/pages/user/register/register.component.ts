@@ -1,7 +1,13 @@
-import { Component,OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 
-import {passwordPattern,namePattern} from '../../../constants/patterns'
+import { passwordPattern, namePattern } from '../../../constants/patterns';
 import { UserApiServiceService } from 'src/app/services/user-api.service.service';
 import { registerResponse } from 'src/app/models/interface';
 import { ToastrServiceService } from 'src/app/services/toastr.service';
@@ -11,23 +17,33 @@ declare const particlesJS: any;
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit  {
-
-  constructor(private formBuilder: FormBuilder,private userApiServiceService:UserApiServiceService,private toastrService:ToastrServiceService) {}
-
+export class RegisterComponent implements OnInit {
+  constructor(
+    private formBuilder: FormBuilder,
+    private userApiServiceService: UserApiServiceService,
+    private toastrService: ToastrServiceService
+  ) {}
+  loading = false;
   submit: boolean = false;
   passwordShown = false;
-  verify :string='';
+  verify: string = '';
   ErrMessage: string | null = null;
 
-    signupForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(passwordPattern)]],      
-    })  
+  signupForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    username: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.pattern(passwordPattern),
+      ],
+    ],
+  });
   get f() {
     return this.signupForm.controls;
   }
@@ -38,19 +54,23 @@ export class RegisterComponent implements OnInit  {
 
   onSubmit(): void {
     this.submit = true;
-    if (this.signupForm.valid ) {
-        this.userApiServiceService.userRegister(this.signupForm.value).subscribe(({status,message}:registerResponse)=>{         
-          if(status){
-            this.toastrService.showSuccess(message)
-            this.verify=message
-            this.ErrMessage=null
-          }else{
-            this.ErrMessage=message
+    if (this.signupForm.valid) {
+      this.loading = true;
+      this.userApiServiceService
+        .userRegister(this.signupForm.value)
+        .subscribe(({ status, message }: registerResponse) => {
+          if (status) {
+            this.loading = false;
+            this.toastrService.showSuccess(message);
+            this.verify = message;
+            this.ErrMessage = null;
+            this.signupForm.reset();
+          } else {
+            this.loading = false;
+            this.ErrMessage = message;
           }
-        },(err)=>{
-
-        })
-      }
+        });
+    }
   }
 
   ngOnInit(): void {
@@ -165,5 +185,4 @@ export class RegisterComponent implements OnInit  {
       retina_detect: true,
     });
   }
-
 }

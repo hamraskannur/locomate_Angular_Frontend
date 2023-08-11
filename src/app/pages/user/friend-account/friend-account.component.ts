@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FriendAccountComponent {
   user!: User;
+  type=false
   constructor(
     private userApiServiceService: UserApiServiceService,
     private route: ActivatedRoute

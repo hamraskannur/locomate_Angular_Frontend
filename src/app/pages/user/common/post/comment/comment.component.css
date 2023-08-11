@@ -1,0 +1,15 @@
+/* emoji-input.component.css */
+
+.rounded-input {
+    width: 100%; /* Make the input full width */
+    padding: 10px; /* Add padding for better spacing */
+    border: 1px solid #ccc; /* Add a border for visual separation */
+    border-radius: 10px; /* Apply rounded corners */
+    outline: none; /* Remove default outline on focus */
+    transition: border-color 0.2s ease-in-out; /* Add a smooth transition for border color */
+  }
+  
+  .rounded-input:focus {
+    border-color: dodgerblue; /* Change border color on focus */
+  }
+  

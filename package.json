@@ -22,6 +22,7 @@
     "particles.js": "^2.0.0",
     "rxjs": "~7.8.0",
     "sass": "^1.64.2",
+    "stream-chat-angular": "^4.32.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },

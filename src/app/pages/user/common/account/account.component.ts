@@ -27,6 +27,8 @@ export class AccountComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.type);
+    
     this.userCheck()
   }
   ngOnChanges(changes: SimpleChanges): void {
