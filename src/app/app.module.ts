@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr'; 
 
-import { TokenIntercepterService } from 'src/app/core/token-intercepter.service';
+import { TokenIntercepterService } from 'src/app/core/interceptors/token-intercepter.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AppNotfoundComponent } from './pages/error/app-notfound/app-notfound.component';
-import { AppInternalserverComponent } from './pages/error/app-internalserver/app-internalserver.component';
-import { AppBadgatewayComponent } from './pages/error/app-badgateway/app-badgateway.component';
-import { CommonerrorComponent } from './pages/error/commonerror/commonerror.component';
-import { ErrorHandlingInterceptor } from './core/errorHandintercepter.service';
+import { AppNotfoundComponent } from './features/error/components/app-notfound/app-notfound.component';
+import { AppInternalserverComponent } from './features/error/components/app-internalserver/app-internalserver.component';
+import { AppBadgatewayComponent } from './features/error/components/app-badgateway/app-badgateway.component';
+import { CommonerrorComponent } from './features/error/components/commonerror/commonerror.component';
+import { ErrorHandlingInterceptor } from './core/interceptors/errorHandintercepter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
