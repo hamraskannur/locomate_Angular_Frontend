@@ -15,6 +15,6 @@ const route:Routes =[
 @NgModule({
   declarations: [FriendAccountComponent],
   
-  imports: [FormsModule,CommonModule,CoreModule,sharedModule,RouterModule.forChild(route)],
+  imports: [CommonModule,CoreModule,sharedModule,RouterModule.forChild(route)],
 })
 export class FriendAccountModule { }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CoreModule } from 'src/app/core/core.module';
 import { sharedModule } from 'src/app/shared/shared.module';
@@ -14,6 +13,6 @@ const route:Routes =[
 ]
 @NgModule({
   declarations: [MyAccountComponent],
-  imports: [FormsModule,CommonModule,CoreModule,sharedModule,RouterModule.forChild(route)],
+  imports: [CommonModule,CoreModule,sharedModule,RouterModule.forChild(route)],
 })
 export class myAccountModule { }
