@@ -14,8 +14,7 @@ import { AppBadgatewayComponent } from './features/error/components/app-badgatew
 import { CommonerrorComponent } from './features/error/components/commonerror/commonerror.component';
 import { ErrorHandlingInterceptor } from './core/interceptors/errorHandintercepter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { userReducer } from 'src/app/stores/user/user.reducer';
-import { UserEffects } from 'src/app/stores/user/user.effects';
+
 import { UserStateModule } from './stores/state.module';
 
 @NgModule({

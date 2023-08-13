@@ -5,11 +5,12 @@ import { UserLoginGuard } from 'src/app/core/authentication/userLogin.guard';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { VerifyComponent } from './components/verify/verify.component';
+import { UserComponent } from './user.component';
 
 
 const userRoute: Routes = [
   {
-    path: '',
+    path: '',component: UserComponent,
     children: [
       { path: '', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule),pathMatch: 'full',canActivate:[UserGuard] },
       { path: 'login', component: LoginComponent ,canActivate:[UserLoginGuard]},
