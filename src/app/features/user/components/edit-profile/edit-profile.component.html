@@ -1,5 +1,5 @@
 <app-layout>
-  <div class="justify-center items-center  max-sm:w-full max-md:w-full max-lg:w-full ">
+  <div *ngIf="userData!=null" class="justify-center items-center  max-sm:w-full max-md:w-full max-lg:w-full ">
     <div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
       <div
         class="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
@@ -51,7 +51,7 @@
                     [src]="
                       coverImg
                         ? coverImg
-                        : userData?.coverImg ||
+                        : userData.coverImg ||
                           'https://media.easemytrip.com/media/Blog/India/637033873695687971/637033873695687971fsrzol.jpg'
                     "
                     alt="cover"
@@ -74,7 +74,7 @@
                       [src]="
                         proImg
                           ? proImg
-                          : userData?.ProfileImg ||
+                          : userData.ProfileImg ||
                             'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'
                       "
                       alt="avatars"

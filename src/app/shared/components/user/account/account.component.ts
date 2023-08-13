@@ -1,7 +1,10 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Post, User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
+import { UserState } from 'src/app/stores/user/user.reducer';
+import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 
 @Component({
   selector: 'app-account',
@@ -23,8 +26,11 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private userApiServiceService: UserApiServiceService,
-    private router: Router
+    private router: Router,
+    private store: Store<{ user: UserState }>
   ) {}
+
+  userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
   ngOnInit(): void {
     console.log(this.type);
@@ -38,17 +44,14 @@ export class AccountComponent implements OnInit {
   }
 
   userCheck(){
-    this.userApiServiceService
-    .getUser()
-    .subscribe(
-      ({ user }: { success: boolean; message: string; user: User }) => {
-        this.follow = this.user?.Followers.includes(user._id);
-        this.Requested = this.user?.Requests.includes(user._id);
-        this.followersCount = this.user?.Followers?.length 
-        this.followingCount = this.user?.Following?.length  
-        this.follow= this.user?.Followers.includes(user._id)
-      }
-      );
+      this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+        if(user){
+          this.follow = this.user?.Followers.includes(user._id);
+          this.Requested = this.user?.Requests.includes(user._id);
+          this.followersCount = this.user?.Followers?.length 
+          this.followingCount = this.user?.Following?.length  
+          this.follow= this.user?.Followers.includes(user._id)        }
+      });
   }
 
 

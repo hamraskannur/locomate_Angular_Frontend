@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import {  User } from 'src/app/core/models/interface';
 import { ToastrServiceService } from 'src/app/features/user/services/toastr.service';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
+import { UserState } from 'src/app/stores/user/user.reducer';
+import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 
 @Component({
   selector: 'app-one-post',
@@ -23,25 +26,25 @@ export class OnePostComponent implements OnInit {
   count = 0;
   user: User | null = null;
   editPost = false;
+  userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
   constructor(
     private userApiServiceService: UserApiServiceService,
     private router: Router,
     private toastrService: ToastrServiceService
+    ,private store: Store<{ user: UserState }>
   ) {}
 
   ngOnInit() {
-    this.userApiServiceService
-      .getUser()
-      .subscribe(
-        ({ user }: { success: boolean; message: string; user: User }) => {
+      this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+        if(user){
           this.currentUser = user._id === this.post?.userId?._id;
           this.savedStatus = user?.saved?.includes(this.post?._id);
           this.like = this.post?.likes?.includes(user._id);
           this.likeCount = this.post?.likes?.length;
           this.user = user;
         }
-      );
+      });
   }
   onDescriptionChange(newDescription: string): void {
     this.post.description = newDescription;

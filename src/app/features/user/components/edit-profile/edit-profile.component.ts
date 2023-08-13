@@ -3,6 +3,10 @@ import { User } from 'src/app/core/models/interface';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { UserApiServiceService } from '../../services/user-api.service.service';
+import { UserState } from 'src/app/stores/user/user.reducer';
+import { Store } from '@ngrx/store';
+import { updateOptions } from 'src/app/stores/user/user.actions';
+import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 
 @Component({
   selector: 'app-edit-profile',
@@ -10,6 +14,8 @@ import { UserApiServiceService } from '../../services/user-api.service.service';
   styleUrls: ['./edit-profile.component.css'],
 })
 export class EditProfileComponent implements OnInit {
+  userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
+
   @ViewChild('proImageRef', { static: false }) proImageRef:
     | ElementRef
     | undefined;
@@ -20,26 +26,24 @@ export class EditProfileComponent implements OnInit {
   coverImg: SafeUrl | undefined;
   coverImgFile: File | undefined;
   proImgFile: File | undefined;
-  userData!: any;
+  userData: User | null=null
   imgErr = '';
   success = false;
   noUpdates = false;
 
   constructor(
     private userApiServiceService: UserApiServiceService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private store: Store<{ user: UserState }>
   ) {}
 
   ngOnInit() {
-    console.log('kokokook');
-
-    this.userApiServiceService
-      .getUser()
-      .subscribe(
-        ({ user }: { success: boolean; message: string; user: User }) => {
-          this.userData = user;
-        }
-      );
+    this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
+      if (user) {
+        this.userData = { ...user };
+      }
+    });
+    
   }
 
   coverImgChangeHandler(event: Event): void {
@@ -81,7 +85,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   submitHandler() {
-    if (this.userData.username.trim().length > 0) {
+    if (this.userData && this.userData.username.trim().length > 0) {
       if (this.userData.name.trim().length > 0) {
         if (this.coverImgFile || this.proImgFile) {
           const observables: any[] = [];
@@ -100,10 +104,10 @@ export class EditProfileComponent implements OnInit {
 
           if (observables.length > 0) {
             forkJoin(observables).subscribe((responses: any[]) => {
-              if (this.coverImgFile) {
+              if (this.coverImgFile && this.userData != null) {
                 this.userData.coverImg = responses[0].secure_url;
               }
-              if (this.proImgFile) {
+              if (this.proImgFile && this.userData != null) {
                 this.userData.ProfileImg =
                   responses[this.coverImgFile ? 1 : 0].secure_url;
               }
@@ -124,21 +128,28 @@ export class EditProfileComponent implements OnInit {
   }
 
   private saveUserData() {
-    this.userApiServiceService
-      .saveUserData(this.userData)
-      .subscribe((response: any) => {
-        this.coverImg = undefined;
-        this.coverImgFile = undefined;
-        this.proImg = undefined;
-        this.proImgFile = undefined;
-        if (response?.success === true) {
-          this.success = true;
-        } else if (response?.message === 'noUpdates') {
-          this.success = false;
-          this.noUpdates = true;
-        } else {
-          this.imgErr = response.message;
-        }
-      });
+    if (this.userData != null) {
+      this.success = false;
+      const updatedUser: User = {
+        ...this.userData,
+      };
+      this.userApiServiceService
+        .saveUserData(this.userData)
+        .subscribe((response: any) => {
+          this.coverImg = undefined;
+          this.coverImgFile = undefined;
+          this.proImg = undefined;
+          this.proImgFile = undefined;
+          if (response?.success === true) {
+            this.store.dispatch(updateOptions({ user: updatedUser }));
+            this.success = true;
+          } else if (response?.message === 'noUpdates') {
+            this.success = false;
+            this.noUpdates = true;
+          } else {
+            this.imgErr = response.message;
+          }
+        });
+    }
   }
 }

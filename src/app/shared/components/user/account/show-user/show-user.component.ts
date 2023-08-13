@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
@@ -8,15 +14,15 @@ import { UserApiServiceService } from 'src/app/features/user/services/user-api.s
   templateUrl: './show-user.component.html', // Adjust the template URL
   styleUrls: ['./show-user.component.css'], // Adjust the styles URL
 })
-export class ShowUserComponent implements OnInit,OnChanges {
+export class ShowUserComponent implements OnInit, OnChanges {
   @Input() type!: string;
   @Input() userId!: string;
 
-  currentUser:User|null = null;  
+  currentUser: User | null = null;
   users: any[] | undefined;
 
   constructor(
-    private userApiService: UserApiServiceService, 
+    private userApiService: UserApiServiceService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -30,33 +36,26 @@ export class ShowUserComponent implements OnInit,OnChanges {
 
   ngOnInit(): void {
     this.getUserData(this.type);
-   this.userApiService.getUser().subscribe(({user}:{ success: boolean; message: string; user: User })=>{
-    
-      this.currentUser=user
-    })
-
+   
   }
 
   getUserData(type: string): void {
     if (type === 'Following') {
-      this.userApiService.getFollowingUser(this.userId).subscribe(({user}:{message:string,user:any[]}) => {
-        this.users=user
-
-      });
+      this.userApiService
+        .getFollowingUser(this.userId)
+        .subscribe(({ user }: { message: string; user: any[] }) => {
+          this.users = user;
+        });
     } else if (type === 'Followers') {
-      this.userApiService.getFollowersUser(this.userId).subscribe(({user}:{message:string,user:any[]}) => {
-        this.users=user
-
-      });
+      this.userApiService
+        .getFollowersUser(this.userId)
+        .subscribe(({ user }: { message: string; user: any[] }) => {
+          this.users = user;
+        });
     }
   }
 
   goToAccountPage(userId: string): void {
-
-    if (this.currentUser && userId === this.currentUser._id) {
-      this.router.navigate(['/myAccount']);
-    } else {
-      this.router.navigate(['/friendAccount',userId]);
-    }
+    this.userApiService.goToAccount(userId);
   }
 }

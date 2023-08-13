@@ -5,7 +5,6 @@ import { UserLoginGuard } from 'src/app/core/authentication/userLogin.guard';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { VerifyComponent } from './components/verify/verify.component';
-import { SettingsComponent } from './components/settings/settings.component';
 
 
 const userRoute: Routes = [
@@ -13,6 +12,9 @@ const userRoute: Routes = [
     path: '',
     children: [
       { path: '', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule),pathMatch: 'full',canActivate:[UserGuard] },
+      { path: 'login', component: LoginComponent ,canActivate:[UserLoginGuard]},
+      { path: 'register', component: RegisterComponent,canActivate:[UserLoginGuard] },
+      { path: 'verify', component: VerifyComponent,canActivate:[UserLoginGuard] },
       { path: 'settings', loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsModule), canActivate: [UserGuard] },
       { path: 'friendAccount/:id', loadChildren: () => import('./components/friend-account/friendAccount.module').then(m => m.FriendAccountModule), canActivate: [UserGuard] },
       { path: 'myAccount', loadChildren: () => import('./components/my-account/myAccount.module').then(m => m.myAccountModule), canActivate: [UserGuard] },
@@ -20,9 +22,6 @@ const userRoute: Routes = [
       { path: 'editProfile', loadChildren: () => import('./components/edit-profile/edit.module').then(m => m.EditModule), canActivate: [UserGuard] },
       { path: 'requests', loadChildren: () => import('./components/requests/request.module').then(m => m.RequestModule), canActivate: [UserGuard] },
       { path: 'notification', loadChildren: () => import('./components/notifications/notification.module').then(m => m.NotificationModule), canActivate: [UserGuard] },
-      { path: 'login', component: LoginComponent ,canActivate:[UserLoginGuard]},
-      { path: 'register', component: RegisterComponent,canActivate:[UserLoginGuard] },
-      { path: 'verify', component: VerifyComponent,canActivate:[UserLoginGuard] },
     ],
   },
 ];

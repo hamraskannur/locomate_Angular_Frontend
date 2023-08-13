@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Post, User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
+import { Store } from '@ngrx/store';
+import { UserState } from 'src/app/stores/user/user.reducer';
+import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +11,9 @@ import { UserApiServiceService } from '../../services/user-api.service.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor(private userApiServiceService: UserApiServiceService) {}
+  constructor(private userApiServiceService: UserApiServiceService,private store: Store<{ user: UserState }>) {}
+  userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
+
   onePost=false
   posts: Post[] = [];
   userId: string | undefined;
@@ -18,13 +23,11 @@ export class HomeComponent implements OnInit {
     this.getPost();
   }
   getUser() {
-    this.userApiServiceService
-      .getUser()
-      .subscribe(
-        ({ user }: { success: boolean; message: string; user: User }) => {
+      this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+        if(user){
           this.userId = user._id;
         }
-      );
+      });
   }
   getPost(): void {
     this.userApiServiceService.getAllPost().subscribe((allPost:Post[]) => {      

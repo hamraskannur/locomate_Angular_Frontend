@@ -8,6 +8,7 @@ export interface registerResponse {
   status: Boolean;
 }
 
+
 export interface loginResponse {
   message: string;
   token: string;

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/core/models/interface';
-import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
+import { Store } from '@ngrx/store';
+import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
+import { UserState } from 'src/app/stores/user/user.reducer';
+import { loadUserData } from 'src/app/stores/user/user.actions';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,18 +11,20 @@ import { UserApiServiceService } from 'src/app/features/user/services/user-api.s
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+  userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
   showModal = false;
   addPost = false;
   shortsModal = false;
   showToggle = false;
   user :User|null = null;
 
-  constructor(private userApiServiceService:UserApiServiceService){}
+  constructor(private store: Store<{ user: UserState }>){}
 
  ngOnInit(): void {
-   this.userApiServiceService.getUser().subscribe(({user}:{ success: boolean; message: string; user: User })=>{    
-        this.user=user
-   })
+   this.store.dispatch(loadUserData())
+   this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+    this.user=user
+  });
  }
   toggleAddPost() {
     this.addPost = !this.addPost;

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ToastrModule } from 'ngx-toastr'; 
+import { ToastrModule } from 'ngx-toastr';
+import { StoreModule } from '@ngrx/store'; // Import StoreModule
+import { EffectsModule } from '@ngrx/effects'; // Import EffectsModule
 
 import { TokenIntercepterService } from 'src/app/core/interceptors/token-intercepter.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +14,9 @@ import { AppBadgatewayComponent } from './features/error/components/app-badgatew
 import { CommonerrorComponent } from './features/error/components/commonerror/commonerror.component';
 import { ErrorHandlingInterceptor } from './core/interceptors/errorHandintercepter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { userReducer } from 'src/app/stores/user/user.reducer';
+import { UserEffects } from 'src/app/stores/user/user.effects';
+import { UserStateModule } from './stores/state.module';
 
 @NgModule({
   declarations: [
@@ -20,8 +25,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppInternalserverComponent,
     AppBadgatewayComponent,
     CommonerrorComponent,
- ],
-  imports: [AppRoutingModule, BrowserModule, HttpClientModule,BrowserAnimationsModule,ToastrModule.forRoot()],
+  ],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    UserStateModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

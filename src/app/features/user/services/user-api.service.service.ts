@@ -10,12 +10,17 @@ import {
   registerResponse,
 } from '../../../core/models/interface';
 import { Router } from '@angular/router';
+import { UserState } from 'src/app/stores/user/user.reducer';
+import { Store } from '@ngrx/store';
+import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserApiServiceService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router,private store: Store<{ user: UserState }>) {}
+  userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
+
 
   private serverApi = 'http://localhost:3008/';
 
@@ -131,8 +136,8 @@ export class UserApiServiceService {
   }
 
   goToAccount(userId: string): void {
-    this.getUser().subscribe(
-      ({ user }: { success: boolean; message: string; user: User }) => {
+    this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+      if(user){
         const currentUserId = user._id;
         if (userId === currentUserId) {
           this.router.navigate(['/myAccount']);
@@ -140,7 +145,8 @@ export class UserApiServiceService {
           this.router.navigate(['/friendAccount', userId]);
         }
       }
-    );
+    });
+
   }
 
   deleteRequests(deleteId:string): Observable<any> {
