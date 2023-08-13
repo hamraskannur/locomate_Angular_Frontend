@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr'; 
 
@@ -22,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppBadgatewayComponent,
     CommonerrorComponent,
  ],
-  imports: [AppRoutingModule, BrowserModule, FormsModule, HttpClientModule,BrowserAnimationsModule,ToastrModule.forRoot()],
+  imports: [AppRoutingModule, BrowserModule, HttpClientModule,BrowserAnimationsModule,ToastrModule.forRoot()],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

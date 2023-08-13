@@ -47,7 +47,6 @@ export class AccountComponent implements OnInit {
         this.followersCount = this.user?.Followers?.length 
         this.followingCount = this.user?.Following?.length  
         this.follow= this.user?.Followers.includes(user._id)
-
       }
       );
   }

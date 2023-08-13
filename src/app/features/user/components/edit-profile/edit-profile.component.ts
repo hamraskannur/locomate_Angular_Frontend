@@ -31,6 +31,8 @@ export class EditProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('kokokook');
+
     this.userApiServiceService
       .getUser()
       .subscribe(
@@ -39,8 +41,6 @@ export class EditProfileComponent implements OnInit {
         }
       );
   }
-
-  
 
   coverImgChangeHandler(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
@@ -102,17 +102,11 @@ export class EditProfileComponent implements OnInit {
             forkJoin(observables).subscribe((responses: any[]) => {
               if (this.coverImgFile) {
                 this.userData.coverImg = responses[0].secure_url;
-                this.coverImg = undefined;
-                this.coverImgFile = undefined;
               }
-
               if (this.proImgFile) {
                 this.userData.ProfileImg =
                   responses[this.coverImgFile ? 1 : 0].secure_url;
-                this.proImg = undefined;
-                this.proImgFile = undefined;
               }
-
               this.saveUserData();
             });
           } else {
@@ -130,13 +124,13 @@ export class EditProfileComponent implements OnInit {
   }
 
   private saveUserData() {
-    console.log(this.userData.Address);
-    
     this.userApiServiceService
       .saveUserData(this.userData)
       .subscribe((response: any) => {
-        console.log(response);
-        
+        this.coverImg = undefined;
+        this.coverImgFile = undefined;
+        this.proImg = undefined;
+        this.proImgFile = undefined;
         if (response?.success === true) {
           this.success = true;
         } else if (response?.message === 'noUpdates') {

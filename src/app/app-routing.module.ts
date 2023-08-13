@@ -6,7 +6,7 @@ import { AppInternalserverComponent } from './features/error/components/app-inte
 import { CommonerrorComponent } from './features/error/components/commonerror/commonerror.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'user', pathMatch: 'full' },
+  { path: '', redirectTo: '', pathMatch: 'full' },
   { path: '', loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) },
   { path: '404', component: AppNotfoundComponent },
   { path: '502', component: AppBadgatewayComponent },

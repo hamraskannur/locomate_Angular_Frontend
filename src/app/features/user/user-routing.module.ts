@@ -1,45 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { LoginComponent } from './login/login.component';
-// import { RegisterComponent } from './register/register.component';
-// import { VerifyComponent } from './verify/verify.component';
-// import { HomeComponent } from './home/home.component';
-// import { MyAccountComponent } from './my-account/my-account.component';
-// import { FriendAccountComponent } from './friend-account/friend-account.component';
-// import { SettingsComponent } from './settings/settings.component';
-// import { SearchComponent } from './search/search.component';
-// import { EditProfileComponent } from './edit-profile/edit-profile.component';
-// import { RequestsComponent } from './requests/requests.component';
-// import { NotificationsComponent } from './notifications/notifications.component';
 import { UserGuard } from 'src/app/core/authentication/user.guard';
 import { UserLoginGuard } from 'src/app/core/authentication/userLogin.guard';
-import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { VerifyComponent } from './components/verify/verify.component';
-import { MyAccountComponent } from './components/my-account/my-account.component';
-import { FriendAccountComponent } from './components/friend-account/friend-account.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { SearchComponent } from './components/search/search.component';
-import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
-import { RequestsComponent } from './components/requests/requests.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
+
 
 const userRoute: Routes = [
   {
     path: '',
     children: [
-      { path: '', component: HomeComponent, pathMatch: 'full',canActivate:[UserGuard] },
+      { path: '', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule),pathMatch: 'full',canActivate:[UserGuard] },
+      { path: 'settings', loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsModule), canActivate: [UserGuard] },
+      { path: 'friendAccount/:id', loadChildren: () => import('./components/friend-account/friendAccount.module').then(m => m.FriendAccountModule), canActivate: [UserGuard] },
+      { path: 'myAccount', loadChildren: () => import('./components/my-account/myAccount.module').then(m => m.myAccountModule), canActivate: [UserGuard] },
+      { path: 'search', loadChildren: () => import('./components/search/search.module').then(m => m.SearchModule), canActivate: [UserGuard] },
+      { path: 'editProfile', loadChildren: () => import('./components/edit-profile/edit.module').then(m => m.EditModule), canActivate: [UserGuard] },
+      { path: 'requests', loadChildren: () => import('./components/requests/request.module').then(m => m.RequestModule), canActivate: [UserGuard] },
+      { path: 'notification', loadChildren: () => import('./components/notifications/notification.module').then(m => m.NotificationModule), canActivate: [UserGuard] },
       { path: 'login', component: LoginComponent ,canActivate:[UserLoginGuard]},
       { path: 'register', component: RegisterComponent,canActivate:[UserLoginGuard] },
       { path: 'verify', component: VerifyComponent,canActivate:[UserLoginGuard] },
-      { path: 'myAccount', component: MyAccountComponent,canActivate:[UserGuard] },
-      { path: 'friendAccount/:id', component: FriendAccountComponent,canActivate:[UserGuard] },
-      { path: 'settings', component: SettingsComponent,canActivate:[UserGuard] },
-      { path: 'search', component: SearchComponent,canActivate:[UserGuard] },
-      { path: 'editProfile', component: EditProfileComponent,canActivate:[UserGuard] },
-      { path: 'requests', component: RequestsComponent,canActivate:[UserGuard] },
-      { path: 'notification', component: NotificationsComponent,canActivate:[UserGuard] },
     ],
   },
 ];
