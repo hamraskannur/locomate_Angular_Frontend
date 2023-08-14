@@ -23,5 +23,9 @@ export const userReducer = createReducer(
     ...state,
     user,
   })),
-  on(UserActions.removeUserData, (state) => ({ ...state, user: null }))
+  on(UserActions.removeUserData, (state) => ({ ...state, user: null })),
+  on(UserActions.addPostSuccess, (state) => ({
+    ...state,
+    user: { ...state.user, addPost: true } as User, 
+  }))
 );

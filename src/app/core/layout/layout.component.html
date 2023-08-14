@@ -14,7 +14,7 @@
           <div
             style="cursor: pointer"
             (click)="changeSidebar()"
-            class=" flex justify-end pt-2"
+            class="flex justify-end pt-2"
           >
             <img class="w-8 h-7" src="../../../../../assets/menu.png" alt="" />
           </div>
@@ -52,20 +52,15 @@
             </button>
           </a>
 
-          <a routerLink="/notification" class="mt-4 flex flex-col gap-4 relative">
+          <div
+            (click)="showOptions(!showOption)"
+            class="mt-4 flex flex-col gap-4 relative"
+          >
             <button
               type="button"
-              class="group flex items-center text-sm gap-3.5 font-medium hover:bg-[#bbc0c7] rounded-md p-2"
+              class="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md"
             >
-              <div>
-                <div class="flex">
-
-                  <span class="material-symbols-outlined"> notifications </span>
-                  <span *ngIf="!sideBar && notification" class="bg-red-100 text-red-800 text-xs font-medium p-1 rounded-full dark:bg-red-900 dark:text-red-300">
-                    new
-                  </span>
-                </div>
-              </div>
+              <span class="material-symbols-outlined"> upload </span>
               <h2
                 style="transition-delay: 800ms"
                 [ngClass]="{
@@ -74,11 +69,119 @@
                   'opacity-0 translate-x-28 overflow-hidden': !sideBar
                 }"
               >
-                Notifications 
-                <span *ngIf="notification" class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                Upload Post
+              </h2>
+              <h2
+                [ngClass]="{
+                  'absolute left-48 bg-white font-semibold w-0 overflow-hidden whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit': true,
+                  hidden: sideBar
+                }"
+              >
+                Upload Post
+              </h2>
+            </button>
+          </div>
+
+          <div *ngIf="showOption"
+          class="origin-top duration-500 transform"
+          >
+            <div
+              (click)="uploadPhotoFun(!uploadPhoto)"
+              class="mt-4 flex flex-col gap-4 relative"
+            >
+              <button
+                type="button"
+                class="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md"
+              >
+                <span class="material-symbols-outlined">
+                  add_photo_alternate
+                </span>
+                <h2
+                  style="transition-delay: 900ms"
+                  [ngClass]="{
+                    'whitespace-pre': true,
+                    'duration-500': sideBar,
+                    'opacity-0 translate-x-28 overflow-hidden': !sideBar
+                  }"
+                >
+                  Upload Photo
+                </h2>
+                <h2
+                  [ngClass]="{
+                    'absolute left-48 bg-white font-semibold w-0 overflow-hidden whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit': true,
+                    hidden: sideBar
+                  }"
+                >
+                  Upload Photo
+                </h2>
+              </button>
+            </div>
+
+            <div
+              (click)="uploadShortsFun(!uploadShorts)"
+              class="mt-4 flex flex-col gap-4 relative"
+            >
+              <button
+                type="button"
+                class="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md"
+              >
+                <span class="material-symbols-outlined"> video_library </span>
+                <h2
+                  style="transition-delay: 900ms"
+                  [ngClass]="{
+                    'whitespace-pre': true,
+                    'duration-500': sideBar,
+                    'opacity-0 translate-x-28 overflow-hidden': !sideBar
+                  }"
+                >
+                  Upload Shorts
+                </h2>
+                <h2
+                  [ngClass]="{
+                    'absolute left-48 bg-white font-semibold w-0 overflow-hidden whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit': true,
+                    hidden: sideBar
+                  }"
+                >
+                  Upload Shorts
+                </h2>
+              </button>
+            </div>
+          </div>
+
+          <a
+            routerLink="/notification"
+            class="mt-4 flex flex-col gap-4 relative"
+          >
+            <button
+              type="button"
+              class="group flex items-center text-sm gap-3.5 font-medium hover:bg-[#bbc0c7] rounded-md p-2"
+            >
+              <div>
+                <div class="flex">
+                  <span class="material-symbols-outlined"> notifications </span>
+                  <span
+                    *ngIf="!sideBar && notification"
+                    class="bg-red-100 text-red-800 text-xs font-medium p-1 rounded-full dark:bg-red-900 dark:text-red-300"
+                  >
+                    new
+                  </span>
+                </div>
+              </div>
+              <h2
+                style="transition-delay: 900ms"
+                [ngClass]="{
+                  'whitespace-pre': true,
+                  'duration-500': sideBar,
+                  'opacity-0 translate-x-28 overflow-hidden': !sideBar
+                }"
+              >
+                Notifications
+                <span
+                  *ngIf="notification"
+                  class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300"
+                >
                   new
                 </span>
-               
               </h2>
               <h2
                 [ngClass]="{
@@ -87,12 +190,15 @@
                 }"
               >
                 Notifications
-                
               </h2>
             </button>
           </a>
 
-          <a routerLink="/requests" *ngIf="!public" class="mt-4 flex flex-col gap-4 relative">
+          <a
+            routerLink="/requests"
+            *ngIf="!public"
+            class="mt-4 flex flex-col gap-4 relative"
+          >
             <button
               type="button"
               class="group flex items-center text-sm gap-3.5 font-medium hover:bg-[#bbc0c7] rounded-md p-2"
@@ -109,7 +215,7 @@
                 </div>
               </div>
               <h2
-                style="transition-delay: 800ms"
+                style="transition-delay: 1000ms"
                 [ngClass]="{
                   'whitespace-pre': true,
                   'duration-500': sideBar,
@@ -146,7 +252,7 @@
                 <span class="material-symbols-outlined"> logout </span>
               </div>
               <h2
-                style="transition-delay: 900ms"
+                style="transition-delay: 1100ms"
                 [ngClass]="{
                   'whitespace-pre': true,
                   'duration-500': sideBar,
@@ -165,12 +271,11 @@
               </h2>
             </button>
           </div>
-
-
         </div>
       </div>
     </div>
-
+      <app-upload-photo *ngIf="uploadPhoto" (addPost)="uploadPhotoFun($event)"></app-upload-photo>
+      <app-upload-shorts *ngIf="uploadShorts"></app-upload-shorts>
     <ng-content class="w-full"></ng-content>
   </div>
   <div class="md:hidden block sticky bottom-0 z-50 w-full">

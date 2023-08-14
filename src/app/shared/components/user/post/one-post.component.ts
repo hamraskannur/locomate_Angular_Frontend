@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {  User } from 'src/app/core/models/interface';
+
+import { User } from 'src/app/core/models/interface';
 import { ToastrServiceService } from 'src/app/features/user/services/toastr.service';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
 import { UserState } from 'src/app/stores/user/user.reducer';
@@ -15,8 +16,8 @@ import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 export class OnePostComponent implements OnInit {
   @Input() post: any;
   @Input() onePost: boolean = false;
+  @Output() deleteId: EventEmitter<string> = new EventEmitter<string>();
 
-  
   dropdownOpen = false;
   currentUser = false;
   savedStatus = false;
@@ -27,28 +28,33 @@ export class OnePostComponent implements OnInit {
   user: User | null = null;
   editPost = false;
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
-
+  images: string[] = []; // Add your image URLs here
+  currentIndex: number = 0;
+  currentImage: string = '';
+  alert = false;
   constructor(
     private userApiServiceService: UserApiServiceService,
     private router: Router,
-    private toastrService: ToastrServiceService
-    ,private store: Store<{ user: UserState }>
+    private toastrService: ToastrServiceService,
+    private store: Store<{ user: UserState }>
   ) {}
 
   ngOnInit() {
-      this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
-        if(user){
-          this.currentUser = user._id === this.post?.userId?._id;
-          this.savedStatus = user?.saved?.includes(this.post?._id);
-          this.like = this.post?.likes?.includes(user._id);
-          this.likeCount = this.post?.likes?.length;
-          this.user = user;
-        }
-      });
+    this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
+      if (user) {
+        this.currentUser = user._id === this.post?.userId?._id;
+        this.savedStatus = user?.saved?.includes(this.post?._id);
+        this.like = this.post?.likes?.includes(user._id);
+        this.likeCount = this.post?.likes?.length;
+        this.images = this.post.img;
+        this.user = user;
+      }
+    });
+    this.showImage(this.currentIndex);
   }
   onDescriptionChange(newDescription: string): void {
     this.post.description = newDescription;
-    this.post.edit=true
+    this.post.edit = true;
   }
 
   getAccountPage(id: string) {
@@ -59,13 +65,25 @@ export class OnePostComponent implements OnInit {
     }
   }
 
-  submit(id: string) {}
-
+  deletePost(value: boolean) {
+    this.alert = false;
+    this.userApiServiceService
+      .deletePost(this.post._id)
+      .subscribe(({ success }: { message: string; success: boolean }) => {
+        if (success) {
+          this.deleteId.emit(this.post._id);
+          this.toastrService.showSuccess('successfully deleted');
+        }
+      });
+  }
+  confirmAlert() {
+    this.alert = true;
+  }
   setEditPost() {
     this.editPost = true;
   }
-  handleSetCount(value:number){
-    this.count=value
+  handleSetCount(value: number) {
+    this.count = value;
   }
 
   setReport() {}
@@ -105,10 +123,26 @@ export class OnePostComponent implements OnInit {
   }
 
   setCommentsOpen(state: boolean) {
-    this.commentsOpen=state
+    this.commentsOpen = state;
   }
 
   onSetEditPost(value: boolean) {
     this.editPost = false;
+  }
+
+  showImage(index: number): void {
+    this.currentImage = this.images[index];
+  }
+
+  showNextImage(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    this.showImage(this.currentIndex);
+    console.log(this.currentIndex);
+  }
+
+  showPreviousImage(): void {
+    this.currentIndex =
+      (this.currentIndex - 1 + this.images.length) % this.images.length;
+    this.showImage(this.currentIndex);
   }
 }

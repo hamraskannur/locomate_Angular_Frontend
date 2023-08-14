@@ -27,6 +27,7 @@ export interface loginResponse {
 }
 export interface User {
   _id: string;
+  addPost:boolean
   username: string;
   name: string;
   email: string;

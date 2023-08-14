@@ -121,4 +121,9 @@ export class AccountComponent implements OnInit {
   onPostCountChange(newPostCount: number) {
     this.postCount = newPostCount; // Update the parent's postCount
   }
+  deletePost(id:string):void {
+    this.onePostId = null;
+    this.selectOption = 'post';
+  }
+
 }

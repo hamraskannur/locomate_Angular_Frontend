@@ -18,6 +18,7 @@ import { CommentsComponent } from './components/user/post/comments/comments.comp
 import { TimeAgoPipe } from './pipe/timePipe';
 import { CommentComponent } from './components/user/post/comments/comment/comment.component';
 import { ReplayCommentComponent } from './components/user/post/comments/comment/replay-comment/replay-comment.component';
+import { AlertComponent } from './components/user/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ReplayCommentComponent } from './components/user/post/comments/comment/
     EditPostComponent,
     CommentsComponent,
     CommentComponent,
-    ReplayCommentComponent
+    ReplayCommentComponent,
+    AlertComponent
   ],
   imports: [CommonModule,FormsModule,RouterModule],
   exports: [

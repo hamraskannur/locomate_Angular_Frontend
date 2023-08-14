@@ -209,7 +209,7 @@
   </div>
 
   <div class="mt-5" *ngIf="(user?.public || type || follow) && onePostId">
-    <app-one-post [onePost]="true" [post]="onePostId"></app-one-post>
+    <app-one-post [onePost]="true"  (deleteId)="deletePost($event)" [post]="onePostId"></app-one-post>
   </div>
   <!-- <div class="mt-5" *ngIf="(user?.public || type || follow ) && selectOption === 'shorts'">
         <Shorts userId={user?._id}/>
@@ -236,5 +236,6 @@
     *ngIf="!user.public && !type && !follow"
   >
     <app-private-page></app-private-page>
+
   </div>
 </div>

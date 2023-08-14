@@ -1,7 +1,7 @@
 <app-layout>
   <div class="w-6/12 max-sm:w-full max-md:w-full max-lg:w-full">
     <div class="bg-[#F3F3F6] mb-10">
-      <app-one-post *ngFor="let post of posts" [post]="post" [onePost]="onePost"></app-one-post>
+      <app-one-post *ngFor="let post of posts" [post]="post" (deleteId)="deletePost($event)" [onePost]="onePost"></app-one-post>
     </div> 
   </div>
   <div class="max-sm:hidden max-md:hidden max-lg:hidden">

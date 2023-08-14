@@ -1,0 +1,53 @@
+  
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .confirmation-alert {
+    position: fixed;
+    top: 50%; /* Vertically center the element */
+    left: 50%; /* Horizontally center the element */
+    transform: translate(-50%, -50%); /* Adjust for centering */
+  
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 300px;
+  }
+  
+  
+  h2 {
+    margin-top: 0;
+  }
+  
+  .buttons {
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-size: 14px;
+  }
+  
+  .confirm-btn {
+    background-color: #008CBA;
+    color: white;
+  }
+  
+  .cancel-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  

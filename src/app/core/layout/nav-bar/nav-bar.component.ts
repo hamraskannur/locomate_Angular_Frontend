@@ -23,6 +23,8 @@ export class NavBarComponent implements OnInit {
  ngOnInit(): void {
    this.store.dispatch(loadUserData())
    this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+    console.log(user);
+    
     this.user=user
   });
  }

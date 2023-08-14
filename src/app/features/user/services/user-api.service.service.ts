@@ -185,4 +185,12 @@ export class UserApiServiceService {
   likeReplayComment(formData:{ commentId:string}): Observable<{message:string,success:boolean}> {
     return this.http.post<{message:string,success:boolean}>(`${this.serverApi}post/likeReplayComment`, formData);
   }
+
+  addPost(formData:{ imageLinks:string[],description:string}): Observable<{status:boolean}> {
+    return this.http.post<{status:boolean}>(`${this.serverApi}post/addPost`, formData);
+  }
+
+  deletePost(postId:string): Observable<{message:string,success:boolean}> {
+    return this.http.delete<{message:string,success:boolean}>(`${this.serverApi}post/deletePost/${postId}`);
+  }
 }
