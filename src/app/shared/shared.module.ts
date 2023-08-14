@@ -14,8 +14,10 @@ import { AllPostComponent } from './components/user/account/all-post/all-post.co
 import { OnePostComponent } from './components/user/post/one-post.component';
 import { ReportPostComponent } from './components/user/post/report-post/report-post.component';
 import { EditPostComponent } from './components/user/post/edit-post/edit-post.component';
-import { CommentComponent } from './components/user/post/comment/comment.component';
+import { CommentsComponent } from './components/user/post/comments/comments.component';
 import { TimeAgoPipe } from './pipe/timePipe';
+import { CommentComponent } from './components/user/post/comments/comment/comment.component';
+import { ReplayCommentComponent } from './components/user/post/comments/comment/replay-comment/replay-comment.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +32,11 @@ import { TimeAgoPipe } from './pipe/timePipe';
     OnePostComponent,
     ReportPostComponent,
     EditPostComponent,
-    CommentComponent
+    CommentsComponent,
+    CommentComponent,
+    ReplayCommentComponent
   ],
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,RouterModule],
   exports: [
     AvatarComponent,
     SuggestionsComponent,
@@ -44,7 +48,8 @@ import { TimeAgoPipe } from './pipe/timePipe';
     OnePostComponent,
     ReportPostComponent,
     EditPostComponent,
-    CommentComponent
+    CommentsComponent,
+    
   ],
 })
 export class sharedModule {}

@@ -9,9 +9,7 @@ import { User } from 'src/app/core/models/interface';
 })
 export class SuggestionComponent  {
   @Input() user!: User;
-  sideBar=true
-  followers=0
-  following=0
+
   constructor(private router: Router) {}
 
 

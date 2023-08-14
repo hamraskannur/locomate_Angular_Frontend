@@ -9,6 +9,17 @@ export interface registerResponse {
 }
 
 
+
+export interface  comment{
+  comment: string;
+  createdAt: string;
+  likes: string[];
+  postId: string;
+  userId: string;
+  username: string;
+  _id: string;
+  ProfileImg:string
+}
 export interface loginResponse {
   message: string;
   token: string;
@@ -63,11 +74,10 @@ export interface Post {
   };
 }
 
-
-export interface notification{
-  postId:string;
-  text:string;
-  _id:string;
+export interface notification {
+  postId: string;
+  text: string;
+  _id: string;
   userId: {
     username: string;
     name: string;

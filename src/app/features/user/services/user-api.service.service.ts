@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {
   Post,
   User,
+  comment,
   loginResponse,
   notification,
   registerResponse,
@@ -135,19 +136,7 @@ export class UserApiServiceService {
     );
   }
 
-  goToAccount(userId: string): void {
-    this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
-      if(user){
-        const currentUserId = user._id;
-        if (userId === currentUserId) {
-          this.router.navigate(['/myAccount']);
-        } else {
-          this.router.navigate(['/friendAccount', userId]);
-        }
-      }
-    });
-
-  }
+  
 
   deleteRequests(deleteId:string): Observable<any> {
     return this.http.delete<any>(`${this.serverApi}deleteRequests/${deleteId}`);
@@ -171,5 +160,29 @@ export class UserApiServiceService {
 
   getAllNotifications(): Observable<{Status:boolean,user:notification[]}> {
     return this.http.get<{Status:boolean,user:notification[]}>(`${this.serverApi}getAllNotifications`);
+  }
+
+  getAllComment(postId:string): Observable<{success:boolean,comments:comment[],message:string}> {
+    return this.http.get<{success:boolean,comments:comment[],message:string}>(`${this.serverApi}post/getComment/${postId}`);
+  }
+
+  postComment(postId:string, comment:string): Observable<any> {
+    return this.http.post<any>(`${this.serverApi}post/postComment/${postId}`,{ comment });
+  }
+
+  getReplayComment(commentId:string): Observable<any> {
+    return this.http.get<any>(`${this.serverApi}post/getReplayComment/${commentId}`);
+  }
+
+  postReplayComment(formData:{ commentId:string, newComment:string}): Observable<any> {
+    return this.http.post<any>(`${this.serverApi}post/postReplayComment`, formData);
+  }
+
+  likeMainComment(formData:{ commentId:string}): Observable<{message:string,success:boolean}> {
+    return this.http.post<{message:string,success:boolean}>(`${this.serverApi}post/likeMainComment`, formData);
+  }
+
+  likeReplayComment(formData:{ commentId:string}): Observable<{message:string,success:boolean}> {
+    return this.http.post<{message:string,success:boolean}>(`${this.serverApi}post/likeReplayComment`, formData);
   }
 }

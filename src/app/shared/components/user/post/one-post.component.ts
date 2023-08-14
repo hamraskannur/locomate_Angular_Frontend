@@ -65,6 +65,7 @@ export class OnePostComponent implements OnInit {
     this.editPost = true;
   }
   handleSetCount(value:number){
+    this.count=value
   }
 
   setReport() {}

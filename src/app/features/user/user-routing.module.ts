@@ -17,12 +17,12 @@ const userRoute: Routes = [
       { path: 'register', component: RegisterComponent,canActivate:[UserLoginGuard] },
       { path: 'verify', component: VerifyComponent,canActivate:[UserLoginGuard] },
       { path: 'settings', loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsModule), canActivate: [UserGuard] },
-      { path: 'friendAccount/:id', loadChildren: () => import('./components/friend-account/friendAccount.module').then(m => m.FriendAccountModule), canActivate: [UserGuard] },
       { path: 'myAccount', loadChildren: () => import('./components/my-account/myAccount.module').then(m => m.myAccountModule), canActivate: [UserGuard] },
       { path: 'search', loadChildren: () => import('./components/search/search.module').then(m => m.SearchModule), canActivate: [UserGuard] },
       { path: 'editProfile', loadChildren: () => import('./components/edit-profile/edit.module').then(m => m.EditModule), canActivate: [UserGuard] },
       { path: 'requests', loadChildren: () => import('./components/requests/request.module').then(m => m.RequestModule), canActivate: [UserGuard] },
       { path: 'notification', loadChildren: () => import('./components/notifications/notification.module').then(m => m.NotificationModule), canActivate: [UserGuard] },
+      { path: 'friendAccount/:id', loadChildren: () => import('./components/friend-account/friendAccount.module').then(m => m.FriendAccountModule), canActivate: [UserGuard] },
     ],
   },
 ];

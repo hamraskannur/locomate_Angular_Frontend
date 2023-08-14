@@ -16,7 +16,6 @@ import { LoadingComponent } from '../components/loding/loading.component';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, VerifyComponent,UserComponent,LoadingComponent],
-
   imports: [
     FormsModule,
     ReactiveFormsModule,

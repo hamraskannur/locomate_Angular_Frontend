@@ -2,7 +2,7 @@
 
 .rounded-input {
     width: 100%; /* Make the input full width */
-    padding: 10px; /* Add padding for better spacing */
+    padding: 8px; /* Add padding for better spacing */
     border: 1px solid #ccc; /* Add a border for visual separation */
     border-radius: 10px; /* Apply rounded corners */
     outline: none; /* Remove default outline on focus */
@@ -10,6 +10,6 @@
   }
   
   .rounded-input:focus {
-    border-color: dodgerblue; /* Change border color on focus */
+    border-color: #6b778d; /* Change border color on focus */
   }
   

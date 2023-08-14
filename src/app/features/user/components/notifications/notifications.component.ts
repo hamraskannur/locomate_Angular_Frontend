@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { notification } from 'src/app/core/models/interface';
+import { User, notification } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { UserState } from 'src/app/stores/user/user.reducer';
+import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 
 @Component({
   selector: 'app-notifications',
@@ -9,7 +13,9 @@ import { UserApiServiceService } from '../../services/user-api.service.service';
 })
 export class NotificationsComponent implements OnInit {
   notification:notification[]=[]
-  constructor(private userApiServiceService:UserApiServiceService){}
+  userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
+
+  constructor(private userApiServiceService:UserApiServiceService, private router: Router,private store: Store<{ user: UserState }>){}
 ngOnInit(): void {
   this.userApiServiceService.getAllNotifications().subscribe(({user}:{Status:boolean,user:notification[]})=>{
     this.notification=user.reverse()
@@ -18,6 +24,15 @@ ngOnInit(): void {
 
 getAccountPage(userId: string): void {
 
-  this.userApiServiceService.goToAccount(userId)
+  this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+    if(user){
+      const currentUserId = user._id;
+      if (userId === currentUserId) {
+        this.router.navigate(['/myAccount']);
+      } else {
+        this.router.navigate(['/friendAccount', userId]);
+      }
+    }
+  });
 }
 }

@@ -32,9 +32,7 @@ export class AccountComponent implements OnInit {
 
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
-  ngOnInit(): void {
-    console.log(this.type);
-    
+  ngOnInit(): void {    
     this.userCheck()
   }
   ngOnChanges(changes: SimpleChanges): void {

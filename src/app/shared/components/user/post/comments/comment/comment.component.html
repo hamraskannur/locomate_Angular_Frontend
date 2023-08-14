@@ -1,0 +1,85 @@
+<div class="flex comment mt-0 p-2 border-slate-300 rounded-full">
+  <div
+    class="cursor-pointer rounded-full h-9 w-9 overflow-hidden border-slate-700 cur"
+  >
+    <app-avatar [imgSrc]="comment?.ProfileImg"></app-avatar>
+  </div>
+  <div class="ml-3 bg-gray-100 w-full cursor-pointer rounded-md">
+    <div class="flex justify-between items-end">
+      <span
+        (click)="getUserAccount(comment?.userId)"
+        class="mt-3 flex ml-1 mr-2 italic text-black text-sm cursor-pointer font-semibold"
+      >
+        {{ comment?.username }}
+        <p class="self-center text-gray-500 text-xs ml-2">
+          {{ comment?.createdAt | timeAgo }}
+        </p>
+      </span>
+
+      <div class="mr-5">
+        <img
+        *ngIf="like; else unlike"
+        (click)="likeComment(comment?._id)"
+        src="../../../../../../../assets/favorite_FILL1_wght400_GRAD0_opsz48.svg"
+        class="w-6"
+        alt=""
+      />
+      
+      <ng-template #unlike>
+        
+        <span (click)="likeComment(comment?._id)" class="material-symbols-outlined mt-2"> favorite </span>
+      </ng-template>
+      
+      </div>
+    </div>
+
+    <div class="info ml-3 mt-2 text-sm">
+      <p>{{ comment?.comment }}</p>
+    </div>
+    <div class="flex mb-1 mt-2">
+      <h1
+        (click)="likeComment(comment?._id)"
+        class="self-center text-gray-500 text-xs ml-2 cursor-pointer flex"
+      >
+        Like
+      </h1>
+
+      <h1 class="self-center text-gray-500 text-xs ml-1 cursor-pointer flex">
+        {{ likeCount }}
+      </h1>
+      <h1
+        (click)="setReply(!reply)"
+        class="self-center text-gray-500 text-xs ml-2 cursor-pointer"
+      >
+        Reply {{ replayCommentCount }}
+      </h1>
+    </div>
+    <hr />
+    <div *ngIf="reply">
+
+    <div  class="flex mt-2 gap-3 w-full">
+      <div class="flex mt-1 w-full gap-3">
+        <div class="ml-2 mt-1">
+          <app-avatar [imgSrc]="profileImg"></app-avatar>
+        </div>
+
+        <div class="border-none ml-0 w-full grow rounded-full">
+          <input
+            [(ngModel)]="newReplayComment"
+            placeholder="Type"
+            class="rounded-input"
+          />
+        </div>
+        <img
+          (click)="handlePostComment()"
+          class="h-9 mt-1 cursor-pointer"
+          src="https://cdn-icons-png.flaticon.com/512/3106/3106794.png"
+        />
+      </div>
+      <hr />
+    </div>
+    <app-replay-comment *ngFor="let data of allReplayComment" [userId]="user?._id" [data]="data" ></app-replay-comment>
+  </div>
+
+  </div>
+</div>

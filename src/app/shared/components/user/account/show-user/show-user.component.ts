@@ -6,8 +6,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
+import { UserState } from 'src/app/stores/user/user.reducer';
+import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 
 @Component({
   selector: 'app-show-user',
@@ -17,6 +20,7 @@ import { UserApiServiceService } from 'src/app/features/user/services/user-api.s
 export class ShowUserComponent implements OnInit, OnChanges {
   @Input() type!: string;
   @Input() userId!: string;
+  userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
   currentUser: User | null = null;
   users: any[] | undefined;
@@ -24,7 +28,7 @@ export class ShowUserComponent implements OnInit, OnChanges {
   constructor(
     private userApiService: UserApiServiceService,
     private router: Router,
-    private route: ActivatedRoute
+    private store: Store<{ user: UserState }>
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -56,6 +60,15 @@ export class ShowUserComponent implements OnInit, OnChanges {
   }
 
   goToAccountPage(userId: string): void {
-    this.userApiService.goToAccount(userId);
+    this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+      if(user){
+        const currentUserId = user._id;
+        if (userId === currentUserId) {
+          this.router.navigate(['/myAccount']);
+        } else {
+          this.router.navigate(['/friendAccount', userId]);
+        }
+      }
+    });
   }
 }

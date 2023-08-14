@@ -16,30 +16,7 @@
     <h2>{{ user.username }}</h2>
     <p class="text-gray-400 text-sm p-0">{{ user.name }}</p>
   </div>
-  <div *ngIf="!sideBar" class="ml-auto  flex duration-900">
-    <div>
-      <h1 class="align-middle ml-8 font-semibold" *ngIf="user.Followers" >
-        {{ user.Followers.length  || 0 }}
-      </h1>
-      <div class="text-slate-700 p-1 rounded-md px-2 flex">
-        <span class="material-symbols-outlined"> person </span>
-        followers
-      </div>
-    </div>
-    <div>
-        <h1 class="align-middle ml-8 font-semibold" *ngIf="user.Following">
-
-            {{ user.Following.length || 0 }}
-          </h1>
-          
-      <div class="text-slate-700 p-1 rounded-md px-2 flex">
-        <span class="material-symbols-outlined">
-            person
-            </span>
-        following
-      </div>
-    </div>
-  </div>
+  
   <div class="ml-auto">
     <button class="text-white bg-slate-700 p-1 rounded-md px-2 ml-5">
       Go to profile
