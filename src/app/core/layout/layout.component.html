@@ -275,7 +275,7 @@
       </div>
     </div>
       <app-upload-photo *ngIf="uploadPhoto" (addPost)="uploadPhotoFun($event)"></app-upload-photo>
-      <app-upload-shorts *ngIf="uploadShorts"></app-upload-shorts>
+      <app-upload-shorts *ngIf="uploadShorts" (addshorts)="uploadShortsFun($event)"></app-upload-shorts>
     <ng-content class="w-full"></ng-content>
   </div>
   <div class="md:hidden block sticky bottom-0 z-50 w-full">

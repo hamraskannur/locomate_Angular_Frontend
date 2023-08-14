@@ -1,0 +1,12 @@
+<app-layout>
+    <div class="w-6/12 max-sm:w-full max-md:w-full max-lg:w-full">
+      <div class="bg-[#F3F3F6] mb-10">
+        <app-one-post *ngFor="let oneShorts of shorts" [post]="oneShorts" [shorts]="true" (deleteId)="deletePost($event)" [onePost]="false"></app-one-post>
+      </div> 
+    </div>
+    <div class="max-sm:hidden max-md:hidden max-lg:hidden">
+      <app-suggestions></app-suggestions>
+    </div>
+  </app-layout>
+  
+  

@@ -23,6 +23,7 @@ const userRoute: Routes = [
       { path: 'requests', loadChildren: () => import('./components/requests/request.module').then(m => m.RequestModule), canActivate: [UserGuard] },
       { path: 'notification', loadChildren: () => import('./components/notifications/notification.module').then(m => m.NotificationModule), canActivate: [UserGuard] },
       { path: 'friendAccount/:id', loadChildren: () => import('./components/friend-account/friendAccount.module').then(m => m.FriendAccountModule), canActivate: [UserGuard] },
+      { path: 'shorts', loadChildren: () => import('./components/shorts/shorts.module').then(m => m.ShortsModule), canActivate: [UserGuard] },
     ],
   },
 ];

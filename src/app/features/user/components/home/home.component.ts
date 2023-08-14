@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+
 import { Post, User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
 import { UserState } from 'src/app/stores/user/user.reducer';
@@ -24,9 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onePost = false;
   posts: Post[] = [];
-  userId: string | undefined;
   update: boolean = false;
-  user: User | undefined;
 
   ngOnInit(): void {
     this.getUser();
@@ -35,13 +34,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getUser() {
     this.subscription = this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
-      if (user) {
-        this.userId = user._id;
-        this.user = user;
-        if (user.addPost) {
+        if (user && user.addPost) {
           this.getPost();
         }
-      }
+      
     });
   }
 

@@ -22,11 +22,11 @@ export class AllPostComponent implements OnInit, OnChanges {
   @Input() postCount: number | undefined;
   @Output() postCountChange: EventEmitter<number> = new EventEmitter<number>();
   @Output() onePost: EventEmitter<Post> = new EventEmitter<Post>();
+  @Input() shorts: boolean = false;
 
   posts: any;
 
   constructor(private userApiServiceService: UserApiServiceService) {}
-
 
   ngOnInit(): void {
     this.getPost();
@@ -37,15 +37,25 @@ export class AllPostComponent implements OnInit, OnChanges {
     }
   }
 
-
   getPost = async () => {
     if (this.SavedPost && this.userId) {
-
       this.userApiServiceService
         .getSavedPost(this.userId)
         .subscribe((response) => {
           this.posts = response;
         });
+    } else if (this.shorts && this.userId) {
+      this.userApiServiceService
+        .getUserShorts(this.userId)
+        .subscribe(
+          (response: {
+            AllPosts: Post[];
+            message: string;
+            success: boolean;
+          }) => {
+            this.posts = response.AllPosts;
+          }
+        );
     } else {
       if (this.userId) {
         this.userApiServiceService
@@ -66,14 +76,24 @@ export class AllPostComponent implements OnInit, OnChanges {
       }
     }
   };
-  getSavedOnePost(postData: Post,postUser:any) {
-    console.log(postData);
-    
-    postData.userId=postUser
+  getSavedOnePost(postData: Post, postUser: any) {
+    postData.userId = postUser;
+    postData.shortsCheck = false;
+    this.onePost.emit(postData);
+  }
+
+  getSavedOneShorts(postData: Post, postUser: any) {
+    postData.userId = postUser;
+    postData.shortsCheck = true;
     this.onePost.emit(postData);
   }
 
   getOnePost(post: Post) {
+    if (this.shorts) {
+      post.shortsCheck = true;
+    } else {
+      post.shortsCheck = false;
+    }
     this.onePost.emit(post);
   }
 }

@@ -17,6 +17,7 @@ export class OnePostComponent implements OnInit {
   @Input() post: any;
   @Input() onePost: boolean = false;
   @Output() deleteId: EventEmitter<string> = new EventEmitter<string>();
+  @Input() shorts:boolean=false
 
   dropdownOpen = false;
   currentUser = false;

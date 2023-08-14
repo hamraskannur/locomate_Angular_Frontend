@@ -58,6 +58,7 @@ export interface User {
 }
 
 export interface Post {
+  shortsCheck:boolean
   _id: string;
   description: string;
   img: string[];

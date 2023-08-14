@@ -63,4 +63,5 @@ export class LayoutComponent {
   uploadPhotoFun(value: boolean) {
     this.uploadPhoto = value;
   }
+
 }

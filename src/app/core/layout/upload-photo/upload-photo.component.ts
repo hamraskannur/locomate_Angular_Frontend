@@ -1,8 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { forkJoin } from 'rxjs';
-
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
 import { UserState } from 'src/app/stores/user/user.reducer';
 import { addPostSuccess } from 'src/app/stores/user/user.actions';

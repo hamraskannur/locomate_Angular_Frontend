@@ -2,10 +2,16 @@
 <div class="grid grid-cols-3 gap-3 mt-5 ">
     <div *ngFor="let post of posts" (click)="SavedPost?getSavedOnePost(post?.post,post?.userId):getOnePost(post)"  >
       <img
+      *ngIf="SavedPost?post?.post?.img[0]:post?.img[0] && !shorts else video"
         class="rounded-md overflow-hidden h-48 flex items-center object-cover"
         [src]="SavedPost?post?.post?.img[0]:post?.img[0]"
         alt="posts"
       />
+      <ng-template #video>
+        <video class="rounded-md overflow-hidden h-48 flex items-center object-cover" (click)="SavedPost?getSavedOneShorts(post?.post,post?.userId):getOnePost(post)" width="400" controls>
+               <source [src]="SavedPost?post?.post?.shorts:post?.shorts" />
+          </video>
+      </ng-template>
     </div>
 </div>
 

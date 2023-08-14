@@ -119,6 +119,20 @@ export class UserApiServiceService {
       formData
     );
   }
+
+
+  uploadvideo(videoFile: File): Observable<{ secure_url: string }> {
+    const formData = new FormData();
+    formData.append('file', videoFile);
+    formData.append('upload_preset', 'ete0nc34');
+    return this.http.post<{ secure_url: string }>('https://api.cloudinary.com/v1_1/dyujj6zhw/video/upload',formData);
+  }
+
+  uploadVideoDms(formData: {imageLinks:string,description:string}): Observable<{status:boolean}> {
+    return this.http.post<{status:boolean}>(`${this.serverApi}video/uploadVideo`, formData);
+  }
+
+
   saveUserData(formData: User): Observable<User[]> {
     return this.http.put<User[]>(`${this.serverApi}updateUserData`, formData);
   }
@@ -192,5 +206,13 @@ export class UserApiServiceService {
 
   deletePost(postId:string): Observable<{message:string,success:boolean}> {
     return this.http.delete<{message:string,success:boolean}>(`${this.serverApi}post/deletePost/${postId}`);
+  }
+
+  getAllshorts(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.serverApi}video/getAllPosts`);
+  }
+
+  getUserShorts(userId:string): Observable<{AllPosts:Post[],message:string,success:boolean}> {
+    return this.http.get<{AllPosts:Post[],message:string,success:boolean}>(`${this.serverApi}video/getUserAllShorts/${userId}`);
   }
 }

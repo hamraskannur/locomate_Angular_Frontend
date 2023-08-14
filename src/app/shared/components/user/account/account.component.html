@@ -197,6 +197,7 @@
       (user?.public || type || follow) &&
       !onePostId &&
       selectOption === 'SavedPost'
+      
     "
   >
     <app-all-post
@@ -209,11 +210,26 @@
   </div>
 
   <div class="mt-5" *ngIf="(user?.public || type || follow) && onePostId">
-    <app-one-post [onePost]="true"  (deleteId)="deletePost($event)" [post]="onePostId"></app-one-post>
+    <app-one-post [onePost]="true" [shorts]="onePostId.shortsCheck" (deleteId)="deletePost($event)" [post]="onePostId"></app-one-post>
   </div>
-  <!-- <div class="mt-5" *ngIf="(user?.public || type || follow ) && selectOption === 'shorts'">
-        <Shorts userId={user?._id}/>
-        </div> -->
+
+  <div
+  class="mt-5"
+  *ngIf="
+    (user?.public || type || follow) &&
+    !onePostId &&
+    selectOption === 'shorts'
+  "
+>
+  <app-all-post
+    [userId]="user._id"
+    [shorts]="true"
+    [type]="type"
+    [postCount]="postCount"
+    (onePost)="onePost($event)"
+  ></app-all-post>
+</div>
+
 
   <div
     class="mt-5"
