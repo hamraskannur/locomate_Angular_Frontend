@@ -10,7 +10,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from 'src/app/core/core.module';
 import { UserComponent } from './user.component';
-import { LoadingComponent } from '../components/loding/loading.component';
+import { LoadingComponent } from '../../shared/components/user/loding/loading.component';
 
 
 

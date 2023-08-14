@@ -67,14 +67,17 @@ export class OnePostComponent implements OnInit {
 
   deletePost(value: boolean) {
     this.alert = false;
-    this.userApiServiceService
-      .deletePost(this.post._id)
-      .subscribe(({ success }: { message: string; success: boolean }) => {
-        if (success) {
-          this.deleteId.emit(this.post._id);
-          this.toastrService.showSuccess('successfully deleted');
-        }
-      });
+    
+    if(value){
+      this.userApiServiceService
+        .deletePost(this.post._id)
+        .subscribe(({ success }: { message: string; success: boolean }) => {
+          if (success) {
+            this.deleteId.emit(this.post._id);
+            this.toastrService.showSuccess('successfully deleted');
+          }
+        });
+    }
   }
   confirmAlert() {
     this.alert = true;
