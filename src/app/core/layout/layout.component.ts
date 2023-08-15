@@ -37,7 +37,7 @@ export class LayoutComponent {
   menus = [
     { name: 'Home', link: '/', icon: 'Home' },
     { name: 'Search', link: '/search', icon: 'Search' },
-    { name: 'Messages', link: '/messages', icon: 'chat' },
+    { name: 'Messages', link: '/message', icon: 'chat' },
     { name: 'Shorts', link: '/shorts', icon: 'play_circle' },
     { name: 'Settings', link: '/settings', icon: 'settings' },
   ];

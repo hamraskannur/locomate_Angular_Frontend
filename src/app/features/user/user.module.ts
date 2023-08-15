@@ -23,7 +23,6 @@ import { LoadingComponent } from '../../shared/components/user/loding/loading.co
     CommonModule,
     RouterModule,
     CoreModule,
-    
   ],
   bootstrap:[UserComponent]
 })

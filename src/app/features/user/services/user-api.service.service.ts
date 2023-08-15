@@ -5,8 +5,10 @@ import { Observable } from 'rxjs';
 import {
   Post,
   User,
+  chat,
   comment,
   loginResponse,
+  message,
   notification,
   registerResponse,
 } from '../../../core/models/interface';
@@ -214,5 +216,17 @@ export class UserApiServiceService {
 
   getUserShorts(userId:string): Observable<{AllPosts:Post[],message:string,success:boolean}> {
     return this.http.get<{AllPosts:Post[],message:string,success:boolean}>(`${this.serverApi}video/getUserAllShorts/${userId}`);
+  }
+
+  getUserChat(userId:string): Observable<chat[]> {
+    return this.http.get<chat[]>(`${this.serverApi}chat/${userId}`);
+  }
+
+  getMessages(chatId:string): Observable<message[]> {
+    return this.http.get<message[]>(`${this.serverApi}chat/getMessages/${chatId}`);
+  }
+
+  sentMessage(formData:{senderId:string,text:string,chatId:string}): Observable<message> {
+    return this.http.post<message>(`${this.serverApi}chat/addMessage`, formData);
   }
 }

@@ -1,0 +1,19 @@
+
+
+<div *ngIf="notAllowed"
+  class="flex flex-row py-4 px-2 h-full w2/6 justify-center items-center border-b-2 hover:bg-[#bbc0c7]"
+>
+  <div class="">
+    <app-avatar [imgSrc]="user?.ProfileImg"></app-avatar>
+  </div>
+  <div class="w-full ml-5">
+    <div class="text-lg font-semibold">{{ user?.username }}</div>
+
+    <div *ngFor="let item of onlineUsers">
+      <ng-container *ngIf="item.userId === user?._id">
+        <span class="text-gray-500" *ngIf="onlineUsers.length > 1">online</span>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<hr />

@@ -9,7 +9,7 @@ export class BottomBarComponent {
    menus = [
     { name: "Home", link: "/", icon: "Home" },
     { name: "shorts", link: "/shorts", icon: "play_circle" },
-    { name: "Messages", link: "/messages", icon: "chat"  },
+    { name: "Messages", link: "/message", icon: "chat"  },
     {
       name: "notification",
       link: "/notification",

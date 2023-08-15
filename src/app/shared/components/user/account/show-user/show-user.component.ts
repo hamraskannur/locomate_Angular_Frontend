@@ -2,8 +2,8 @@ import {
   Component,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
+  OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';

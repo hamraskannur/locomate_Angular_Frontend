@@ -8,9 +8,7 @@ export interface registerResponse {
   status: Boolean;
 }
 
-
-
-export interface  comment{
+export interface comment {
   comment: string;
   createdAt: string;
   likes: string[];
@@ -18,7 +16,7 @@ export interface  comment{
   userId: string;
   username: string;
   _id: string;
-  ProfileImg:string
+  ProfileImg: string;
 }
 export interface loginResponse {
   message: string;
@@ -27,7 +25,7 @@ export interface loginResponse {
 }
 export interface User {
   _id: string;
-  addPost:boolean
+  addPost: boolean;
   username: string;
   name: string;
   email: string;
@@ -58,7 +56,7 @@ export interface User {
 }
 
 export interface Post {
-  shortsCheck:boolean
+  shortsCheck: boolean;
   _id: string;
   description: string;
   img: string[];
@@ -88,3 +86,21 @@ export interface notification {
     public: boolean;
   };
 }
+
+export interface chat {
+  createdAt: string;
+  members: string[];
+  updatedAt: string;
+  _id: string;
+}
+
+export interface message{
+  receiverId:string
+  chatId: string;
+  createdAt: string;
+  senderId: string;
+  text: string;
+  updatedAt: string;
+  _id: string;
+}
+

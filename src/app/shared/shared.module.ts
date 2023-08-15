@@ -51,7 +51,7 @@ import { AlertComponent } from './components/user/alert/alert.component';
     ReportPostComponent,
     EditPostComponent,
     CommentsComponent,
-    
+    TimeAgoPipe,
   ],
 })
 export class sharedModule {}

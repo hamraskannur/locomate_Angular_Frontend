@@ -1,0 +1,49 @@
+<app-layout>
+  <div class="w-full max-sm:w-full max-md:w-full max-lg:w-full">
+    <div class="h-full">
+      <div class="container mx-auto rounded-lg px-10 max-sm:px-2 p-2 h-full">
+        <div class="flex flex-row bg-white w-full">
+          <div
+            [ngClass]="
+              phoneSizeUser +
+              ' flex flex-col border-r-2 overflow-y-auto bg-white w-full lg:w-4/12'
+            "
+          >
+            <div class="border-b-2 py-4 px-2 bg-slate-700">
+              <input
+                type="text"
+                placeholder="search friend's"
+                [(ngModel)]="searchUser"
+                class="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
+              />
+            </div>
+            <div class="h-[75vh]  ">
+              <div *ngFor="let chat of chats" (click)="clickUser(chat)">
+                <app-users
+                  [data]="chat"
+                  [currentUserId]="user._id"
+                  [onlineUsers]="onlineUsers"
+                  [searchUser]="searchUser"
+                ></app-users>
+              </div>
+            </div>
+          </div>
+
+          <div [ngClass]="phoneSizeChat + ' lg:w-9/12 w-full'">
+           
+            <app-chat
+             class="w-full"
+              (setPhoneSizeUser)="setPhoneSizeUser($event)"
+              (setPhoneSizeChat)="setPhoneSizeChat($event)"
+              [chat]="currentChat"
+              [currentUserId]="user._id"
+              [userName]="user.username"
+              (setSentMessage)="setSentMessage($event)"
+              [receiveMessages]="receiveMessages"
+            ></app-chat>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-layout>

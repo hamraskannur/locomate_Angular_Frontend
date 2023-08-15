@@ -1,0 +1,119 @@
+<div
+  *ngIf="chat; else startConversation"
+  class="flex flex-col flex-auto h-full"
+>
+  <div
+    class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full"
+  >
+    <div class="flex flex-col h-full overflow-x-auto mb-4">
+      <div class="flex flex-col h-full">
+        <div class="flex flex-col w-full">
+          <div
+            class="border-b-2 py-2 px-2 w-full bg-slate-700 h-16 flex items-center"
+            style="cursor: pointer;"
+          >
+            <div (click)="clickUser()" class="text-white lg:hidden">
+              <span class="material-symbols-outlined"> arrow_back </span>
+            </div>
+            <app-avatar [imgSrc]="user?.ProfileImg"></app-avatar>
+            <div class="text-white p-3 text-lg font-semibold">
+              {{ user?.username }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-12 gap-y-2 h-[60vh] md:h-[65vh] w-full overflow-y-scroll"
+          #scrollContainer
+        >
+        
+          <ng-container *ngFor="let message of messages">
+            <div
+              *ngIf="message.senderId === currentUserId; else notCurrentUser"
+              class="col-start-6 col-end-13 p-3 rounded-lg"
+            >
+              <div class="flex items-center justify-start flex-row-reverse">
+                <div
+                  class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                >
+                {{ userName.charAt(0) }}
+
+                </div>
+                <div
+                  class="max-w-2xl relative mr-3 text-sm bg-indigo-100 py-2 max-w-10 px-4 shadow rounded-xl"
+                >
+                  <div class="flex flex-wrap break-all">
+                    <div class=" max-w-[60vh] break-words" >{{ message.text }}</div>
+                  </div>
+                  <div class="self-center text-gray-500 text-xs ml-2 items-end">
+                    {{ message.createdAt | timeAgo }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-template #notCurrentUser>
+              <div class="col-start-1 col-end-7 p-3 rounded-lg">
+                <div class="flex flex-row items-center">
+                  <div
+                    class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                  >
+                     {{ user?.username?.charAt(0) }}
+                  </div>
+                  <div
+                    class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl "
+                  >
+                    <div class="max-w-[60vh] break-words">{{ message.text }}</div>
+                    <div
+                      class="self-center text-gray-500 text-xs ml-2 items-end"
+                    >
+                      {{ message.createdAt | timeAgo }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-row items-center h-16 rounded-xl bg-white w-full lg:px-2"
+    >
+      <div class="flex-grow ml-4">
+        <div class="relative w-full">
+          <div class="border-none ml-0 grow rounded-full">
+            <input
+              [(ngModel)]="newMessage"
+              placeholder="Type"
+              class="rounded-input"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="ml-4">
+        <button
+          (click)="postMessage()"
+          class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+        >
+          <span>Send</span>
+          <span class="material-symbols-outlined ml-2">
+            arrow_circle_right
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #startConversation>
+  <div class="flex items-center justify-center py-40">
+    <div class="empty-chat-container">
+        <div class="empty-chat-icon">💬</div>
+        <div class="empty-chat-message">tap on chat to start conversation.</div>
+        <div class="empty-chat-message">or</div>
+
+        <div class="empty-chat-message">Please go to your friend's profile page and create a chat with<br/> them first, and then send a message</div>
+        <div class="empty-chat-action">
+          <a >select you friend</a>
+        </div>
+      </div>
+  </div>
+</ng-template>
