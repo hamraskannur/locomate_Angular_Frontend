@@ -8,6 +8,7 @@ import { CommonerrorComponent } from './features/error/components/commonerror/co
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: '', loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) },
+  { path: 'admin', loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule) },
   { path: '404', component: AppNotfoundComponent },
   { path: '502', component: AppBadgatewayComponent },
   { path: '500', component: AppInternalserverComponent },

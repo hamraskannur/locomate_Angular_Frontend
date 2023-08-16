@@ -20,6 +20,7 @@
             <div class="h-[75vh]  ">
               <div *ngFor="let chat of chats" (click)="clickUser(chat)">
                 <app-users
+                  style="cursor: pointer;"
                   [data]="chat"
                   [currentUserId]="user._id"
                   [onlineUsers]="onlineUsers"

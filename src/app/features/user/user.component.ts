@@ -30,8 +30,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(loadUserData())
     this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
-      
-      if(user){
+      if(user ){
         this.SocketService.getSocket().emit("new-user-add", user._id);
       }
    });

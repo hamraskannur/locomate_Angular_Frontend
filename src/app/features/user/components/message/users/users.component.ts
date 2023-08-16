@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   @Input() searchUser:string=""
   @Input() receiveMessagesChange!:number
   @Input() receiveMessagescount:{status:boolean,count:number,userId:string}={status:false,count:1,userId:""}
-  private initialized=false;
+
   count=0
   user:User|undefined
   notAllowed=true
@@ -51,7 +51,6 @@ export class UsersComponent implements OnInit {
      this.notAllowed= this.user.username.toLowerCase().includes(this.searchUser.toLowerCase())     
     }
     if (changes['receiveMessagesChange']) {
-      console.log(this.receiveMessagescount);
       if(this.receiveMessagescount.status && this.user&& this.receiveMessagescount.userId===this.user._id) {
         this.count++
       }
