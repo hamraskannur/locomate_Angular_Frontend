@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Post, User } from 'src/app/core/models/interface';
+import { Post, User, chat } from 'src/app/core/models/interface';
+import { ToastrServiceService } from 'src/app/features/user/services/toastr.service';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
 import { UserState } from 'src/app/stores/user/user.reducer';
 import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
@@ -23,9 +24,10 @@ export class AccountComponent implements OnInit {
   followersCount = 0;
   followingCount = 0;
   loading=false
-
+  userId!:string
   constructor(
     private userApiServiceService: UserApiServiceService,
+    private ToastrServiceService:ToastrServiceService,
     private router: Router,
     private store: Store<{ user: UserState }>
   ) {}
@@ -48,7 +50,9 @@ export class AccountComponent implements OnInit {
           this.Requested = this.user?.Requests.includes(user._id);
           this.followersCount = this.user?.Followers?.length 
           this.followingCount = this.user?.Following?.length  
-          this.follow= this.user?.Followers.includes(user._id)        }
+          this.follow= this.user?.Followers.includes(user._id)     
+          this.userId=user._id
+        }
       });
   }
 
@@ -97,7 +101,14 @@ export class AccountComponent implements OnInit {
     })
   }
 
-  createMessage(id: string ) {}
+  createMessage(senderId: string ) {
+
+    this.userApiServiceService.createChat({ senderId, receiverId: this.userId }).subscribe((data:chat)=>{
+      this.ToastrServiceService.showSuccess("Successfully created message")
+      this.router.navigate(['/message']);
+      
+    })
+  }
   openPost = () => {
     this.onePostId = null;
     this.selectOption = 'post';
@@ -126,4 +137,8 @@ export class AccountComponent implements OnInit {
     this.selectOption = 'post';
   }
 
+  createChat(id:string):void {
+    this.onePostId = null;
+    this.selectOption = 'post';
+  }
 }

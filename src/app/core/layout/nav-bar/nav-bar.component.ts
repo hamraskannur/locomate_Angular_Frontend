@@ -21,12 +21,11 @@ export class NavBarComponent implements OnInit {
   constructor(private store: Store<{ user: UserState }>){}
 
  ngOnInit(): void {
-   this.store.dispatch(loadUserData())
    this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
-    
     this.user=user
   });
  }
+ 
   toggleAddPost() {
     this.addPost = !this.addPost;
   }

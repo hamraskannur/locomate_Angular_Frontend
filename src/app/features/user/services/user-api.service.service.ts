@@ -222,11 +222,19 @@ export class UserApiServiceService {
     return this.http.get<chat[]>(`${this.serverApi}chat/${userId}`);
   }
 
-  getMessages(chatId:string): Observable<message[]> {
-    return this.http.get<message[]>(`${this.serverApi}chat/getMessages/${chatId}`);
+  getMessages(chatId:string,userId:string): Observable<message[]> {
+    return this.http.get<message[]>(`${this.serverApi}chat/getMessages/${chatId}/${userId}`);
   }
 
   sentMessage(formData:{senderId:string,text:string,chatId:string}): Observable<message> {
     return this.http.post<message>(`${this.serverApi}chat/addMessage`, formData);
+  }
+
+  getMessageCount(userId:string): Observable<number> {
+    return this.http.get<number>(`${this.serverApi}chat/getCount/${userId}`);
+  }
+
+  createChat(formData:{senderId:string,receiverId:string}): Observable<chat> {
+    return this.http.post<chat>(`${this.serverApi}chat/createChat`,formData);
   }
 }

@@ -19,7 +19,7 @@ import { UserApiServiceService } from '../../../services/user-api.service.servic
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent implements OnInit, OnChanges, AfterViewChecked {
-  @Input() chat!: chat;
+  @Input() chat: chat|undefined;
   @Input() currentUserId!: string;
   @Input() receiveMessages: any;
   @Input() userName!:string
@@ -28,24 +28,29 @@ export class ChatComponent implements OnInit, OnChanges, AfterViewChecked {
   @Output() setPhoneSizeChat: EventEmitter<string> = new EventEmitter<string>();
   messages: message[] = [];
   newMessage = '';
-  user: User | undefined;
+  user!: User ;
+
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   constructor(private userApiServiceService: UserApiServiceService) {}
   ngOnInit(): void {
     this.getUser();
-    this.getMessages();
+   
   }
 
   getUser() {
     if (this.chat && this.currentUserId) {
-      const userId = this.chat.members.find((id) => id != this.currentUserId);
-      if (userId) {
-        this.userApiServiceService
-          .getFriendsAccount(userId)
-          .subscribe((data: User) => {
-            this.user = data;
-          });
+      if(this.chat){
+
+        const userId = this.chat.members.find((id) => id != this.currentUserId);
+        if (userId) {
+          this.userApiServiceService
+            .getFriendsAccount(userId)
+            .subscribe((data: User) => {
+              this.user = data;
+              this.getMessages(data._id);
+            });
+        }
       }
     }
   }
@@ -63,10 +68,10 @@ export class ChatComponent implements OnInit, OnChanges, AfterViewChecked {
   }
   }
 
-  getMessages() {
+  getMessages(userId:string=this.user._id) {
     if (this.chat) {
       this.userApiServiceService
-        .getMessages(this.chat._id)
+        .getMessages(this.chat._id,userId)
         .subscribe((data: message[]) => {
           this.messages = data;
         });
@@ -84,22 +89,25 @@ export class ChatComponent implements OnInit, OnChanges, AfterViewChecked {
 
 
   postMessage() {
-    if (this.newMessage.trim().length !== 0) {
+    if (this.newMessage.trim().length !== 0 && this.chat) {
       const messageAdd = {
         senderId: this.currentUserId,
         text: this.newMessage,
-        chatId: this.chat?._id,
+        chatId: this.chat._id,
       };
       this.userApiServiceService
         .sentMessage(messageAdd)
         .subscribe((data: message) => {
           this.messages.push(data);
           this.newMessage = '';
-          const receiverId = this.chat.members.find(
-            (id) => id !== this.currentUserId
-          );
-          if (receiverId) {
-            this.setSentMessage.emit({ ...data, receiverId });
+          if(this.chat){
+
+            const receiverId = this.chat.members.find(
+              (id) => id !== this.currentUserId
+            );
+            if (receiverId) {
+              this.setSentMessage.emit({ ...data, receiverId });
+            }
           }
         });
     }

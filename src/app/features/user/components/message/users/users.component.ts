@@ -12,6 +12,10 @@ export class UsersComponent implements OnInit {
   @Input() currentUserId: string | undefined;
   @Input() onlineUsers: any;
   @Input() searchUser:string=""
+  @Input() receiveMessagesChange!:number
+  @Input() receiveMessagescount:{status:boolean,count:number,userId:string}={status:false,count:1,userId:""}
+  private initialized=false;
+  count=0
   user:User|undefined
   notAllowed=true
 
@@ -26,16 +30,34 @@ export class UsersComponent implements OnInit {
       if(userId){
         this.userApiServiceService.getFriendsAccount(userId).subscribe((data:User)=>{
           this.user=data
+          if(data){
+            this.getCount(data)
+          }
         })
       }
     }
   }
 
+
+  getCount(data:User){
+    this.userApiServiceService.getMessageCount(data._id).subscribe((data:number)=>{      
+      this.count=data
+    })
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
+    
     if (changes['searchUser'] &&  this.user) {
-     this.notAllowed= this.user.username.toLowerCase().includes(this.searchUser.toLowerCase())
-     console.log(this.notAllowed);
-     
+     this.notAllowed= this.user.username.toLowerCase().includes(this.searchUser.toLowerCase())     
+    }
+    if (changes['receiveMessagesChange']) {
+      console.log(this.receiveMessagescount);
+      if(this.receiveMessagescount.status && this.user&& this.receiveMessagescount.userId===this.user._id) {
+        this.count++
+      }
+      if(this.receiveMessagescount.count===0){
+        this.count=0
+      }
     }
   }
 }

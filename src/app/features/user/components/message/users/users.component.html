@@ -11,9 +11,13 @@
 
     <div *ngFor="let item of onlineUsers">
       <ng-container *ngIf="item.userId === user?._id">
-        <span class="text-gray-500" *ngIf="onlineUsers.length > 1">online</span>
+        <span class="text-lime-600" *ngIf="onlineUsers.length > 1">online</span>
       </ng-container>
     </div>
   </div>
+  <span *ngIf="count>0"
+    class="bg-green-700 text-white text-xs mr-2 font-medium px-2.5 py-0.5 rounded-full"
+    >{{count}}</span
+  >
 </div>
 <hr />

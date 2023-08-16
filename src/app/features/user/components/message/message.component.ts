@@ -6,6 +6,7 @@ import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 import { User, chat, message } from 'src/app/core/models/interface';
 import { Socket, io } from 'socket.io-client';
 import { loadUserData } from 'src/app/stores/user/user.actions';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-message',
@@ -18,18 +19,19 @@ export class MessageComponent implements OnInit {
   user!:User
   chats:chat[] = [];
   searchUser=""
-  currentChat!:chat
-  private socket!: Socket;
+  currentChat:chat|undefined
   onlineUsers:any
   phoneSizeUser="lg:inline-block"
   phoneSizeChat="hidden lg:inline-block"
   receiveMessages:message|null=null
-
-  constructor(private UserApiServiceService:UserApiServiceService,private store: Store<{ user: UserState }>){}
+  receiveMessagescount:{status:boolean,count:number,userId:string}={status:false,count:1,userId:""}
+  
+  receiveMessagesChange:number=0
+  constructor(private UserApiServiceService:UserApiServiceService,private store: Store<{ user: UserState }>,private SocketService:SocketService){}
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
   ngOnInit(): void {
-    this.socket = io("http://localhost:8800");
+    
     this.store.dispatch(loadUserData())
 
     this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
@@ -41,17 +43,24 @@ export class MessageComponent implements OnInit {
         })
       }
     });
-    this.socket.on("receive-message", (data) => {
-      console.log(data);
-      this.receiveMessages=data
+    this.SocketService.getSocket().on("receive-message", (data:message) => {
+       
+       
+      if(this.user && this.currentChat&& data.chatId===this.currentChat._id){
+        this.receiveMessages=data
+      }else{        
+        this.receiveMessagescount.status=true
+        this.receiveMessagescount.userId=data.senderId
+        this.receiveMessagescount.count=1
+        this.receiveMessagesChange++
+      }
     });
   }
 
 
   socketSetup(user:User){    
-    if(this.socket && user){
-      this.socket.emit("new-user-add", user._id);
-      this.socket.on("get-user", (users:any) => {
+    if(user){
+      this.SocketService.getSocket().on("get-user", (users:any) => {
         this.onlineUsers=users
       });
     }
@@ -59,10 +68,12 @@ export class MessageComponent implements OnInit {
 
 
   setPhoneSizeUser(value:string){    
+    this.currentChat=undefined
     this.phoneSizeUser=value
   }
 
-  setPhoneSizeChat(value:string){    
+  setPhoneSizeChat(value:string){   
+    this.currentChat=undefined 
      this.phoneSizeChat=value
   }
 
@@ -70,10 +81,11 @@ export class MessageComponent implements OnInit {
     this.currentChat=data
     this.phoneSizeChat="lg:flex"
     this.phoneSizeUser="hidden lg:flex"
-   
+    this.receiveMessagescount.count=0
+    this.receiveMessagesChange++
   }
 
-  setSentMessage(value:message){
-    this.socket.emit("send-message", value);
+  setSentMessage(value:message){    
+    this.SocketService.getSocket().emit("send-message", value);
   }
 }
