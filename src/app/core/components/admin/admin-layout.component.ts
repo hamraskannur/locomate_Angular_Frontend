@@ -10,10 +10,9 @@ export class AdminLayoutComponent {
   sideBar = true;
   constructor(private router: Router) {}
   menus = [
-    { name: 'Dashboard', link: '/', icon: 'Home' },
-    { name: 'Users', link: '/users', icon: 'group' },
-    { name: 'report', link: '/reports', icon: 'report' },
-    { name: 'posts', link: '/posts', icon: 'photo_library' },
+    { name: 'Dashboard', link: '/admin/dashboard', icon: 'Home' },
+    { name: 'Users', link: '/admin/users', icon: 'group' },
+    { name: 'posts', link: '/admin/posts', icon: 'photo_library' },
   ];
 
   changeSidebar() {

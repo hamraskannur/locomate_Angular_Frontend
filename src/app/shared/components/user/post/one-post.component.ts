@@ -90,7 +90,6 @@ export class OnePostComponent implements OnInit {
     this.count = value;
   }
 
-  setReport() {}
 
   likePost(id: string) {
     this.userApiServiceService

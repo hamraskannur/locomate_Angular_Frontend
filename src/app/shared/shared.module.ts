@@ -11,7 +11,6 @@ import { ShowUserComponent } from './components/user/account/show-user/show-user
 import { PrivatePageComponent } from './components/user/account/private-page/private-page.component';
 import { AllPostComponent } from './components/user/account/all-post/all-post.component';
 import { OnePostComponent } from './components/user/post/one-post.component';
-import { ReportPostComponent } from './components/user/post/report-post/report-post.component';
 import { EditPostComponent } from './components/user/post/edit-post/edit-post.component';
 import { CommentsComponent } from './components/user/post/comments/comments.component';
 import { TimeAgoPipe } from './pipe/timePipe';
@@ -30,7 +29,6 @@ import { AlertComponent } from './components/user/alert/alert.component';
     PrivatePageComponent,
     AllPostComponent,
     OnePostComponent,
-    ReportPostComponent,
     EditPostComponent,
     CommentsComponent,
     CommentComponent,
@@ -47,7 +45,6 @@ import { AlertComponent } from './components/user/alert/alert.component';
     PrivatePageComponent,
     AllPostComponent,
     OnePostComponent,
-    ReportPostComponent,
     EditPostComponent,
     CommentsComponent,
     TimeAgoPipe,

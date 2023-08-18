@@ -29,7 +29,7 @@ export interface User {
   username: string;
   name: string;
   email: string;
-  dob: Date;
+  dob: string;
   phoneNo: number;
   password: string;
   verified: boolean;

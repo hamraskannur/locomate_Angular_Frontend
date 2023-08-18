@@ -9,13 +9,12 @@ import { Router } from '@angular/router';
 export class AdminBottomBarComponent {
   constructor(private router: Router) {}
   menus = [
-    { name: 'Dashboard', link: '/', icon: 'Home' },
     { name: 'Users', link: '/users', icon: 'group' },
     { name: 'report', link: '/reports', icon: 'report' },
     { name: 'posts', link: '/posts', icon: 'photo_library' },
   ];
   logOut() {
     localStorage.clear();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/admin/login']);
   }
 }

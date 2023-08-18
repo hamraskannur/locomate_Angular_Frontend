@@ -89,14 +89,7 @@
                 </p>
               </ng-template>
             </div>
-            <div (click)="setReport()">
-              <p
-                class="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
-              >
-                <span class="material-symbols-outlined"> report </span>
-                Report
-              </p>
-            </div>
+            
           </div>
 
           <div
@@ -250,5 +243,4 @@
     (setEditPost)="onSetEditPost($event)"
     (descriptionChange)="onDescriptionChange($event)"
   ></app-edit-post>
-  <!-- <app-report-post *ngIf="report" video={false} setReport={setReport} postId={post?._id}></app-report-post> -->
 </div>

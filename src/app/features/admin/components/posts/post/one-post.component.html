@@ -1,0 +1,87 @@
+
+<div
+  [ngClass]="{
+    'shadow-md': onePost,
+    'shadow-lg': !onePost,
+    'bg-white': true,
+    'shadow-gray-400': true,
+    'rounded-md': true,
+    'p-3': true,
+    'md:mx-5': true,
+    'mb-5': true,
+    'mt-5': true,
+    'md:mt-6': true
+  }"
+  class="mb-5"
+>
+  <div class="flex gap-3">
+    <div>
+      <app-avatar [imgSrc]="post?.userId?.ProfileImg"></app-avatar>
+    </div>
+    <div
+      (click)="getAccountPage(post?.userId?._id)"
+      class="grow cursor-pointer"
+    >
+      <div class="flex items-center gap-2">
+        <p class="font-semibold">{{ post?.userId?.username }}</p>
+      </div>
+      <p class="text-gray-500 text-sm">
+        <a>{{ post?.createdAt | timeAgo }}</a>
+        <span
+          *ngIf="post?.edit"
+          class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300"
+          >edited</span
+        >
+      </p>
+    </div>
+  
+  </div>
+  <div>
+    <p class="my-1 break-all text-sm">{{ post?.description }}</p>
+
+    <div class="rounded-md overflow-hidden w-full">
+        <div *ngIf="!shorts else video" class="slider-container">
+          <img [src]="currentImage?currentImage:post.img[0]" class="slider-image w-full h-80" alt="" />
+          <div *ngIf="post.img.length>1" class="button-container">
+            <button class="slider-button prev-button" (click)="showPreviousImage()">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <button class="slider-button next-button" (click)="showNextImage()">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+        <ng-template #video>
+          <video class="w-full object-cover max-h-96 mb-5" width="400" controls>
+                 <source [src]="post?.shorts" />
+            </video>
+        </ng-template>
+    </div>
+
+  </div>
+  <div class="flex mt-2 gap-4">
+    <button type="button" class="flex gap-2 items-center">
+      <div *ngIf="like; else unlike" >
+       
+        <img class="w-7" src="../../../../../assets/favorite_FILL1_wght400_GRAD0_opsz48.svg" alt="">
+      </div>
+      <ng-template #unlike>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="28"
+          height="28"
+        >
+          <path fill="none" d="M0 0H24V24H0z" />
+          <path
+            d="M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z"
+          />
+        </svg>
+      </ng-template>
+      {{ likeCount }}
+    </button>
+   
+  </div>
+  
+  
+</div>

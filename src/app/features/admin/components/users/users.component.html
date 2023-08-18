@@ -1,0 +1,68 @@
+<app-admin-layout>
+
+    <div class="container mx-auto bg-[#FFFFFF] max-md:pl-16 ">
+        <div class="p-5 h-full min-w-full bg-[#FFFFFF]">
+          <table class="w-full mt-5">
+            <thead class="bg-gray-50 border-b-2 border-stone-700 ">
+              <tr>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">
+                  No
+                </th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">
+                  Name
+                </th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">
+                  Email
+                </th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">
+                  UserName
+                </th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">
+                  Status
+                </th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">
+                  view user
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of users let i=index" class="b-white border-b-2 ">
+                  <td class="p-3 pt-7  text-sm text-gray-700">{{i + 1}}</td>
+                  <td class="p-3 pt-7 text-sm text-gray-700">{{item.name}}</td>
+                  <td class="p-3 pt-7 text-sm text-gray-700">{{item.email}}</td>
+                  <td class="p-3 pt-7 text-sm text-gray-700">
+                    {{item.username}}
+                  </td>
+                    <button
+                    *ngIf="item.status else unBlock"
+                      (click)="unblockUser(item)"
+                      type="button"
+                      class="mt-4 inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-600 active:shadow-lg transition duration-150 ease-in-out"
+                    >
+                      Unblock
+                    </button>
+                    <ng-template #unBlock>
+                        <button
+                        type="button"
+                        (click)="blockUser(item)"
+                        class="mt-4 inline-block px-6 py-2.5 bg-slate-700 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-slate-500 hover:shadow-lg focus:bg-slate-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-slate-500 active:shadow-lg transition duration-150 ease-in-out"
+                        >
+                        Block
+                    </button>
+                </ng-template>
+                  <td>
+                    <button
+                      type="button"
+                       (click)="getUserPage(item._id)"
+                      class="mt-4 inline-block px-6 py-2.5 bg-slate-700 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-slate-500 hover:shadow-lg focus:bg-slate-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-slate-500 active:shadow-lg transition duration-150 ease-in-out"
+                    >
+                      view profile
+                    </button>
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+</app-admin-layout>

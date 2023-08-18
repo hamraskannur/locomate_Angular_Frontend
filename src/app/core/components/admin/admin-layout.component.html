@@ -2,7 +2,7 @@
     <app-admin-nav-bar></app-admin-nav-bar>
     <div class="flex">
       <!-- side bar -->
-      <div class="h-full sticky top-16">
+      <div class=" h-full sticky top-16 ">
         <div class="hidden md:inline-block border-r-4 border-slate-700">
           <div
             [ngClass]="{
@@ -25,6 +25,8 @@
               class="mt-4 flex flex-col gap-4 relative"
             >
               <button
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{ exact: true }"
                 type="button"
                 class="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md"
               >
@@ -88,8 +90,11 @@
           </div>
         </div>
       </div>
+      <div class="content ">
+
+          <ng-content class="w-full md:mb-0 mb-10 "></ng-content>
+      </div>
         
-      <ng-content class="w-full md:mb-0 mb-10"></ng-content>
     </div>
     <div class="md:hidden block sticky bottom-0 z-50 w-full">
       <app-admin-bottom-bar></app-admin-bottom-bar>

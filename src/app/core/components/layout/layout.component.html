@@ -27,6 +27,8 @@
             <button
               type="button"
               class="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-[#bbc0c7] rounded-md"
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{ exact: true }"
             >
               <div>
                 <span class="material-symbols-outlined"> {{ menu.icon }} </span>
@@ -153,6 +155,8 @@
             class="mt-4 flex flex-col gap-4 relative"
           >
             <button
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
               type="button"
               class="group flex items-center text-sm gap-3.5 font-medium hover:bg-[#bbc0c7] rounded-md p-2"
             >

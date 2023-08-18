@@ -15,7 +15,7 @@ export class LayoutComponent {
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
   constructor(
     private router: Router,
-    private store: Store<{ user: UserState }>
+    private store: Store<{ user: UserState }>,
   ) {}
   count = 0;
   sideBar = true;
@@ -45,6 +45,8 @@ export class LayoutComponent {
     this.showOption = showOption;
   }
 
+ 
+  
   changeSidebar() {
     this.sideBar = !this.sideBar;
   }
