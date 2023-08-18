@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
-import { updateLoading } from 'src/app/stores/loading/loading.actions';
-import { LoadingState } from 'src/app/stores/loading/loading.reducer';
+
 import { UserState } from 'src/app/stores/user/user.reducer';
 import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 
@@ -20,7 +19,7 @@ export class SuggestionsComponent implements OnInit {
   userId: string = '';
   constructor(
     private userApiServiceService: UserApiServiceService,
-    private store: Store<{ user: UserState; loading: LoadingState }>
+    private store: Store<{ user: UserState;}>
   ) {}
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
@@ -30,7 +29,6 @@ export class SuggestionsComponent implements OnInit {
   }
 
   fetchSuggestions(): void {
-    this.store.dispatch(updateLoading({ isLoading: true }));
 
     this.userApiServiceService
       .getSuggestionUsers()
@@ -41,7 +39,6 @@ export class SuggestionsComponent implements OnInit {
           status: boolean;
           notFollowedUsers: User[];
         }) => {
-          this.store.dispatch(updateLoading({ isLoading: false }));
           this.users = notFollowedUsers;
         }
       );

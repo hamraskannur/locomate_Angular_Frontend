@@ -11,6 +11,7 @@ import { UploadShortsComponent } from './components/layout/upload-shorts/upload-
 import { AdminLayoutComponent } from './components/admin/admin-layout.component';
 import { AdminBottomBarComponent } from './components/admin/admin-bottom-bar/admin-bottom-bar.component';
 import { AdminNavBarComponent } from './components/admin/admin-nav-bar/admin-nav-bar.component';
+import { LoadingComponent } from '../shared/components/user/loding/loading.component';
 
 @NgModule({
   declarations: [
@@ -22,14 +23,16 @@ import { AdminNavBarComponent } from './components/admin/admin-nav-bar/admin-nav
     AdminLayoutComponent,
     AdminBottomBarComponent,
     AdminNavBarComponent,
+    LoadingComponent,
 ],
   imports: [
     CommonModule,
     FormsModule, 
     RouterModule,
+    
     sharedModule
   ],
-  exports: [LayoutComponent,AdminLayoutComponent],
+  exports: [LayoutComponent,AdminLayoutComponent,LoadingComponent],
 
 })
 export class CoreModule { }

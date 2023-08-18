@@ -6,8 +6,7 @@ import { Post, User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
 import { UserState } from 'src/app/stores/user/user.reducer';
 import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
-import { LoadingState } from 'src/app/stores/loading/loading.reducer';
-import { updateLoading } from 'src/app/stores/loading/loading.actions';
+
 
 @Component({
   selector: 'app-home',
@@ -17,7 +16,7 @@ import { updateLoading } from 'src/app/stores/loading/loading.actions';
 export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private userApiServiceService: UserApiServiceService,
-    private store: Store<{ user: UserState; loading: LoadingState }>
+    private store: Store<{ user: UserState }>
   ) {}
 
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
@@ -46,19 +45,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe to avoid memory leaks
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
   getPost(): void {
-    this.store.dispatch(updateLoading({ isLoading: true }));
 
     this.userApiServiceService.getAllPost().subscribe((allPost: Post[]) => {
       if (allPost.length > 0) {
         this.posts = allPost.reverse();
-        this.store.dispatch(updateLoading({ isLoading: false }));
       }
     });
   }

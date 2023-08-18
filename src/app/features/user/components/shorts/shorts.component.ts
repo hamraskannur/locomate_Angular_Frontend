@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { UserApiServiceService } from '../../services/user-api.service.service';
 import { Post, User } from 'src/app/core/models/interface';
 import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
-import { LoadingState } from 'src/app/stores/loading/loading.reducer';
 import { UserState } from 'src/app/stores/user/user.reducer';
 
 @Component({
@@ -19,7 +18,7 @@ export class ShortsComponent implements OnInit {
 
   constructor(
     private UserApiServiceService: UserApiServiceService,
-    private store: Store<{ user: UserState; loading: LoadingState }>
+    private store: Store<{ user: UserState;  }>
 
     ) {}
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);

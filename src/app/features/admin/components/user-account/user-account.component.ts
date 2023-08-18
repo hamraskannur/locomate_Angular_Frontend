@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { User } from 'src/app/core/models/interface';
 import { ActivatedRoute } from '@angular/router';
-import { updateLoading } from 'src/app/stores/loading/loading.actions';
-import { LoadingState } from 'src/app/stores/loading/loading.reducer';
-import { Store } from '@ngrx/store';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
 
 @Component({

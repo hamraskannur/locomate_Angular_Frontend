@@ -17,6 +17,7 @@ import { TimeAgoPipe } from './pipe/timePipe';
 import { CommentComponent } from './components/user/post/comments/comment/comment.component';
 import { ReplayCommentComponent } from './components/user/post/comments/comment/replay-comment/replay-comment.component';
 import { AlertComponent } from './components/user/alert/alert.component';
+import { LoadingComponent } from './components/user/loding/loading.component';
 
 @NgModule({
   declarations: [

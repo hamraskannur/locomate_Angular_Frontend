@@ -10,12 +10,11 @@ import { UserRoutingModule } from './user-routing.module';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from 'src/app/core/core.module';
 import { UserComponent } from './user.component';
-import { LoadingComponent } from '../../shared/components/user/loding/loading.component';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, VerifyComponent,UserComponent,LoadingComponent],
+  declarations: [LoginComponent, RegisterComponent, VerifyComponent,UserComponent,  ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
