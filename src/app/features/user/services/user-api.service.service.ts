@@ -237,4 +237,7 @@ export class UserApiServiceService {
   createChat(formData:{senderId:string,receiverId:string}): Observable<chat> {
     return this.http.post<chat>(`${this.serverApi}chat/createChat`,formData);
   }
+  messageView(id:string): Observable<string>{
+    return this.http.get<string>(`${this.serverApi}chat/viewMessage/${id}`);
+  }
 }

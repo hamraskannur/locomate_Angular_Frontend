@@ -3,20 +3,21 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { loginResponse } from '../../../../core/models/interface';
 import { passwordPattern } from '../../../../constants/patterns';
-import { UserApiServiceService } from '../../services/user-api.service.service';
-import { ToastrServiceService } from '../../services/toastr.service';
+import { ToastrServiceService } from 'src/app/features/user/services/toastr.service';
+import { adminService } from '../../services/admin-api.service';
+
 
 declare const particlesJS: any;
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-admin-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements AfterViewInit,OnChanges {
+export class AdminLoginComponent implements AfterViewInit,OnChanges {
   constructor(
     private fb: FormBuilder,
-    private userApiServiceService: UserApiServiceService,
+    private adminService: adminService,
     private router: Router,
     private toastrService: ToastrServiceService,
   ) {}
@@ -37,14 +38,13 @@ export class LoginComponent implements AfterViewInit,OnChanges {
 
   onSubmit() {
     this.submit = true;
-    if (this.registrationForm.valid) {
-      this.userApiServiceService
-        .userLogin(this.registrationForm.value)
-        .subscribe(({ token, message, status }: loginResponse) => {
+    if (this.registrationForm.valid ) {
+      this.adminService.adminLogin(this.registrationForm.value)
+        .subscribe(({ token, message, status }: loginResponse) => {          
           if (status) {
-            localStorage.setItem('token', token);
+            localStorage.setItem('adminToken', token);
             this.ErrMessage = null;
-            this.router.navigate(['/']);
+            this.router.navigate(['/admin']);
             this.toastrService.showSuccess('logined successfully');
           } else {
             this.ErrMessage = message;

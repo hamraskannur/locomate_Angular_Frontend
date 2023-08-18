@@ -19,7 +19,6 @@ import { UserStateModule } from './stores/state.module';
 
 @NgModule({
   declarations: [
-    
     AppComponent,
     AppNotfoundComponent,
     AppInternalserverComponent,

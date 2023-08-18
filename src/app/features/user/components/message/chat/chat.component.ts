@@ -63,7 +63,10 @@ export class ChatComponent implements OnInit, OnChanges, AfterViewChecked {
     if (changes['receiveMessages']) {
     if(this.receiveMessages && this.user && this.receiveMessages.senderId===this.user._id){
       this.messages.push(this.receiveMessages)
-      this.receiveMessages=null
+      this.userApiServiceService.messageView(this.receiveMessages._id).subscribe(()=>{
+
+        this.receiveMessages=null
+      })
     }
   }
   }
