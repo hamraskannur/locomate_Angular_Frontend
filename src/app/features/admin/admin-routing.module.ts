@@ -10,7 +10,7 @@ import { UserAccountComponent } from './components/user-account/user-account.com
 
 
 const adminRoute: Routes = [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full'}, 
       { path: 'dashboard', component: DashboardComponent ,canActivate:[AdminGuard]},
       { path: 'users', component: UsersComponent ,canActivate:[AdminGuard]},
       { path: 'posts', component: PostsComponent ,canActivate:[AdminGuard]},

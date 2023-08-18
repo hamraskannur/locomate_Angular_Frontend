@@ -15,12 +15,12 @@ import { UserState } from 'src/app/stores/user/user.reducer';
 export class ShortsComponent implements OnInit {
   shorts: Post[] = [];
   subscription: Subscription | undefined; // Subscription to handle cleanup
+  subscription1: Subscription | undefined; // Subscription to handle cleanup
 
   constructor(
     private UserApiServiceService: UserApiServiceService,
-    private store: Store<{ user: UserState;  }>
-
-    ) {}
+    private store: Store<{ user: UserState }>
+  ) {}
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
   ngOnInit(): void {
@@ -31,22 +31,22 @@ export class ShortsComponent implements OnInit {
         }
       }
     );
-    this.getshorts()
+    this.getshorts();
   }
 
   getshorts() {
-    this.UserApiServiceService.getAllshorts().subscribe((data: Post[]) => {
-      this.shorts = data.reverse();
-    });
+    this.subscription1 = this.UserApiServiceService.getAllshorts().subscribe(
+      (data: Post[]) => {
+        this.shorts = data.reverse();
+      }
+    );
   }
   deletePost(id: string): void {
     this.shorts = this.shorts.filter((post) => post._id !== id);
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe to avoid memory leaks
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription?.unsubscribe();
+    this.subscription1?.unsubscribe();
   }
 }

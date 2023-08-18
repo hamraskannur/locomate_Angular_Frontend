@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { UserApiServiceService } from '../../services/user-api.service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-requests',
   templateUrl: './requests.component.html',
   styleUrls: ['./requests.component.css']
 })
-export class RequestsComponent implements OnInit {
+export class RequestsComponent implements OnInit,OnDestroy {
   request:any[]=[]
   
   constructor(private userApiServiceService:UserApiServiceService){}
+  userDataSubscription: Subscription | undefined;
 
   ngOnInit(): void {
-    this.userApiServiceService.getAllRequest().subscribe((data:any)=>{
+   this.userDataSubscription= this.userApiServiceService.getAllRequest().subscribe((data:any)=>{
       this.request=data.Request
     })
   }
@@ -23,5 +25,8 @@ export class RequestsComponent implements OnInit {
 
   handleDeleteRequest(id: string): void {  
       this.request = this.request.filter((item:any) => item.Requests[0]._id !== id);
+  }
+  ngOnDestroy(): void {
+    this.userDataSubscription?.unsubscribe()
   }
 }

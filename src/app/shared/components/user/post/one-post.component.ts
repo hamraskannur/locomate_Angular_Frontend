@@ -1,6 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs'; // Import Subscription
 
 import { User } from 'src/app/core/models/interface';
 import { ToastrServiceService } from 'src/app/features/user/services/toastr.service';
@@ -13,11 +21,16 @@ import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
   templateUrl: './one-post.component.html',
   styleUrls: ['./one-post.component.css'],
 })
-export class OnePostComponent implements OnInit {
+export class OnePostComponent implements OnInit, OnDestroy {
   @Input() post: any;
   @Input() onePost: boolean = false;
   @Output() deleteId: EventEmitter<string> = new EventEmitter<string>();
-  @Input() shorts:boolean=false
+  @Input() shorts: boolean = false;
+
+  // Subscription
+  deletePostSubscribe: Subscription | undefined;
+  likePostSubscribe: Subscription | undefined;
+  savePostSubscribe: Subscription | undefined;
 
   dropdownOpen = false;
   currentUser = false;
@@ -68,9 +81,9 @@ export class OnePostComponent implements OnInit {
 
   deletePost(value: boolean) {
     this.alert = false;
-    
-    if(value){
-      this.userApiServiceService
+
+    if (value) {
+      this.deletePostSubscribe = this.userApiServiceService
         .deletePost(this.post._id)
         .subscribe(({ success }: { message: string; success: boolean }) => {
           if (success) {
@@ -89,7 +102,6 @@ export class OnePostComponent implements OnInit {
   handleSetCount(value: number) {
     this.count = value;
   }
-
 
   likePost(id: string) {
     this.userApiServiceService
@@ -147,5 +159,18 @@ export class OnePostComponent implements OnInit {
     this.currentIndex =
       (this.currentIndex - 1 + this.images.length) % this.images.length;
     this.showImage(this.currentIndex);
+  }
+
+  ngOnDestroy() {
+    // Unsubscribe when the component is destroyed to prevent memory leaks
+    if (this.deletePostSubscribe) {
+      this.deletePostSubscribe.unsubscribe();
+    }
+    if(this.likePostSubscribe){
+      this.likePostSubscribe.unsubscribe();
+    }
+    if(this.savePostSubscribe){
+      this.savePostSubscribe.unsubscribe();
+    }
   }
 }

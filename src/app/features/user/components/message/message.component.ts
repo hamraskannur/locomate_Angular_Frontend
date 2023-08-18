@@ -1,10 +1,11 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit ,OnDestroy} from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { UserApiServiceService } from '../../services/user-api.service.service';
 import { UserState } from 'src/app/stores/user/user.reducer';
 import { Store } from '@ngrx/store';
 import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 import { User, chat, message } from 'src/app/core/models/interface';
-import { Socket, io } from 'socket.io-client';
 import { loadUserData } from 'src/app/stores/user/user.actions';
 import { SocketService } from '../../services/socket.service';
 
@@ -13,7 +14,7 @@ import { SocketService } from '../../services/socket.service';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit,OnDestroy {
 
 
   user!:User
@@ -30,15 +31,18 @@ export class MessageComponent implements OnInit {
   constructor(private UserApiServiceService:UserApiServiceService,private store: Store<{ user: UserState }>,private SocketService:SocketService){}
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
+  userDataSubscription: Subscription | undefined;
+  subscription2: Subscription | undefined;
+
   ngOnInit(): void {
     
     this.store.dispatch(loadUserData())
 
-    this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+    this.userDataSubscription=this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
       if(user){        
         this.user=user
         this.socketSetup(user)
-        this.UserApiServiceService.getUserChat(user._id).subscribe((data:chat[])=>{
+        this.subscription2=this.UserApiServiceService.getUserChat(user._id).subscribe((data:chat[])=>{
             this.chats=data
         })
       }
@@ -87,5 +91,9 @@ export class MessageComponent implements OnInit {
 
   setSentMessage(value:message){    
     this.SocketService.getSocket().emit("send-message", value);
+  }
+  ngOnDestroy(): void {
+    this.userDataSubscription?.unsubscribe()
+  this.subscription2?.unsubscribe
   }
 }

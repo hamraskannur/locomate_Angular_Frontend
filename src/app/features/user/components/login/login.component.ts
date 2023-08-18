@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, OnChanges,SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, OnChanges,SimpleChanges , OnDestroy} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { loginResponse } from '../../../../core/models/interface';
 import { passwordPattern } from '../../../../constants/patterns';
 import { UserApiServiceService } from '../../services/user-api.service.service';
 import { ToastrServiceService } from '../../services/toastr.service';
+import { Subscription } from 'rxjs';
 
 declare const particlesJS: any;
 
@@ -13,13 +14,14 @@ declare const particlesJS: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements AfterViewInit,OnChanges {
+export class LoginComponent implements AfterViewInit,OnChanges , OnDestroy{
   constructor(
     private fb: FormBuilder,
     private userApiServiceService: UserApiServiceService,
     private router: Router,
     private toastrService: ToastrServiceService,
   ) {}
+  subscription: Subscription | undefined;
 
   //declare variable
   submit: boolean = false;
@@ -38,7 +40,7 @@ export class LoginComponent implements AfterViewInit,OnChanges {
   onSubmit() {
     this.submit = true;
     if (this.registrationForm.valid) {
-      this.userApiServiceService
+     this.subscription= this.userApiServiceService
         .userLogin(this.registrationForm.value)
         .subscribe(({ token, message, status }: loginResponse) => {
           if (status) {
@@ -179,5 +181,9 @@ ngOnChanges(changes: SimpleChanges): void {
       },
       retina_detect: true,
   })
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe()
   }
 }

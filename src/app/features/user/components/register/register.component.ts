@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -8,6 +8,7 @@ import { registerResponse } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
 import { ToastrServiceService } from '../../services/toastr.service';
 import { passwordPattern } from 'src/app/constants/patterns';
+import { Subscription } from 'rxjs';
 
 
 declare const particlesJS: any;
@@ -17,7 +18,7 @@ declare const particlesJS: any;
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit ,OnDestroy{
   constructor(
     private formBuilder: FormBuilder,
     private userApiServiceService: UserApiServiceService,
@@ -28,6 +29,8 @@ export class RegisterComponent implements OnInit {
   passwordShown = false;
   verify: string = '';
   ErrMessage: string | null = null;
+  subscription: Subscription | undefined;
+
 
   signupForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -54,7 +57,7 @@ export class RegisterComponent implements OnInit {
     this.submit = true;
     if (this.signupForm.valid) {
       this.loading = true;
-      this.userApiServiceService
+   this.subscription=   this.userApiServiceService
         .userRegister(this.signupForm.value)
         .subscribe(({ status, message }: registerResponse) => {
           if (status) {
@@ -182,5 +185,8 @@ export class RegisterComponent implements OnInit {
       },
       retina_detect: true,
     });
+  }
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe()
   }
 }

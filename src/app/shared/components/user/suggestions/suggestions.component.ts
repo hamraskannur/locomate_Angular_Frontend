@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+
 import { User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
-
 import { UserState } from 'src/app/stores/user/user.reducer';
 import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 
@@ -14,7 +12,7 @@ import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
   templateUrl: './suggestions.component.html',
   styleUrls: ['./suggestions.component.css'],
 })
-export class SuggestionsComponent implements OnInit {
+export class SuggestionsComponent implements OnInit,OnDestroy {
   users: User[] = [];
   userId: string = '';
   constructor(
@@ -22,6 +20,8 @@ export class SuggestionsComponent implements OnInit {
     private store: Store<{ user: UserState;}>
   ) {}
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
+  subscription: Subscription | undefined;
+  userDataSubscription: Subscription | undefined;
 
   ngOnInit(): void {
     this.getUser();
@@ -30,7 +30,7 @@ export class SuggestionsComponent implements OnInit {
 
   fetchSuggestions(): void {
 
-    this.userApiServiceService
+   this.subscription= this.userApiServiceService
       .getSuggestionUsers()
       .subscribe(
         ({
@@ -45,10 +45,14 @@ export class SuggestionsComponent implements OnInit {
   }
 
   getUser() {
-    this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
+   this.userDataSubscription= this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
       if (user) {
         this.userId = user._id;
       }
     });
+  }
+  ngOnDestroy(): void {
+    this.userDataSubscription?.unsubscribe()
+    this.subscription?.unsubscribe()
   }
 }

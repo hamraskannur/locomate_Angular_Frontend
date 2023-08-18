@@ -6,16 +6,18 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
 import { Post, User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-all-post',
   templateUrl: './all-post.component.html',
   styleUrls: ['./all-post.component.css'],
 })
-export class AllPostComponent implements OnInit, OnChanges {
+export class AllPostComponent implements OnInit, OnChanges, OnDestroy {
   @Input() userId: string | undefined;
   @Input() type: Boolean = false;
   @Input() SavedPost: boolean = false;
@@ -25,9 +27,12 @@ export class AllPostComponent implements OnInit, OnChanges {
   @Input() shorts: boolean = false;
 
   posts: any;
+  subscription1: Subscription | undefined;
+  subscription2: Subscription | undefined;
+  subscription3: Subscription | undefined;
 
   constructor(private userApiServiceService: UserApiServiceService) {}
-
+  
   ngOnInit(): void {
     this.getPost();
   }
@@ -39,13 +44,13 @@ export class AllPostComponent implements OnInit, OnChanges {
 
   getPost = async () => {
     if (this.SavedPost && this.userId) {
-      this.userApiServiceService
+     this.subscription1= this.userApiServiceService
         .getSavedPost(this.userId)
         .subscribe((response) => {
           this.posts = response;
         });
     } else if (this.shorts && this.userId) {
-      this.userApiServiceService
+    this.subscription2=  this.userApiServiceService
         .getUserShorts(this.userId)
         .subscribe(
           (response: {
@@ -58,7 +63,7 @@ export class AllPostComponent implements OnInit, OnChanges {
         );
     } else {
       if (this.userId) {
-        this.userApiServiceService
+      this.subscription3=  this.userApiServiceService
           .getUserAllPost(this.userId)
           .subscribe(
             ({
@@ -95,5 +100,10 @@ export class AllPostComponent implements OnInit, OnChanges {
       post.shortsCheck = false;
     }
     this.onePost.emit(post);
+  }
+  ngOnDestroy(): void {
+   this.subscription1?.unsubscribe()
+   this.subscription2?.unsubscribe()
+   this.subscription3?.unsubscribe()
   }
 }

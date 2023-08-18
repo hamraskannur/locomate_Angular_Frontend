@@ -6,8 +6,11 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
-import { Post, User } from 'src/app/core/models/interface';
+import { Subscription } from 'rxjs';
+
+import { Post } from 'src/app/core/models/interface';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
 
 @Component({
@@ -15,7 +18,7 @@ import { UserApiServiceService } from 'src/app/features/user/services/user-api.s
   templateUrl: './all-post.component.html',
   styleUrls: ['./all-post.component.css'],
 })
-export class AdminAllPostComponent implements OnInit, OnChanges {
+export class AdminAllPostComponent implements OnInit, OnChanges, OnDestroy {
   @Input() userId: string | undefined;
   @Input() type: Boolean = false;
   @Input() postCount: number | undefined;
@@ -24,7 +27,8 @@ export class AdminAllPostComponent implements OnInit, OnChanges {
   @Input() shorts: boolean = false;
 
   posts: any;
-
+  subscription2: Subscription | undefined;
+  subscription1: Subscription | undefined;
   constructor(private userApiServiceService: UserApiServiceService) {}
 
   ngOnInit(): void {
@@ -37,8 +41,8 @@ export class AdminAllPostComponent implements OnInit, OnChanges {
   }
 
   getPost = async () => {
-     if (this.shorts && this.userId) {
-      this.userApiServiceService
+    if (this.shorts && this.userId) {
+      this.subscription1 = this.userApiServiceService
         .getUserShorts(this.userId)
         .subscribe(
           (response: {
@@ -51,7 +55,7 @@ export class AdminAllPostComponent implements OnInit, OnChanges {
         );
     } else {
       if (this.userId) {
-        this.userApiServiceService
+        this.subscription2 = this.userApiServiceService
           .getUserAllPost(this.userId)
           .subscribe(
             ({
@@ -69,7 +73,10 @@ export class AdminAllPostComponent implements OnInit, OnChanges {
       }
     }
   };
-  
+  ngOnDestroy(): void {
+    this.subscription1?.unsubscribe();
+    this.subscription2?.unsubscribe();
+  }
 
   getOnePost(post: Post) {
     if (this.shorts) {

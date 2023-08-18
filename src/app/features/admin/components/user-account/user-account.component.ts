@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component ,OnDestroy} from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { User } from 'src/app/core/models/interface';
 import { ActivatedRoute } from '@angular/router';
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
@@ -8,7 +10,7 @@ import { UserApiServiceService } from 'src/app/features/user/services/user-api.s
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.component.css'],
 })
-export class UserAccountComponent {
+export class UserAccountComponent implements OnDestroy {
   user!: User;
   type = false;
   constructor(
@@ -16,10 +18,10 @@ export class UserAccountComponent {
     private route: ActivatedRoute,
   ) {}
 
+  subscription1: Subscription | undefined;
+
   ngOnInit(): void {
-   console.log("yzzzzzzzzzzzz");
-   
-    this.route.params.subscribe((params) => {
+    this.subscription1=this.route.params.subscribe((params) => {
       const id = params['id']; // This is the id parameter from the URL
       this.userApiServiceService
         .getFriendsAccount(id)
@@ -27,5 +29,8 @@ export class UserAccountComponent {
           this.user = friendsAccount;
         });
     });
+  }
+  ngOnDestroy(): void {
+    this.subscription1?.unsubscribe()
   }
 }

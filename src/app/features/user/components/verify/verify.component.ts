@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { registerResponse } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
 
@@ -8,43 +10,46 @@ declare const particlesJS: any;
 @Component({
   selector: 'app-verify',
   templateUrl: './verify.component.html',
-  styleUrls: ['./verify.component.css']
+  styleUrls: ['./verify.component.css'],
 })
-export class VerifyComponent implements OnInit {
-
+export class VerifyComponent implements OnInit, OnDestroy {
   spinner: boolean = true;
   verify: boolean = false;
   notVerify: boolean = false;
   alreadyVerify: boolean = false;
-  
 
-  constructor(private route: ActivatedRoute,private userApiServiceService:UserApiServiceService) { }
+  subscription: Subscription | undefined;
+
+  constructor(
+    private route: ActivatedRoute,
+    private userApiServiceService: UserApiServiceService
+  ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.queryParamMap.get('id');
     const token = this.route.snapshot.queryParamMap.get('token');
 
-    this.route.queryParamMap.subscribe(params => {
+    this.route.queryParamMap.subscribe((params) => {
       const id = params.get('id');
       const token = params.get('token');
-      if(id !== null && token !== null){
-        this.userApiServiceService.verifyRegistration(id,token).subscribe(({status,message}:registerResponse)=>{     
-          if(message==="Already verified"){
-            this.alreadyVerify=true
-            this.spinner=false
-          }else if( status){
-            this.verify=true
-            this.spinner=false
-          }else{
-            this.spinner=false
-            this.verify=false
-            this.notVerify=true
-          }
-        })
+      if (id !== null && token !== null) {
+        this.subscription = this.userApiServiceService
+          .verifyRegistration(id, token)
+          .subscribe(({ status, message }: registerResponse) => {
+            if (message === 'Already verified') {
+              this.alreadyVerify = true;
+              this.spinner = false;
+            } else if (status) {
+              this.verify = true;
+              this.spinner = false;
+            } else {
+              this.spinner = false;
+              this.verify = false;
+              this.notVerify = true;
+            }
+          });
       }
-      
     });
-
 
     particlesJS('particles-js', {
       particles: {
@@ -157,9 +162,7 @@ export class VerifyComponent implements OnInit {
       retina_detect: true,
     });
   }
-
-
-  
-
-
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 }

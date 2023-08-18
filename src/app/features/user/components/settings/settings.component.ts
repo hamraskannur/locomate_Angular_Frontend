@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { User } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
 import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
@@ -13,7 +15,7 @@ import { first } from 'rxjs/operators';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit,OnDestroy {
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
   switchChecked = false;
   constructor(
@@ -22,8 +24,12 @@ export class SettingsComponent implements OnInit {
     private store: Store<{ user: UserState }>
   ) {}
 
+  userDataSubscription: Subscription | undefined;
+  subscription: Subscription | undefined;
+
+
   ngOnInit(): void {
-    this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
+    this.userDataSubscription=this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
       if (user) {
         this.switchChecked = !user.public;
       }
@@ -32,7 +38,7 @@ export class SettingsComponent implements OnInit {
 
   handleSwitchChange(): void {
 
-    this.userApiServiceService
+    this.subscription=this.userApiServiceService
       .changeToPrivate(!this.switchChecked)
       .subscribe(({ success }: { message: string; success: boolean }) => {
         if(success){ 
@@ -55,5 +61,9 @@ export class SettingsComponent implements OnInit {
     localStorage.clear();
     this.store.dispatch(removeUserData())
     this.router.navigate(['/login']);
+  }
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe()
+    this.userDataSubscription?.unsubscribe()
   }
 }

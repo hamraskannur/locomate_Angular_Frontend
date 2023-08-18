@@ -1,4 +1,6 @@
-import { AfterViewInit, Component, OnChanges,SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, OnChanges,SimpleChanges ,OnDestroy} from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { loginResponse } from '../../../../core/models/interface';
@@ -14,13 +16,14 @@ declare const particlesJS: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class AdminLoginComponent implements AfterViewInit,OnChanges {
+export class AdminLoginComponent implements AfterViewInit,OnChanges,OnDestroy {
   constructor(
     private fb: FormBuilder,
     private adminService: adminService,
     private router: Router,
     private toastrService: ToastrServiceService,
   ) {}
+  subscription1: Subscription | undefined;
 
   //declare variable
   submit: boolean = false;
@@ -39,7 +42,7 @@ export class AdminLoginComponent implements AfterViewInit,OnChanges {
   onSubmit() {
     this.submit = true;
     if (this.registrationForm.valid ) {
-      this.adminService.adminLogin(this.registrationForm.value)
+      this.subscription1=this.adminService.adminLogin(this.registrationForm.value)
         .subscribe(({ token, message, status }: loginResponse) => {          
           if (status) {
             localStorage.setItem('adminToken', token);
@@ -179,5 +182,9 @@ ngOnChanges(changes: SimpleChanges): void {
       },
       retina_detect: true,
   })
+  }
+
+  ngOnDestroy(): void {
+    this.subscription1?.unsubscribe()
   }
 }

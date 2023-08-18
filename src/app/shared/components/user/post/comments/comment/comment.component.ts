@@ -19,7 +19,12 @@ export class CommentComponent implements OnInit ,OnDestroy{
     , private router: Router
   ) {}
   private commentDataSubscription: Subscription | undefined;
+  userDataSubscription: Subscription | undefined;
+  subscription2: Subscription | undefined;
+  subscription3: Subscription | undefined;
+
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
+
 
   @Input() comment: comment | undefined;
   profileImg: string | undefined;
@@ -46,7 +51,7 @@ export class CommentComponent implements OnInit ,OnDestroy{
         this.replayCommentCount = data.comments?.length;
         
       });
-    this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
+   this.userDataSubscription= this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
       if (user) {
         this.profileImg = user.ProfileImg;
         this.user = user;
@@ -62,7 +67,7 @@ export class CommentComponent implements OnInit ,OnDestroy{
   handlePostComment() {
     if (this.comment) {
       const commentId = this.comment._id;
-      this.userApiServiceService
+      this.subscription2=  this.userApiServiceService
         .postReplayComment({ commentId, newComment: this.newReplayComment })
         .subscribe((data) => {
           if (this.user) {
@@ -80,7 +85,7 @@ export class CommentComponent implements OnInit ,OnDestroy{
 
   likeComment(id: string | undefined) {
     if (id) {
-      this.userApiServiceService
+      this.subscription3= this.userApiServiceService
         .likeMainComment({ commentId: id })
         .subscribe(({ success }: { message: string; success: boolean }) => {
           if (success) {
@@ -113,7 +118,8 @@ export class CommentComponent implements OnInit ,OnDestroy{
   }
   ngOnDestroy(): void {
       this.commentDataSubscription?.unsubscribe();
+      this.userDataSubscription?.unsubscribe();
+      this.subscription2?.unsubscribe();
+      this.subscription3?.unsubscribe();
     }
-  
-
 }

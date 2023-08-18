@@ -1,4 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild ,OnDestroy} from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { User } from 'src/app/core/models/interface';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
@@ -13,7 +15,7 @@ import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css'],
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileComponent implements OnInit,OnDestroy {
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
   @ViewChild('proImageRef', { static: false }) proImageRef:
@@ -37,8 +39,12 @@ export class EditProfileComponent implements OnInit {
     private store: Store<{ user: UserState }>
   ) {}
 
+  userDataSubscription: Subscription | undefined;
+  subscription2: Subscription | undefined;
+  subscription3: Subscription | undefined;
+
   ngOnInit() {
-    this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
+   this.userDataSubscription= this.userDataAndOptions$.subscribe(({ user }: { user: User | null }) => {
       if (user) {
         this.userData = { ...user };
       }
@@ -103,7 +109,7 @@ export class EditProfileComponent implements OnInit {
           }
 
           if (observables.length > 0) {
-            forkJoin(observables).subscribe((responses: any[]) => {
+           this.subscription2= forkJoin(observables).subscribe((responses: any[]) => {
               if (this.coverImgFile && this.userData != null) {
                 this.userData.coverImg = responses[0].secure_url;
               }
@@ -133,7 +139,7 @@ export class EditProfileComponent implements OnInit {
       const updatedUser: User = {
         ...this.userData,
       };
-      this.userApiServiceService
+    this.subscription3=  this.userApiServiceService
         .saveUserData(this.userData)
         .subscribe((response: any) => {
           this.coverImg = undefined;
@@ -151,5 +157,12 @@ export class EditProfileComponent implements OnInit {
           }
         });
     }
+  }
+  ngOnDestroy(): void {
+
+    this.userDataSubscription?.unsubscribe()
+    this.subscription2?.unsubscribe()
+    this.subscription3?.unsubscribe()
+   
   }
 }

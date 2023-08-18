@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Post, User, chat } from 'src/app/core/models/interface';
@@ -6,13 +6,14 @@ import { ToastrServiceService } from 'src/app/features/user/services/toastr.serv
 import { UserApiServiceService } from 'src/app/features/user/services/user-api.service.service';
 import { UserState } from 'src/app/stores/user/user.reducer';
 import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit,OnDestroy {
   @Input() user!: User;
   @Input() type: boolean=false
 
@@ -31,7 +32,9 @@ export class AccountComponent implements OnInit {
     private router: Router,
     private store: Store<{ user: UserState }>
   ) {}
-
+  userDataSubscription: Subscription | undefined;
+  subscription2: Subscription | undefined;
+  subscription3: Subscription | undefined;
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
   ngOnInit(): void {    
@@ -44,7 +47,7 @@ export class AccountComponent implements OnInit {
   }
 
   userCheck(){
-      this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
+     this.userDataSubscription= this.userDataAndOptions$.subscribe(({user}:{user:User|null}) => {
         if(user){
           this.follow = this.user?.Followers.includes(user._id);
           this.Requested = this.user?.Requests.includes(user._id);
@@ -67,7 +70,7 @@ export class AccountComponent implements OnInit {
 
   followUserHandler(followId: string ) {
     this.loading=true
-    this.userApiServiceService.followUser({followId}).subscribe(({success,message}:{message:string,success:boolean})=>{
+   this.subscription2= this.userApiServiceService.followUser({followId}).subscribe(({success,message}:{message:string,success:boolean})=>{
       if (success) {
         if (!this.user?.public) {
           if (this.follow) {
@@ -103,8 +106,8 @@ export class AccountComponent implements OnInit {
 
   createMessage(senderId: string ) {
 
-    this.userApiServiceService.createChat({ senderId, receiverId: this.userId }).subscribe((data:chat)=>{
-      this.ToastrServiceService.showSuccess("Successfully created message")
+    this.subscription3= this.userApiServiceService.createChat({ senderId, receiverId: this.userId }).subscribe((data:chat)=>{
+     this.ToastrServiceService.showSuccess("Successfully created message")
       this.router.navigate(['/message']);
       
     })
@@ -140,5 +143,11 @@ export class AccountComponent implements OnInit {
   createChat(id:string):void {
     this.onePostId = null;
     this.selectOption = 'post';
+  }
+
+  ngOnDestroy(): void {
+    this.userDataSubscription?.unsubscribe()
+    this.subscription2?.unsubscribe()
+    this.subscription3?.unsubscribe()
   }
 }
