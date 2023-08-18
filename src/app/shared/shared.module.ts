@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LayoutComponent } from 'src/app/core/layout/layout.component';
 
 import { RouterModule } from '@angular/router';
 import { AvatarComponent } from './components/user/avatar/avatar.component';

@@ -4,6 +4,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminLoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreModule } from 'src/app/core/core.module';
 
 
 
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    CoreModule
   ]
 })
 export class AdminModule { }

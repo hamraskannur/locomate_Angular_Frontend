@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LayoutComponent } from 'src/app/core/layout/layout.component';
-import { NavBarComponent } from './layout/nav-bar/nav-bar.component';
-import { BottomBarComponent } from './layout/bottom-bar/bottom-bar.component';
+import { FormsModule } from '@angular/forms';
+import { LayoutComponent } from './components/layout/layout.component';
+import { NavBarComponent } from './components/layout/nav-bar/nav-bar.component';
+import { BottomBarComponent } from './components/layout/bottom-bar/bottom-bar.component';
 import { RouterModule } from '@angular/router';
 import { sharedModule } from '../shared/shared.module';
-import { UploadPhotoComponent } from './layout/upload-photo/upload-photo.component';
-import { UploadShortsComponent } from './layout/upload-shorts/upload-shorts.component';
+import { UploadPhotoComponent } from './components/layout/upload-photo/upload-photo.component';
+import { UploadShortsComponent } from './components/layout/upload-shorts/upload-shorts.component';
+import { AdminLayoutComponent } from './components/admin/admin-layout.component';
+import { AdminBottomBarComponent } from './components/admin/admin-bottom-bar/admin-bottom-bar.component';
+import { AdminNavBarComponent } from './components/admin/admin-nav-bar/admin-nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +19,9 @@ import { UploadShortsComponent } from './layout/upload-shorts/upload-shorts.comp
     BottomBarComponent,
     UploadPhotoComponent,
     UploadShortsComponent,
+    AdminLayoutComponent,
+    AdminBottomBarComponent,
+    AdminNavBarComponent,
 ],
   imports: [
     CommonModule,
@@ -23,7 +29,7 @@ import { UploadShortsComponent } from './layout/upload-shorts/upload-shorts.comp
     RouterModule,
     sharedModule
   ],
-  exports: [LayoutComponent],
+  exports: [LayoutComponent,AdminLayoutComponent],
 
 })
 export class CoreModule { }
