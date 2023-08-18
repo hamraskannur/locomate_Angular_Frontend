@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { adminService } from '../../services/admin-api.service';
 import { User } from 'src/app/core/models/interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -10,7 +11,7 @@ import { User } from 'src/app/core/models/interface';
 })
 export class UsersComponent implements OnInit {
   users!: User[];
-  constructor(private adminService: adminService) {}
+  constructor(private adminService: adminService ,private router: Router) {}
 
   ngOnInit(): void {
     this.adminService.getUsers().subscribe((data: User[]) => {
@@ -41,5 +42,9 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  getUserPage(id: string) {}
+
+  getUserPage(userId: string): void {
+    
+    this.router.navigate(['/admin/userAccount', userId]);
+  }
 }

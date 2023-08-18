@@ -9,6 +9,10 @@ import { PostsComponent } from './components/posts/posts.component';
 import { AdminOnePostComponent } from './components/posts/post/one-post.component';
 import { sharedModule } from 'src/app/shared/shared.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { UserAccountComponent } from './components/user-account/user-account.component';
+import { AdminAccountComponent } from './components/user-account/account/account.component';
+import { AdminShowUserComponent } from './components/user-account/account/show-user/show-user.component';
+import { AdminAllPostComponent } from './components/user-account/account/all-post/all-post.component';
 
 @NgModule({
   declarations: [
@@ -17,14 +21,18 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     AdminOnePostComponent,
     PostsComponent,
     DashboardComponent,
+    UserAccountComponent,
+    AdminAccountComponent,
+    AdminShowUserComponent,
+    AdminAllPostComponent
   ],
   imports: [
+    CoreModule,
+    sharedModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
     AdminRoutingModule,
-    CoreModule,
-    sharedModule,
   ]
 })
 export class AdminModule { }

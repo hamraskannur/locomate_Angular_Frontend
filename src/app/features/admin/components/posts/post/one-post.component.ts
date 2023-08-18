@@ -36,12 +36,9 @@ export class AdminOnePostComponent implements OnInit {
   }
  
 
-  getAccountPage(id: string) {
-    if (this.currentUser) {
-      this.router.navigate(['/myAccount']);
-    } else {
-      this.router.navigate(['/friendAccount', id]);
-    }
+  getAccountPage(userId: string) {
+    this.router.navigate(['/admin/userAccount', userId]);
+
   }
  
   showImage(index: number): void {

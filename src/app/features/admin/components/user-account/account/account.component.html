@@ -1,0 +1,190 @@
+<div class="bg-white shadow:lg shadow-gray-300 rounded-md p-4 mb-5 md:m-4 mt-6">
+  <div class=" ">
+    <div class="relative">
+      <div
+        class="h-40 w-full overflow-hidden flex rounded-md justify-center items-center"
+      >
+        <img *ngIf="user.coverImg" [src]="user.coverImg" alt="cover" />
+        <img
+          *ngIf="!user.coverImg"
+          src="https://media.easemytrip.com/media/Blog/India/637033873695687971/637033873695687971fsrzol.jpg"
+          alt="cover"
+        />
+      </div>
+      <div class="absolute top-14 left-4">
+        <div
+          class="w-36 h-36 rounded-full overflow-hidden shadow-sm shadow-gray-500"
+        >
+          <img
+            class="bg-white"
+            [src]="
+              user.ProfileImg ||
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'
+            "
+            alt="avatars"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <h2 class="text-3xl font-bold text-heavy-metal-800">
+        {{ user.username || "" }}
+      </h2>
+      <div class="text-heavy-metal-500 leading-4 mt-2">
+        {{ user.name || "" }},
+      </div>
+      <div class="text-heavy-metal-500 leading-4 mt-1">
+        {{ user.city || "" }},
+        {{ user.country || "" }}
+      </div>
+      <p class="my-2 max-w-6xl text-sm">
+        {{ user.description || "" }}
+      </p>
+
+      <div class="flex">
+        
+        <button
+        *ngIf="!user.status else unBlock"
+          (click)="blockUser(user)"
+          class="flex justify-between ml-2 font-bold py-1 rounded bg-slate-700 hover:bg-slate-600 text-white px-6 pb-2 pt-2.5 text-xs uppercase leading-normal shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        >
+          Block
+        </button>
+        <ng-template #unBlock>
+
+          <button
+          (click)="unBlockUser(user)"
+          class="flex justify-between ml-2 font-bold py-1 rounded bg-slate-700 hover:bg-slate-600 text-white px-6 pb-2 pt-2.5 text-xs uppercase leading-normal shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+          >
+          UnBlock
+        </button>
+      </ng-template>
+
+        <button
+          *ngIf="loading"
+          type="button"
+          class="flex justify-between ml-2 font-bold py-1 rounded bg-slate-700 hover:bg-slate-600 text-white px-6 pb-2 pt-2.5 text-xs uppercase leading-normal shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] mr-2 border border-gray-200 focus:z-10 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 items-center"
+        >
+          <svg
+            aria-hidden="true"
+            role="status"
+            class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="#1C64F2"
+            />
+          </svg>
+          Loading...
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="flex mt-2 justify-center">
+    <span
+      (click)="openPost()"
+      class="bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300"
+    >
+      <div class="flex justify-center">
+        <p class="text-lg font-bold text-center ml-3">{{ postCount }}</p>
+      </div>
+      <p class="text-center">Posts</p>
+    </span>
+
+    <span
+      (click)="clickFollowers()"
+      class="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300"
+    >
+      <div class="flex">
+        <div class="text-lg font-bold text-center mt-1">
+          <span class="material-symbols-outlined"> group </span>
+        </div>
+        <p class="text-lg font-bold text-center ml-3">
+          {{ followersCount }}
+        </p>
+      </div>
+      <p class="text-center">Followers</p>
+    </span>
+    <span
+      (click)="clickFollowing()"
+      class="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300"
+    >
+      <div class="flex">
+        <div class="text-lg font-bold text-center mt-1">
+          <span class="material-symbols-outlined"> group </span>
+        </div>
+        <p class="text-lg font-bold text-center ml-3">
+          {{ followingCount }}
+        </p>
+      </div>
+      <p class="text-center">Following</p>
+    </span>
+  </div>
+
+  <div class="flex items-center justify-center mt-5">
+    <div class="flex">
+      <div
+        (click)="openPost()"
+        class="cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110"
+      >
+        <h1>Post</h1>
+      </div>
+    </div>
+    <div
+      (click)="openShorts()"
+      class="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110"
+    >
+      <h1>Shorts</h1>
+    </div>
+  </div>
+  <div class="mt-5" *ngIf="!onePostId && selectOption === 'post'">
+    <app-admin-all-post
+      [userId]="user._id"
+      [type]="type"
+      [postCount]="postCount"
+      (onePost)="onePost($event)"
+      (postCountChange)="onPostCountChange($event)"
+    ></app-admin-all-post>
+  </div>
+
+  <div class="mt-5" *ngIf="onePostId">
+    <app-admin-one-post
+      [onePost]="true"
+      [shorts]="onePostId.shortsCheck"
+      [post]="onePostId"
+    ></app-admin-one-post>
+  </div>
+
+  <div class="mt-5" *ngIf="!onePostId && selectOption === 'shorts'">
+    <app-admin-all-post
+      [userId]="user._id"
+      [shorts]="true"
+      [type]="type"
+      [postCount]="postCount"
+      (onePost)="onePost($event)"
+    ></app-admin-all-post>
+  </div>
+
+  <div
+    class="mt-5"
+    *ngIf="
+      selectOption != 'post' &&
+      selectOption != 'shorts' &&
+      !onePostId &&
+      selectOption != 'SavedPost'
+    "
+  >
+    <app-admin-show-user
+      [userId]="user._id || ''"
+      [type]="selectOption"
+    ></app-admin-show-user>
+  </div>
+</div>

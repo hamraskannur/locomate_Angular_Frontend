@@ -1,0 +1,17 @@
+<hr />
+<div class="grid grid-cols-3 gap-3 mt-5 ">
+    <div *ngFor="let post of posts" (click)="getOnePost(post)"  >
+      <img
+      *ngIf="post?.img[0] && !shorts else video"
+        class="rounded-md overflow-hidden h-48 flex items-center object-cover"
+        [src]="post?.img[0]"
+        alt="posts"
+      />
+      <ng-template #video>
+        <video class="rounded-md overflow-hidden h-48 flex items-center object-cover" (click)="getOnePost(post)" width="400" controls>
+               <source [src]="post?.shorts" />
+          </video>
+      </ng-template>
+    </div>
+</div>
+
