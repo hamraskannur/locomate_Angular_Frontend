@@ -6,6 +6,9 @@ import { passwordPattern } from '../../../../constants/patterns';
 import { UserApiServiceService } from '../../services/user-api.service.service';
 import { ToastrServiceService } from '../../services/toastr.service';
 import { Subscription } from 'rxjs';
+import { UserState } from 'src/app/stores/user/user.reducer';
+import { Store } from '@ngrx/store';
+import { updateOptions } from 'src/app/stores/user/user.actions';
 
 declare const particlesJS: any;
 
@@ -20,10 +23,13 @@ export class LoginComponent implements AfterViewInit,OnChanges , OnDestroy{
     private userApiServiceService: UserApiServiceService,
     private router: Router,
     private toastrService: ToastrServiceService,
+    private store: Store<{ user: UserState }>
+
   ) {}
   subscription: Subscription | undefined;
 
   //declare variable
+  loading: boolean = false;
   submit: boolean = false;
   passwordShown: boolean = false;
   ErrMessage: string | null = null;
@@ -40,15 +46,19 @@ export class LoginComponent implements AfterViewInit,OnChanges , OnDestroy{
   onSubmit() {
     this.submit = true;
     if (this.registrationForm.valid) {
+      this.loading=true
      this.subscription= this.userApiServiceService
         .userLogin(this.registrationForm.value)
-        .subscribe(({ token, message, status }: loginResponse) => {
+        .subscribe(({ token, message, status,user }: loginResponse) => {
           if (status) {
+            this.loading=false
             localStorage.setItem('token', token);
+            this.store.dispatch(updateOptions({ user: user }))
             this.ErrMessage = null;
             this.router.navigate(['/']);
             this.toastrService.showSuccess('logined successfully');
           } else {
+            this.loading=false
             this.ErrMessage = message;
           }
         });

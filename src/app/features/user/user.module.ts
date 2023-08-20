@@ -10,6 +10,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from 'src/app/core/core.module';
 import { UserComponent } from './user.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 

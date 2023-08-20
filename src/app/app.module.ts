@@ -32,6 +32,7 @@ import { UserStateModule } from './stores/state.module';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     UserStateModule,
+    
   ],
   providers: [
     {

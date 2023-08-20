@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ShowUserComponent } from './show-user.component';
+import { AdminShowUserComponent } from './show-user.component';
 
 describe('ShowUserComponent', () => {
-  let component: ShowUserComponent;
-  let fixture: ComponentFixture<ShowUserComponent>;
+  let component: AdminShowUserComponent;
+  let fixture: ComponentFixture<AdminShowUserComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ShowUserComponent]
+      declarations: [AdminShowUserComponent]
     });
-    fixture = TestBed.createComponent(ShowUserComponent);
+    fixture = TestBed.createComponent(AdminShowUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

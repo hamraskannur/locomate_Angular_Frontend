@@ -13,6 +13,7 @@ import { UserAccountComponent } from './components/user-account/user-account.com
 import { AdminAccountComponent } from './components/user-account/account/account.component';
 import { AdminShowUserComponent } from './components/user-account/account/show-user/show-user.component';
 import { AdminAllPostComponent } from './components/user-account/account/all-post/all-post.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AdminAllPostComponent } from './components/user-account/account/all-pos
     AdminAllPostComponent
   ],
   imports: [
+    HttpClientModule,
     CoreModule,
     sharedModule,
     FormsModule,

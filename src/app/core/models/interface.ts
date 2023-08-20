@@ -22,6 +22,7 @@ export interface loginResponse {
   message: string;
   token: string;
   status: Boolean;
+  user:User
 }
 export interface User {
   _id: string;

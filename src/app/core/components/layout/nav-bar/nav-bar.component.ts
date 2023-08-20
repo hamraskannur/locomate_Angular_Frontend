@@ -3,7 +3,6 @@ import { User } from 'src/app/core/models/interface';
 import { Store } from '@ngrx/store';
 import { selectUserDataAndOptions } from 'src/app/stores/user/user.selectors';
 import { UserState } from 'src/app/stores/user/user.reducer';
-import { loadUserData } from 'src/app/stores/user/user.actions';
 
 @Component({
   selector: 'app-nav-bar',

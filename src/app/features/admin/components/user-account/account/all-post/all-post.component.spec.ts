@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllPostComponent } from './all-post.component';
+import { AdminAllPostComponent } from './all-post.component';
 
 describe('AllPostComponent', () => {
-  let component: AllPostComponent;
-  let fixture: ComponentFixture<AllPostComponent>;
+  let component: AdminAllPostComponent;
+  let fixture: ComponentFixture<AdminAllPostComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AllPostComponent]
+      declarations: [AdminAllPostComponent]
     });
-    fixture = TestBed.createComponent(AllPostComponent);
+    fixture = TestBed.createComponent(AdminAllPostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

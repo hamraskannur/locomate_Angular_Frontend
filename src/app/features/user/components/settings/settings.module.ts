@@ -6,6 +6,7 @@ import { sharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { SettingsComponent } from './settings.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', component: SettingsComponent }
@@ -13,6 +14,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [SettingsComponent],
-  imports: [CommonModule,FormsModule,sharedModule,CoreModule, RouterModule.forChild(routes)]
+  imports: [HttpClientModule,CommonModule,FormsModule,sharedModule,CoreModule, RouterModule.forChild(routes)]
 })
 export class SettingsModule {}
