@@ -7,5 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent   {
   title = 'client';
+  console.log("hi");
   
 }
