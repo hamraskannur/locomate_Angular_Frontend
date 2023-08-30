@@ -2,7 +2,6 @@ import { Component, OnInit,OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   Validators,
- 
 } from '@angular/forms';
 import { registerResponse } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
@@ -57,7 +56,7 @@ export class RegisterComponent implements OnInit ,OnDestroy{
     this.submit = true;
     if (this.signupForm.valid) {
       this.loading = true;
-   this.subscription=   this.userApiServiceService
+   this.subscription=this.userApiServiceService
         .userRegister(this.signupForm.value)
         .subscribe(({ status, message }: registerResponse) => {
           if (status) {

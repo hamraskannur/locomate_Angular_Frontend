@@ -28,7 +28,6 @@ export class PostsComponent implements OnInit,OnDestroy {
        this.Posts=data
       this.subscription2= this.adminService.getVideos().subscribe((data:Post[])=>{
            this.videos=data
-            
        })
     })
   }

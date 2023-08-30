@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersComponent } from './users.component';
+import { HttpClientModule } from '@angular/common/http';
+import { UserApiServiceService } from '../../../services/user-api.service.service';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -8,7 +10,9 @@ describe('UsersComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersComponent]
+      declarations: [UsersComponent],
+      imports: [HttpClientModule], // Import HttpClientModule
+      providers: [UserApiServiceService], // Add your service here
     });
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
