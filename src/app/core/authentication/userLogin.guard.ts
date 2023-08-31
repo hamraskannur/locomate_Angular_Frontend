@@ -10,6 +10,8 @@ export class UserLoginGuard implements CanActivate {
     const isLoggedIn =localStorage.getItem("token")
     
     if (isLoggedIn) {
+      console.log(isLoggedIn);
+      
       return this.router.navigate(['/']);
     } else {
       return true;

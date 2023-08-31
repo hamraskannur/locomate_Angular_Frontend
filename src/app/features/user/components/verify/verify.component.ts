@@ -29,8 +29,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.queryParamMap.get('id');
-    const token = this.route.snapshot.queryParamMap.get('token');
+
 
     this.route.queryParamMap.subscribe((params) => {
       const id = params.get('id');
@@ -39,6 +38,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
         this.subscription = this.userApiServiceService
           .verifyRegistration(id, token)
           .subscribe(({ status, message }: registerResponse) => {
+            console.log(status, message);
+            
             if (message === 'Already verified') {
               this.toastrService.showSuccess('verified successfully');
               this.alreadyVerify = true;
