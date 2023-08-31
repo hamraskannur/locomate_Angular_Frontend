@@ -65,6 +65,7 @@ export class RegisterComponent implements OnInit ,OnDestroy{
             this.verify = message;
             this.ErrMessage = null;
             this.signupForm.reset();
+            this.submit = false
           } else {
             this.loading = false;
             this.ErrMessage = message;

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { registerResponse } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
+import { ToastrServiceService } from '../../services/toastr.service';
 
 declare const particlesJS: any;
 
@@ -22,7 +23,9 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private userApiServiceService: UserApiServiceService
+    private userApiServiceService: UserApiServiceService,
+    private toastrService: ToastrServiceService
+
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +40,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
           .verifyRegistration(id, token)
           .subscribe(({ status, message }: registerResponse) => {
             if (message === 'Already verified') {
+              this.toastrService.showSuccess('verified successfully');
               this.alreadyVerify = true;
               this.spinner = false;
             } else if (status) {

@@ -25,7 +25,8 @@ export class UserApiServiceService {
   userDataAndOptions$ = this.store.select(selectUserDataAndOptions);
 
 
-  private serverApi = 'https://locomateserverbackend.onrender.com/';
+  private serverApi = 'http://localhost:3008/';
+  // https://locomateserverbackend.onrender.com
 
   userRegister(userData: object): Observable<registerResponse> {
     return this.http.post<registerResponse>(
