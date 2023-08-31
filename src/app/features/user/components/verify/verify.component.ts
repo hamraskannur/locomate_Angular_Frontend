@@ -29,8 +29,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-
-  console.log("plplpl");
   
     this.route.queryParamMap.subscribe((params) => {
       const id = params.get('id');
