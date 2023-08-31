@@ -5,6 +5,7 @@ import { UserApiServiceService } from '../../services/user-api.service.service';
 import { ToastrServiceService } from '../../services/toastr.service';
 import { passwordPattern } from 'src/app/constants/patterns';
 import { Subscription } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 
 declare const particlesJS: any;
 
@@ -17,8 +18,15 @@ export class RegisterComponent implements  OnInit,OnDestroy,AfterViewInit {
   constructor(
     private formBuilder: FormBuilder,
     private userApiServiceService: UserApiServiceService,
-    private toastrService: ToastrServiceService
-  ) {}
+    private toastrService: ToastrServiceService,
+    private router: Router
+  ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.initializeParticles();
+      }
+    });
+  }
   loading = false;
   submit: boolean = false;
   passwordShown = false;
