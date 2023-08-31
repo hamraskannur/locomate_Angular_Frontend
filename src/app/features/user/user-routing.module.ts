@@ -15,7 +15,7 @@ const userRoute: Routes = [
       { path: '', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule),pathMatch: 'full',canActivate:[UserGuard] },
       { path: 'login', component: LoginComponent ,canActivate:[UserLoginGuard]},
       { path: 'register', component: RegisterComponent,canActivate:[UserLoginGuard] },
-      { path: 'verify', component: VerifyComponent},
+      { path: 'verify', component: VerifyComponent,canActivate:[UserLoginGuard] },
       { path: 'settings', loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsModule), canActivate: [UserGuard] },
       { path: 'myAccount', loadChildren: () => import('./components/my-account/myAccount.module').then(m => m.myAccountModule), canActivate: [UserGuard] },
       { path: 'search', loadChildren: () => import('./components/search/search.module').then(m => m.SearchModule), canActivate: [UserGuard] },
