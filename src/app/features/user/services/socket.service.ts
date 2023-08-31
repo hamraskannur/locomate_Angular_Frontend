@@ -8,7 +8,7 @@ export class SocketService {
   private socket: Socket;
 
   constructor() {
-    this.socket = io('http://localhost:8800');
+    this.socket = io('https://locomatesocketbackend.onrender.com');
     // https://locomatesocketbackend.onrender.com
   }
 
