@@ -1,4 +1,4 @@
-import { Component, OnDestroy,AfterViewInit } from '@angular/core';
+import { Component, OnInit,OnDestroy,AfterViewInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { registerResponse } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
@@ -13,7 +13,7 @@ declare const particlesJS: any;
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements  OnDestroy,AfterViewInit {
+export class RegisterComponent implements  OnInit,OnDestroy,AfterViewInit {
   constructor(
     private formBuilder: FormBuilder,
     private userApiServiceService: UserApiServiceService,
@@ -69,7 +69,14 @@ export class RegisterComponent implements  OnDestroy,AfterViewInit {
     }
   }
 
+  ngOnInit(): void {
+    this.initializeParticles();
+  }
   ngAfterViewInit(): void {
+    this.initializeParticles();
+  }
+
+  initializeParticles(){
     particlesJS('particles-js', {
       particles: {
         number: {
@@ -181,7 +188,15 @@ export class RegisterComponent implements  OnDestroy,AfterViewInit {
       retina_detect: true,
     });
   }
+
+  destroyParticles(): void {
+    if (typeof particlesJS !== 'undefined') {
+      particlesJS('particles-js', 'destroy');
+    }
+  }
+  
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+    this.destroyParticles();
   }
 }
