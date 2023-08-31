@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit ,OnDestroy{
    this.initializeParticles()
    setTimeout(() => {
     this.initializeParticles()
-   }, 3000);
+   }, 1000);
   }
     initializeParticles(){
       particlesJS('particles-js', {
