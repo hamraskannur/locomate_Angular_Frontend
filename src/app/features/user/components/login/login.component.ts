@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnChanges,SimpleChanges , OnDestroy} from '@angular/core';
+import { Component, OnInit, SimpleChanges, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { loginResponse } from '../../../../core/models/interface';
@@ -17,14 +17,13 @@ declare const particlesJS: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements AfterViewInit,OnChanges , OnDestroy{
+export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private userApiServiceService: UserApiServiceService,
     private router: Router,
     private toastrService: ToastrServiceService,
     private store: Store<{ user: UserState }>
-
   ) {}
   subscription: Subscription | undefined;
 
@@ -46,38 +45,32 @@ export class LoginComponent implements AfterViewInit,OnChanges , OnDestroy{
   onSubmit() {
     this.submit = true;
     if (this.registrationForm.valid) {
-      this.loading=true
-     this.subscription= this.userApiServiceService
+      this.loading = true;
+      this.subscription = this.userApiServiceService
         .userLogin(this.registrationForm.value)
-        .subscribe(({ token, message, status,user }: loginResponse) => {
+        .subscribe(({ token, message, status, user }: loginResponse) => {
           if (status) {
-            this.loading=false
+            this.loading = false;
             localStorage.setItem('token', token);
-            this.store.dispatch(updateOptions({ user: user }))
+            this.store.dispatch(updateOptions({ user: user }));
             this.ErrMessage = null;
             this.router.navigate(['/']);
             this.toastrService.showSuccess('logined successfully');
           } else {
-            this.loading=false
+            this.loading = false;
             this.ErrMessage = message;
           }
         });
     }
   }
-
+  ngOnInit(): void {
+    this.initializeParticles();
+    setTimeout(() => {
+      this.initializeParticles();
+    }, 200);
+  }
   togglePasswordVisibility() {
     this.passwordShown = !this.passwordShown;
-  }
-
-  ngAfterViewInit(): void {
-    this.initializeParticles();
-  }
-
-  
-ngOnChanges(changes: SimpleChanges): void {
-    if (changes['particlesJS']) {
-      this.initializeParticles();
-    }
   }
 
   private initializeParticles() {
@@ -190,10 +183,10 @@ ngOnChanges(changes: SimpleChanges): void {
         },
       },
       retina_detect: true,
-  })
+    });
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe()
+    this.subscription?.unsubscribe();
   }
 }
