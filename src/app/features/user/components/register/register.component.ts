@@ -1,11 +1,14 @@
-import { Component, OnInit,OnDestroy,AfterViewInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit,OnDestroy } from '@angular/core';
+import {
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { registerResponse } from 'src/app/core/models/interface';
 import { UserApiServiceService } from '../../services/user-api.service.service';
 import { ToastrServiceService } from '../../services/toastr.service';
 import { passwordPattern } from 'src/app/constants/patterns';
 import { Subscription } from 'rxjs';
-import { NavigationEnd, Router } from '@angular/router';
+
 
 declare const particlesJS: any;
 
@@ -14,25 +17,19 @@ declare const particlesJS: any;
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements  OnInit,OnDestroy,AfterViewInit {
+export class RegisterComponent implements OnInit ,OnDestroy{
   constructor(
     private formBuilder: FormBuilder,
     private userApiServiceService: UserApiServiceService,
-    private toastrService: ToastrServiceService,
-    private router: Router
-  ) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.initializeParticles();
-      }
-    });
-  }
+    private toastrService: ToastrServiceService
+  ) {}
   loading = false;
   submit: boolean = false;
   passwordShown = false;
   verify: string = '';
   ErrMessage: string | null = null;
   subscription: Subscription | undefined;
+
 
   signupForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -59,7 +56,7 @@ export class RegisterComponent implements  OnInit,OnDestroy,AfterViewInit {
     this.submit = true;
     if (this.signupForm.valid) {
       this.loading = true;
-      this.subscription = this.userApiServiceService
+   this.subscription=this.userApiServiceService
         .userRegister(this.signupForm.value)
         .subscribe(({ status, message }: registerResponse) => {
           if (status) {
@@ -68,7 +65,7 @@ export class RegisterComponent implements  OnInit,OnDestroy,AfterViewInit {
             this.verify = message;
             this.ErrMessage = null;
             this.signupForm.reset();
-            this.submit = false;
+            this.submit = false
           } else {
             this.loading = false;
             this.ErrMessage = message;
@@ -78,13 +75,6 @@ export class RegisterComponent implements  OnInit,OnDestroy,AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.initializeParticles();
-  }
-  ngAfterViewInit(): void {
-    this.initializeParticles();
-  }
-
-  initializeParticles(){
     particlesJS('particles-js', {
       particles: {
         number: {
@@ -196,15 +186,7 @@ export class RegisterComponent implements  OnInit,OnDestroy,AfterViewInit {
       retina_detect: true,
     });
   }
-
-  destroyParticles(): void {
-    if (typeof particlesJS !== 'undefined') {
-      particlesJS('particles-js', 'destroy');
-    }
-  }
-  
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-    this.destroyParticles();
+    this.subscription?.unsubscribe()
   }
 }

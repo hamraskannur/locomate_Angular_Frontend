@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-import { StoreModule } from '@ngrx/store'; // Import StoreModule
-import { EffectsModule } from '@ngrx/effects'; // Import EffectsModule
 
 import { TokenIntercepterService } from 'src/app/core/interceptors/token-intercepter.service';
 import { AppRoutingModule } from './app-routing.module';
